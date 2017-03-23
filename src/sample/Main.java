@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import javax.smartcardio.ATR;
+import javax.swing.*;
 import javax.xml.soap.Text;
 import java.awt.*;
 import java.text.Normalizer;
@@ -518,7 +519,7 @@ GuardarClienteBtn.setAlignment(Pos.CENTER);
         gridpane.add(AtrasBtn,2,40);
         AgregarMascotaBtn.setOnAction( e -> window.setScene(sceneAMascota));
         AtrasBtn.setOnAction( e -> BtnHome(AtrasBtn));
-
+        GuardarClienteBtn.setOnAction(e -> CampoVacio(NombreTxt));
         root.getChildren().addAll(gridpane);
         return root;
     }
@@ -565,8 +566,15 @@ GuardarClienteBtn.setAlignment(Pos.CENTER);
         root.getChildren().addAll(gridpane);
         return root;
     }
+    private void CampoVacio (TextField textField){
+        if(textField.getText().length()==0){
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(null,"Faltan campos por  rellenar", "Advertencia",JOptionPane.WARNING_MESSAGE);
+        }
 
+    }
     public static void main(String[] args) {
+
 
         launch(args);
     }
