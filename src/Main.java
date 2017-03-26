@@ -22,7 +22,13 @@ import javax.swing.*;
 import javax.xml.soap.Text;
 import java.awt.*;
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.Normalizer;
+import java.time.DayOfWeek;
+import java.time.Month;
+import java.time.Year;
+import java.util.*;
+import java.util.Date;
 
 /**
  * ZetCode JavaFX tutorial
@@ -241,6 +247,7 @@ public class Main extends Application {
 
     //Parte del centro de ventana Cita Medica
     private  VBox CentroCM() {
+
 
 
         VBox root = new VBox(5);
@@ -513,9 +520,13 @@ hBox2.getChildren().addAll(lblIDMASCOTA,txtIDMASCOTA,lblIDADEUDO,txtIDADEUDO);
 
 
     root.getChildren().addAll(hBox,gridpane,hBox2);
+        java.util.Date fecha = new java.util.Date();
+        long fechasistema = fecha.getTime();
+        java.sql.Date fechasql2 = new java.sql.Date(fechasistema);
+        String fechasql  = fechasql2.toString();
+        FechaTxt.setText(fechasql);
 
-
-        GuardarBtn.setOnAction(event -> eventoguardarcitaA(Nor1Rbtn,Anor1Rbtn,textArea1,Nor2Rbtn,Anor2Rbtn,textArea2,Nor3Rbtn,Anor3Rbtn,textArea3,Nor4Rbtn,Anor4Rbtn,textArea4,Nor5Rbtn,Anor5Rbtn,textArea5,Nor6Rbtn,Anor6Rbtn,textArea6,Nor7Rbtn,Anor7Rbtn,textArea7,Nor8Rbtn,Anor8Rbtn,textArea8,Nor9Rbtn,Anor9Rbtn,textArea9,Nor10Rbtn,Anor10Rbtn,textArea10,Nor11Rbtn,Anor11Rbtn,textArea11,Nor12Rbtn,Anor12Rbtn,textArea12,textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));
+        GuardarBtn.setOnAction(event -> eventoguardarcitaA(FechaTxt,TemperaturaTxt,PesoTxt,Nor1Rbtn,Anor1Rbtn,textArea1,Nor2Rbtn,Anor2Rbtn,textArea2,Nor3Rbtn,Anor3Rbtn,textArea3,Nor4Rbtn,Anor4Rbtn,textArea4,Nor5Rbtn,Anor5Rbtn,textArea5,Nor6Rbtn,Anor6Rbtn,textArea6,Nor7Rbtn,Anor7Rbtn,textArea7,Nor8Rbtn,Anor8Rbtn,textArea8,Nor9Rbtn,Anor9Rbtn,textArea9,Nor10Rbtn,Anor10Rbtn,textArea10,Nor11Rbtn,Anor11Rbtn,textArea11,Nor12Rbtn,Anor12Rbtn,textArea12,textAreaPlanesD,textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));
        /* GuardarBtn.setOnAction(event -> eventoguardarcitamedica(textArea1,textArea2,textArea3,textArea4,textArea5,textArea7,textArea8,textArea9,textArea10,textArea11,textArea12,
                 textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));*/
 
@@ -809,11 +820,35 @@ GuardarClienteBtn.setOnAction(e -> DatosCliente(NombreTxt,DireccionTxt,TelefonoT
 
 
 
-    public void guardarCitaA(RadioButton Norbox,RadioButton AnorBox, String DesAG,RadioButton NorBox2, RadioButton AnorBox2,String DesPiel,RadioButton Norbox3, RadioButton AnorBox3,String DesME, RadioButton NorBox4,RadioButton AnorBox4,String DesCircu,RadioButton Norbox5, RadioButton AnorBox5,String DesRes,
-                             RadioButton Norbox6, RadioButton AnorBox6, String DesDige, RadioButton Norbox7, RadioButton Anorbox7,String DesGU, RadioButton Norbox8, RadioButton AnorBox8, String DesOjos,RadioButton Norbox9, RadioButton AnorBox9, String DesOidos,RadioButton Norbox10, RadioButton AnorBox10, String DesSN, RadioButton Norbox11, RadioButton AnorBox11, String DesGanglios, RadioButton Norbox12, RadioButton AnorBox12, String DesMucosa,String ProblemasTemporal,
-                             String PlanesTerapeuticos,String InstruccionesCliente,int IDMASCOTA, int IDADEUDO){
+
+    public void guardarCitaA(String Fecha,String Temperatura, String Peso, RadioButton Norbox, RadioButton AnorBox, String DesAG, RadioButton NorBox2, RadioButton AnorBox2, String DesPiel, RadioButton Norbox3, RadioButton AnorBox3, String DesME, RadioButton NorBox4, RadioButton AnorBox4, String DesCircu, RadioButton Norbox5, RadioButton AnorBox5, String DesRes,
+                             RadioButton Norbox6, RadioButton AnorBox6, String DesDige, RadioButton Norbox7, RadioButton Anorbox7, String DesGU, RadioButton Norbox8, RadioButton AnorBox8, String DesOjos, RadioButton Norbox9, RadioButton AnorBox9, String DesOidos, RadioButton Norbox10, RadioButton AnorBox10, String DesSN, RadioButton Norbox11, RadioButton AnorBox11, String DesGanglios, RadioButton Norbox12, RadioButton AnorBox12, String DesMucosa,String PlanesDiagnostico, String ProblemasTemporal,
+                             String PlanesTerapeuticos, String InstruccionesCliente, int IDMASCOTA, int IDADEUDO){
         String N1=""; String N2 =""; String N3 =""; String N4 =""; String N5=""; String N6=""; String N7 = ""; String N8 ="";
         String N9=""; String N10=""; String N11=""; String N12="";
+
+
+
+
+
+        java.text.SimpleDateFormat myFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        java.text.SimpleDateFormat usuario = new java.text.SimpleDateFormat("dd/MM/yyyy");
+
+
+
+        try {
+           if(Fecha == usuario.toString()){
+               Fecha = myFormat.format(usuario.parse(Fecha));
+           }
+
+
+
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
         try {
             if(Norbox.isSelected()){
                 N1 = "N";
@@ -928,7 +963,7 @@ GuardarClienteBtn.setOnAction(e -> DatosCliente(NombreTxt,DireccionTxt,TelefonoT
 
             Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
             Statement statement = connection.createStatement();
-            ResultSet insertar = statement.executeQuery("insert into citamed(Apariencia_G,DesAG,Piel,DesPiel,MusculoEsqueleto,DesME,Circulatorio,DesCircu,Respiratorio,DesRes,Digestivo,DesDige,GenitoUrinario,DesGU,Ojos,DesOjos,Oidos,DesOidos,SistemaNervioso,DesSN,Ganglios,DesGanglios,Mucosa,DesMucosa,ProblemasTemporal,PlanesTerapeuticos,InstruccionesCli,ID_Mascota,ID_Adeudo) values ('"+N1+"','"+DesAG+"','"+N2+"','"+DesPiel+"','"+N3+"','"+DesME+"','"+N4+"','"+DesCircu+"','"+N5+"','"+DesRes+"','"+N6+"','"+DesDige+"','"+N7+"','"+DesGU+"','"+N8+"','"+DesOjos+"','"+N9+"','"+DesOidos+"','"+N10+"','"+DesSN+"','"+N11+"','"+DesGanglios+"','"+N12+"','"+DesMucosa+"','" + ProblemasTemporal + "','" + PlanesTerapeuticos + "','" + InstruccionesCliente + "'," + IDMASCOTA + "," + IDADEUDO + ")");
+            ResultSet insertar = statement.executeQuery("insert into citamed(Fecha,Temperatura,Peso,Apariencia_G,DesAG,Piel,DesPiel,MusculoEsqueleto,DesME,Circulatorio,DesCircu,Respiratorio,DesRes,Digestivo,DesDige,GenitoUrinario,DesGU,Ojos,DesOjos,Oidos,DesOidos,SistemaNervioso,DesSN,Ganglios,DesGanglios,Mucosa,DesMucosa,PlanesDiagnostico,ProblemasTemporal,PlanesTerapeuticos,InstruccionesCli,ID_Mascota,ID_Adeudo) values ('"+Fecha+"','"+Temperatura+"','"+Peso+"','"+N1+"','"+DesAG+"','"+N2+"','"+DesPiel+"','"+N3+"','"+DesME+"','"+N4+"','"+DesCircu+"','"+N5+"','"+DesRes+"','"+N6+"','"+DesDige+"','"+N7+"','"+DesGU+"','"+N8+"','"+DesOjos+"','"+N9+"','"+DesOidos+"','"+N10+"','"+DesSN+"','"+N11+"','"+DesGanglios+"','"+N12+"','"+DesMucosa+"','"+PlanesDiagnostico+"','" + ProblemasTemporal + "','" + PlanesTerapeuticos + "','" + InstruccionesCliente + "'," + IDMASCOTA + "," + IDADEUDO + ")");
 
         } catch(SQLException e){
             e.printStackTrace();
@@ -943,14 +978,20 @@ GuardarClienteBtn.setOnAction(e -> DatosCliente(NombreTxt,DireccionTxt,TelefonoT
 
 
 
-    public void eventoguardarcitaA(RadioButton Norbox,RadioButton AnorBox,TextArea AparienciaGeneral,RadioButton Norbox2,RadioButton AnorBox2, TextArea Piel,RadioButton Norbox3,RadioButton AnorBox3,
-                                    TextArea MuscoloEesqueleto,RadioButton Norbox4, RadioButton AnorBox4, TextArea Circulatorio,RadioButton Norbox5,RadioButton AnorBox5, TextArea Respiratorio,
-                                    RadioButton Norbox6,RadioButton AnorBox6,  TextArea Digestivo,RadioButton Norbox7, RadioButton AnorBox7, TextArea GenitoUrinario,
-                                    RadioButton Norbox8, RadioButton AnorBox8,  TextArea Ojos,RadioButton Norbox9,RadioButton AnorBox9, TextArea Oidos,
-                                    RadioButton Norbox10, RadioButton AnorBox10, TextArea SistemaNervioso,RadioButton Norbox11,RadioButton AnorBox11, TextArea Ganglios,
-                                    RadioButton Norbox12, RadioButton AnorBox12, TextArea Mucosas, TextArea ProblemasTemporal, TextArea PlanesTerapeuticos, TextArea IntruccionesCliente,
-                                    TextField IDMASCOTA, TextField IDADEUDO){
-        guardarCitaA(Norbox,AnorBox,AparienciaGeneral.getText(),
+    public void eventoguardarcitaA(TextField Fecha,TextField Temperatura, TextField Peso, RadioButton Norbox, RadioButton AnorBox, TextArea AparienciaGeneral, RadioButton Norbox2, RadioButton AnorBox2, TextArea Piel, RadioButton Norbox3, RadioButton AnorBox3,
+                                   TextArea MuscoloEesqueleto, RadioButton Norbox4, RadioButton AnorBox4, TextArea Circulatorio, RadioButton Norbox5, RadioButton AnorBox5, TextArea Respiratorio,
+                                   RadioButton Norbox6, RadioButton AnorBox6, TextArea Digestivo, RadioButton Norbox7, RadioButton AnorBox7, TextArea GenitoUrinario,
+                                   RadioButton Norbox8, RadioButton AnorBox8, TextArea Ojos, RadioButton Norbox9, RadioButton AnorBox9, TextArea Oidos,
+                                   RadioButton Norbox10, RadioButton AnorBox10, TextArea SistemaNervioso, RadioButton Norbox11, RadioButton AnorBox11, TextArea Ganglios,
+                                   RadioButton Norbox12, RadioButton AnorBox12, TextArea Mucosas, TextArea PlanesDiagnostico, TextArea ProblemasTemporal, TextArea PlanesTerapeuticos, TextArea IntruccionesCliente,
+                                   TextField IDMASCOTA, TextField IDADEUDO){
+
+
+
+
+        guardarCitaA(
+                Fecha.getText(),Temperatura.getText(),Peso.getText(),
+                Norbox,AnorBox,AparienciaGeneral.getText(),
                 Norbox2,AnorBox2,Piel.getText(),
                 Norbox3,AnorBox3,MuscoloEesqueleto.getText(),
                 Norbox4,AnorBox4,Circulatorio.getText(),
@@ -962,7 +1003,7 @@ GuardarClienteBtn.setOnAction(e -> DatosCliente(NombreTxt,DireccionTxt,TelefonoT
                 Norbox10,AnorBox10,SistemaNervioso.getText(),
                 Norbox11,AnorBox11,Ganglios.getText(),
                 Norbox12,AnorBox12, Mucosas.getText(),
-                ProblemasTemporal.getText(),PlanesTerapeuticos.getText(),
+                PlanesDiagnostico.getText(),ProblemasTemporal.getText(),PlanesTerapeuticos.getText(),
                 IntruccionesCliente.getText(),Integer.parseInt(IDMASCOTA.getText()),Integer.parseInt(IDADEUDO.getText()));
     }
 
