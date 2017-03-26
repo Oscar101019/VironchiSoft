@@ -1,4 +1,4 @@
-﻿-- VIRONCHISOFT
+-- VIRONCHISOFT
 -- Crear base de datos
 /*Los cambios fueron los siguinetes
 --Se le agrego el campo e fecha a la tabla CitamED
@@ -47,7 +47,7 @@ create table CitaMed(
 	Tempeatura varchar(5),
 	Peso varchar(5),
 	Apariencia_G varchar(1),
-        DesAG varchar(100),
+        DesAG varchar(150),
 	Piel varchar(1),
         DesPiel varchar(150),
 	MusculoEsqueleto varchar(1),
@@ -69,8 +69,8 @@ create table CitaMed(
 	Ganglios varchar(1),
         DesGanglios varchar(150),
 	Mucosa varchar(1),
-        DesMucosa(150),
-        PlanesDiagnostico varchar(100),
+        DesMucosa varchar(150),
+      PlanesDiagnostico varchar(100),
 	ProblemasTemporal varchar(100),
 	PlanesTerapeuticos varchar(100),
 	InstruccionesCli varchar(100),
@@ -100,7 +100,7 @@ create table Tabla_Citas_Inicio(
   Fecha date
 )
 
-
+/*
 
 
 create trigger TR_CIT_MED BEFORE insert on citamed
@@ -137,3 +137,4 @@ select * from vw_tabla_inicio
 
 
 
+*/
