@@ -62,8 +62,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="524" column="5" lean-forward="true" selection-start-line="524" selection-start-column="5" selection-end-line="524" selection-end-column="5" />
+            <state relative-caret-position="88">
+              <caret line="520" column="28" lean-forward="true" selection-start-line="520" selection-start-column="28" selection-end-line="520" selection-end-column="28" />
               <folding>
                 <element signature="method#BtnHome#0;class#Main#0" expanded="false" />
                 <element signature="method#cambiarModo#0;class#Main#0" expanded="false" />
@@ -688,12 +688,12 @@
       <workItem from="1490212305640" duration="3201000" />
       <workItem from="1490222395835" duration="263000" />
       <workItem from="1490240951630" duration="145000" />
-      <workItem from="1490497107933" duration="347000" />
+      <workItem from="1490497107933" duration="767000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16095000" />
+    <option name="totallyTimeSpent" value="16515000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -959,8 +959,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="524" column="5" lean-forward="true" selection-start-line="524" selection-start-column="5" selection-end-line="524" selection-end-column="5" />
+        <state relative-caret-position="88">
+          <caret line="520" column="28" lean-forward="true" selection-start-line="520" selection-start-column="28" selection-end-line="520" selection-end-column="28" />
           <folding>
             <element signature="method#BtnHome#0;class#Main#0" expanded="false" />
             <element signature="method#cambiarModo#0;class#Main#0" expanded="false" />
