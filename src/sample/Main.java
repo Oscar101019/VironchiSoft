@@ -523,7 +523,9 @@ GuardarClienteBtn.setAlignment(Pos.CENTER);
         root.getChildren().addAll(gridpane);
         return root;
     }
+
     private HBox CitaEstetica() {
+        System.out.println("Hola mundo!");
 
         HBox root = new HBox(5);
         root.setPadding(new Insets(0,0,0,0));
