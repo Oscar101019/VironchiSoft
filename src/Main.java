@@ -14,9 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import javax.smartcardio.ATR;
@@ -83,7 +81,8 @@ public class Main extends Application {
         rootCM.setTop(BotonesArribaPrincipal());
         rootCM.setCenter(CentroCM());
         rootCM.setRight(DerechaCM());
-        rootCM.setBottom(ABAJOOCM());
+
+
         //rootCM.setBottom(BtnAtras());
 
        // rootC.setBottom(BtnHome());
@@ -101,17 +100,22 @@ public class Main extends Application {
         rootCE.setTop(BotonesArribaPrincipal());
 
 
-        scene = new Scene(root, 1150, 500);
-      //  scene.getStylesheets().add("Estilo.css");
-        sceneAgregar = new Scene (root1,1150, 500);
+        scene = new Scene(root, 1150, 700);
+       scene.getStylesheets().add("Estilo.css");
+        sceneAgregar = new Scene (root1,1150, 700);
+        sceneAgregar.getStylesheets().add("Estilo.css");
         sceneCitaM =new Scene (rootCM,1150,700 );
-        sceneCitaE =new Scene (rootCE,1150,500 );
+        sceneCitaM.getStylesheets().add("Estilo.css");
+        sceneCitaE =new Scene (rootCE,1150,700 );
+        sceneCitaE.getStylesheets().add("Estilo.css");
 
-        sceneACliente =new Scene (rootC,1150,500 );
-        sceneAMascota = new Scene (rootM,1150,500);
+        sceneACliente =new Scene (rootC,1150,700 );
+        sceneACliente.getStylesheets().add("Estilo.css");
+        sceneAMascota = new Scene (rootM,1150,700);
+        sceneAMascota.getStylesheets().add("Estilo.css");
         stage.setTitle("VironchiSoft");
 
-        stage.setScene(scene);
+        stage.setScene(sceneCitaM);
         stage.show();
     }
 
@@ -126,12 +130,15 @@ public class Main extends Application {
 
 
     //Parte de la derecha de ventana Cita Medica
-    private  HBox DerechaCM() {
+    private  VBox DerechaCM() {
 
-        HBox root = new HBox(10);
-        root.setPadding(new Insets(0,100,0,0));
+        VBox root = new VBox(10);
+        root.setPadding(new Insets(0,50,0,0));
         root.setAlignment(Pos.TOP_LEFT);
 
+
+        Button RegresarBtn = new Button("Regresar");
+        RegresarBtn.setOnAction( e-> window.setScene(scene));
 
         Label lblProblemasTemp =new Label ("LISTA DE PROBLEMAS (TEMPORAL)");
         Label lblPlanesD=new Label ("PLANES DIAGNOSTICOS");
@@ -175,7 +182,7 @@ public class Main extends Application {
 
 
 
-        root.getChildren().addAll(gridpane);
+        root.getChildren().addAll(gridpane,GuardarBtn,RegresarBtn);
 
         return  root;
     }
@@ -191,13 +198,13 @@ public class Main extends Application {
         gridpane.setPadding(new Insets(1,8,7,4));
         gridpane.setHgap(0);
         gridpane.setVgap(0);
-        javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResourceAsStream("logoVironchi2.png"));
+        //javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResourceAsStream("logoVironchi2.png"));
 
         Label lblPrueba = new Label("");
         Label lbl = new Label("Bienvenido a VironchiSoft");
-        lblPrueba.setGraphic(new ImageView(image));
+      //  lblPrueba.setGraphic(new ImageView(image));
 
-        gridpane.add(lblPrueba, 0,0);
+        gridpane.add(lblPrueba, 10,20);
         root.getChildren().addAll(lbl,gridpane);
 
 
@@ -231,49 +238,25 @@ public class Main extends Application {
 
         return  root;
     }
-    private  HBox ABAJOOCM() {
 
-        HBox root = new HBox(0);
-        root.setPadding(new Insets(0,125,400,0));
-
-        root.setAlignment(Pos.TOP_RIGHT);
-
-        Button RegresarBtn = new Button("Regresar");
-
-
-
-        GridPane gridpane = new GridPane();
-        gridpane.setPadding(new Insets(5));
-        RegresarBtn.setOnAction( e-> window.setScene(scene));
-
-        gridpane.setHgap(5);
-        gridpane.setVgap(0);
-        gridpane.add(RegresarBtn,0,0);
-        gridpane.add(GuardarBtn,1,0);
-
-
-
-
-
-
-
-
-        root.getChildren().addAll(gridpane);
-
-        return  root;
-    }
     //Parte del centro de ventana Cita Medica
-    private  HBox CentroCM() {
+    private  VBox CentroCM() {
 
-        HBox root = new HBox(10);
-        root.setPadding(new Insets(30,20,0,20));
 
-        root.setAlignment(Pos.TOP_CENTER);
+        VBox root = new VBox(5);
+        root.setPadding(new Insets(0,0,0,0));
+        root.setAlignment(Pos.CENTER);
+        HBox hBox = new HBox (5);
+        hBox.setPadding(new Insets(15,0,0,0));
+        hBox.setAlignment(Pos.CENTER);
+        HBox hBox2 = new HBox (3);
+        hBox2.setPadding(new Insets(15,0,0,0));
+        hBox2.setAlignment(Pos.CENTER);
 
         GridPane gridpane = new GridPane();
-        gridpane.setPadding(new Insets(5));
-        gridpane.setHgap(15);
-        gridpane.setVgap(3);
+        gridpane.setPadding(new Insets(10));
+        gridpane.setHgap(5);
+        gridpane.setVgap(5);
 
         Label lblIDMASCOTA = new Label("ID MASCOTA:");
         Label lblIDADEUDO = new Label("ID ADEUDO:");
@@ -290,6 +273,14 @@ public class Main extends Application {
         Label lbl11 = new Label( "GANGLIOS");
         Label lbl12 = new Label( "MUCOSAS");
 
+        Label lblFecha =new Label ("Fecha: ");
+        Label lblTemperatura =new Label ("Temperatura: ");
+        Label lblPeso =new Label ("Peso: ");
+        TextField FechaTxt = new TextField ();
+        TextField TemperaturaTxt = new TextField ();
+        TextField PesoTxt = new TextField ();
+
+
         TextField txtIDMASCOTA = new TextField();
         TextField txtIDADEUDO = new TextField();
         TextArea textArea1 = new TextArea();
@@ -305,8 +296,9 @@ public class Main extends Application {
         TextArea textArea11 = new TextArea();
         TextArea textArea12 = new TextArea();
 
-        txtIDMASCOTA.setPrefColumnCount(1);
-        txtIDADEUDO.setPrefColumnCount(1);
+        txtIDMASCOTA.setPrefColumnCount(10);
+        txtIDADEUDO.setPrefColumnCount(10);
+
         textArea1.setPrefRowCount(1);
         textArea2.setPrefRowCount(1);
         textArea3.setPrefRowCount(1);
@@ -437,6 +429,9 @@ public class Main extends Application {
 
 
 
+hBox.getChildren().addAll(lblFecha,FechaTxt,lblPeso,PesoTxt,lblTemperatura,TemperaturaTxt);
+
+
 
         gridpane.add(lbl1,0,0);
         gridpane.add(Nor1Rbtn,1,0);
@@ -444,7 +439,7 @@ public class Main extends Application {
         gridpane.add(textArea1, 3, 0);
 
 
-        gridpane.add(lbl2,0,1);
+      gridpane.add(lbl2,0,1);
         gridpane.add(Nor2Rbtn,1,1);
         gridpane.add(Anor2Rbtn,2,1);
         gridpane.add(textArea2, 3, 1);
@@ -500,12 +495,8 @@ public class Main extends Application {
         gridpane.add(textArea12, 3, 11);
 
 
-        gridpane.add(lblIDMASCOTA,0,12);
-        gridpane.add(txtIDMASCOTA,1,12);
 
-        gridpane.add(lblIDADEUDO,0,13);
-        gridpane.add(txtIDADEUDO,1,13);
-
+hBox2.getChildren().addAll(lblIDMASCOTA,txtIDMASCOTA,lblIDADEUDO,txtIDADEUDO);
         Anor1Rbtn.setOnAction(e->cambiarModo(Anor1Rbtn,textArea1));
         Anor2Rbtn.setOnAction(e->cambiarModo(Anor2Rbtn,textArea2));
         Anor3Rbtn.setOnAction(e->cambiarModo(Anor3Rbtn,textArea3));
@@ -521,15 +512,14 @@ public class Main extends Application {
 
 
 
-
+    root.getChildren().addAll(hBox,gridpane,hBox2);
 
 
         GuardarBtn.setOnAction(event -> eventoguardarcitaA(Nor1Rbtn,Anor1Rbtn,textArea1,Nor2Rbtn,Anor2Rbtn,textArea2,Nor3Rbtn,Anor3Rbtn,textArea3,Nor4Rbtn,Anor4Rbtn,textArea4,Nor5Rbtn,Anor5Rbtn,textArea5,Nor6Rbtn,Anor6Rbtn,textArea6,Nor7Rbtn,Anor7Rbtn,textArea7,Nor8Rbtn,Anor8Rbtn,textArea8,Nor9Rbtn,Anor9Rbtn,textArea9,Nor10Rbtn,Anor10Rbtn,textArea10,Nor11Rbtn,Anor11Rbtn,textArea11,Nor12Rbtn,Anor12Rbtn,textArea12,textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));
        /* GuardarBtn.setOnAction(event -> eventoguardarcitamedica(textArea1,textArea2,textArea3,textArea4,textArea5,textArea7,textArea8,textArea9,textArea10,textArea11,textArea12,
                 textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));*/
-        root.getChildren().addAll(gridpane);
 
-        return  root;
+return  root;
     }
 
 
@@ -547,8 +537,8 @@ public class Main extends Application {
 
     //Botones de la parte de arriba para cambiar de ventanas
     private HBox BotonesArribaPrincipal () {
-        HBox root = new HBox(40);
-        root.setPadding(new Insets(5,0,20,0));
+        HBox root = new HBox(5);
+        root.setPadding(new Insets(5,0,0,0));
         root.setAlignment(Pos.TOP_CENTER);
 
         Button CitaBtn = new Button("MOSTRAR CITA");
