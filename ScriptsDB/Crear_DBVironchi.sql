@@ -44,7 +44,7 @@ create table Adeudo(
 create table CitaMed(
 	id_CitaMed int primary key AUTO_INCREMENT,
 	Fecha date,
-	Tempeatura varchar(5),
+	Temperatura varchar(5),
 	Peso varchar(5),
 	Apariencia_G varchar(1),
         DesAG varchar(150),
