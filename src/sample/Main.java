@@ -526,8 +526,9 @@ GuardarClienteBtn.setAlignment(Pos.CENTER);
 
     private HBox CitaEstetica() {
         System.out.println("Hola mundo!");
-        System.out.println("Prueba 2");
-        System.out.println("SUPER JUVE ");
+        System.out.println("Prueba 2"); 
+        System.out.println("Cabo :D"); 
+        System.out.println("SUPER JUVE "); 
         HBox root = new HBox(5);
         root.setPadding(new Insets(0,0,0,0));
         root.setAlignment(Pos.CENTER);
