@@ -57,10 +57,10 @@ public class Main extends Application {
     TextArea textAreaPlanesD;
     TextArea textAreaPlanesT;
     TextArea textAreaInstrucciones;
-    private BorderPane root,root1,rootCM,rootCE,rootC,rootM,rootABAJOCM;
+    private BorderPane root,root1,rootCM,rootCE,rootC,rootM,rootABAJOCM,rootLogin;
     private final int SIZE = 60;
     Stage window;
-    Scene scene,sceneAgregar, sceneCitaM, sceneCitaE,sceneACliente,sceneAMascota;                    //M=Medica       E=Estetica
+    Scene scene,sceneAgregar, sceneCitaM, sceneCitaE,sceneACliente,sceneAMascota,sceneLogin;                    //M=Medica       E=Estetica
 
     @Override
     public void start(Stage stage) {
@@ -77,6 +77,9 @@ public class Main extends Application {
         rootC= new BorderPane();
         rootM = new BorderPane();
         rootABAJOCM = new BorderPane();
+        rootLogin = new BorderPane();
+
+        rootLogin.setCenter(CentroLogin());
 
         root.setCenter(CentroPrincipal());
         root.setTop(BotonesArribaPrincipal());
@@ -105,9 +108,12 @@ public class Main extends Application {
         rootCE.setCenter(CitaEstetica());
         rootCE.setTop(BotonesArribaPrincipal());
 
-
-        scene = new Scene(root, 1150, 700);
+        sceneLogin = new Scene(rootLogin,500,700);
+        sceneLogin.getStylesheets().add("Estilo.css");
+        scene = new Scene(root,1150, 700 );
        scene.getStylesheets().add("Estilo.css");
+
+
         sceneAgregar = new Scene (root1,1150, 700);
         sceneAgregar.getStylesheets().add("Estilo.css");
         sceneCitaM =new Scene (rootCM,1150,700 );
@@ -121,7 +127,7 @@ public class Main extends Application {
         sceneAMascota.getStylesheets().add("Estilo.css");
         stage.setTitle("VironchiSoft");
 
-        stage.setScene(sceneCitaM);
+        stage.setScene(sceneLogin);
         stage.show();
     }
 
@@ -218,6 +224,56 @@ public class Main extends Application {
 
     }
 
+
+
+    private VBox CentroLogin() {
+
+        VBox root = new VBox(5);
+        root.setPadding(new Insets(0,0,0,0));
+        root.setAlignment(Pos.CENTER);
+
+        HBox root2 = new HBox(10);
+        root2.setPadding(new Insets(0,0,0,30));
+        root2.setAlignment(Pos.CENTER);
+
+        GridPane gridpane = new GridPane();
+        gridpane.setPadding(new Insets(0,60,80,0));
+        gridpane.setHgap(5);
+        gridpane.setVgap(5);
+        gridpane.setAlignment(Pos.CENTER);
+ javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResourceAsStream("logoVironchi.png"));
+         Label lblUsuario = new Label("Usuario");
+        Label lblContraseña = new Label("Contraseña");
+        TextField UsuarioTxt = new TextField ("");
+        TextField ContraseñaTxt  = new TextField ("");
+Button AccederBtn = new Button("Acceder");
+        Button CerrarBtn = new Button("Cerrar");
+
+
+         Label lblPrueba = new Label("");
+    lblPrueba.setGraphic(new ImageView(image));
+
+        Label lblBienvenida = new Label("Bienvenido a VironchiSoft");
+
+
+
+        // gridpane.add(lblBienvenida,1,0);
+        gridpane.add(lblUsuario,15,15);
+        gridpane.add(UsuarioTxt,16,15);
+        gridpane.add(lblContraseña,15,16);
+        gridpane.add(ContraseñaTxt,16,16);
+        gridpane.add(AccederBtn,15,17);
+        gridpane.add(CerrarBtn,16,17);
+        CerrarBtn.setOnAction( e-> window.close());
+       AccederBtn.setOnAction( e-> window.setScene(scene));
+
+root2.getChildren().addAll(AccederBtn,CerrarBtn);
+        root.getChildren().addAll(lblBienvenida,lblPrueba, gridpane,root2);
+
+
+        return root;
+
+    }
     //Parte del centro de ventana Seleccionar Cita medica o Cita estetica
     private  HBox BtnAbajoAgendarCita() {
 
@@ -580,8 +636,10 @@ return  root;
         Button GuardarMascotaBtn= new Button( "Guardar Mascota");
         Button CitaMBtn =new Button( "Cita Medica");
         Button CitaEBtn = new Button( "Cita Estetica");
-        Label lblTitulo = new Label("FORMULARIO PARA AGREGAR MASCOTA");
 
+
+
+        Label lblTitulo = new Label("FORMULARIO PARA AGREGAR MASCOTA");
         Label lblNombre = new Label("Nombre:");
         Label lblEspecie=new Label("Especie:");
         Label lblRaza = new Label ("Raza:");
@@ -595,10 +653,19 @@ return  root;
         TextField NombreTxt = new TextField();
         TextField EspecieTxt = new TextField();
         TextField RazaTxt = new TextField();
-        TextField SexoTxt = new TextField();
         TextField EdadTxt = new TextField();
-        TextField IDCLIENTETxt = new TextField();
+        TextField IDCLIENTETxt = new TextField("-");
 
+        ObservableList<String> options =
+                FXCollections.observableArrayList(
+                        "H",
+                        "M"
+                );
+        // ComboBox ComboHM =new ComboBox(options);
+
+        ComboBox ComboHM =new ComboBox();
+        ComboHM.getItems().addAll("H", "M");
+        ComboHM.setValue("-");
 
         gridpane.add(lblTitulo,1,20);
 
@@ -615,7 +682,7 @@ return  root;
         gridpane.add(RazaTxt,1,32);
 
         gridpane.add(lblSexo,0,33);
-        gridpane.add(SexoTxt,1,33);
+        gridpane.add(ComboHM,1,33);
 
         gridpane.add(lblEdad,0,34);
         gridpane.add(EdadTxt,1,34);
@@ -626,7 +693,7 @@ return  root;
 
         CitaMBtn.setOnAction( e -> window.setScene(sceneCitaM));
         CitaEBtn.setOnAction( e -> window.setScene(sceneCitaE));
-        GuardarMascotaBtn.setOnAction(e -> DatosMascota(IDCLIENTETxt,NombreTxt,EspecieTxt,RazaTxt,SexoTxt,EdadTxt));
+        GuardarMascotaBtn.setOnAction(e -> DatosMascota(IDCLIENTETxt,NombreTxt,EspecieTxt,RazaTxt,ComboHM,EdadTxt));
 
         root.getChildren().addAll(gridpane);
         return root;
@@ -792,32 +859,32 @@ GuardarClienteBtn.setOnAction(e -> DatosCliente(NombreTxt,DireccionTxt,TelefonoT
         DatosCliente(Nombre.getText(),Direccion.getText(),Telefono.getText());
     }*/
 
-    public void DatosMascota(TextField IDCLIENTE, TextField Nombre, TextField Especie, TextField Raza, TextField Sexo, TextField Descripcion){
-        int IdCliente = Integer.parseInt(IDCLIENTE.getText()+"");
+    public void DatosMascota(TextField IDCLIENTE, TextField Nombre, TextField Especie, TextField Raza,ComboBox Sexo, TextField Descripcion){
+        int IdCliente = Integer.parseInt(IDCLIENTE.getText().toString());
         String nombre = Nombre.getText();
         String especie = Especie.getText();
         String raza = Raza.getText();
-        String sexo = Sexo.getText();
+        String sexo = Sexo.getValue().toString();
         String descripcion = Descripcion.getText();
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
-            Statement statement = connection.createStatement();
-            ResultSet insertar = statement.executeQuery("insert into mascota (id_Cliente,Nombre,Especie,Raza,Sexo,Descripcion) values("+IdCliente+",'"+nombre+"','"+especie+"','"+raza+"','"+sexo+"','"+descripcion+"')");
+
+        if (IDCLIENTE.getText().toString()!= "-" && Nombre.getText().length() != 0 && Especie.getText().length() != 0 && Raza.getText().length() != 0 && Sexo.getValue().toString() != "-" && Descripcion.getText().length() != 0 ) {
+            try {
+                Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
+                Statement statement = connection.createStatement();
+                ResultSet insertar = statement.executeQuery("insert into mascota (id_Cliente,Nombre,Especie,Raza,Sexo,Descripcion) values(" + IdCliente + ",'" + nombre + "','" + especie + "','" + raza + "','" + sexo + "','" + descripcion + "')");
 
 
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else {
+            CampoVacioMascota(IDCLIENTE,Nombre,Especie,Raza,Sexo,Descripcion);
         }
     }
 
     /*public void eventoguardarmascota(TextField IDCLIENTE, TextField Nombre, TextField Especie, TextField Raza, TextField Sexo, TextField Descripcion){
          DatosMascota(Integer.parseInt(IDCLIENTE.getText()),Nombre.getText(),Especie.getText(),Raza.getText(),Sexo.getText(),Descripcion.getText());
     }*/
-
-
-
-
 
 
 
@@ -1019,16 +1086,7 @@ GuardarClienteBtn.setOnAction(e -> DatosCliente(NombreTxt,DireccionTxt,TelefonoT
 
             alert.showAndWait();
 
-           /* if ( Telefono.getText().length() == 0) {
-                Toolkit.getDefaultToolkit().beep();
 
-                Alert alert1 = new Alert(Alert.AlertType.WARNING);
-                alert1.setTitle("Advertencia");
-                alert1.setHeaderText("Warning Dialog");
-                alert1.setContentText("Falta Direccion");
-
-                alert1.showAndWait();
-*/
             if ( Direccion.getText().length() == 0) {
                 Toolkit.getDefaultToolkit().beep();
 
@@ -1049,6 +1107,71 @@ GuardarClienteBtn.setOnAction(e -> DatosCliente(NombreTxt,DireccionTxt,TelefonoT
 
                 alert3.showAndWait();
             }
+            }
+        }
+    }
+    //TextField IDCLIENTE
+    private void CampoVacioMascota (TextField IDCLIENTE, TextField Nombre, TextField Especie, TextField Raza,ComboBox Sexo, TextField Descripcion){
+
+        if(IDCLIENTE.getText().toString() == "-") {
+            Toolkit.getDefaultToolkit().beep();
+
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText("Warning Dialog");
+            alert.setContentText("Falta nombre");
+
+            alert.showAndWait();
+
+
+            if (Nombre.getText().length() == 0) {
+                Toolkit.getDefaultToolkit().beep();
+
+                Alert alert2 = new Alert(Alert.AlertType.WARNING);
+                alert2.setTitle("Advertencia");
+                alert2.setHeaderText("Warning Dialog");
+                alert2.setContentText("Falta Telefono");
+
+                alert2.showAndWait();
+                if (Especie.getText().length() == 0) {
+                    Toolkit.getDefaultToolkit().beep();
+
+                    Alert alert3 = new Alert(Alert.AlertType.WARNING);
+                    alert3.setTitle("Advertencia");
+                    alert3.setHeaderText("Warning Dialog");
+                    alert3.setContentText("Falta Telefono");
+
+                    alert3.showAndWait();
+                    if (Raza.getText().length() == 0) {
+                        Toolkit.getDefaultToolkit().beep();
+
+                        Alert alert4 = new Alert(Alert.AlertType.WARNING);
+                        alert4.setTitle("Advertencia");
+                        alert4.setHeaderText("Warning Dialog");
+                        alert4.setContentText("Falta Telefono");
+
+                        alert4.showAndWait();
+
+                        if (Sexo.getValue().toString() == "-") {
+                            Toolkit.getDefaultToolkit().beep();
+                            Alert alert5 = new Alert(Alert.AlertType.WARNING);
+                            alert5.setTitle("Advertencia");
+                            alert5.setHeaderText("Warning Dialog");
+                            alert5.setContentText("Falta Elegir un Sexo");
+                            alert5.showAndWait();
+
+                            if (Descripcion.getText().length() == 0) {
+                                Toolkit.getDefaultToolkit().beep();
+                                Alert alert6 = new Alert(Alert.AlertType.WARNING);
+                                alert6.setTitle("Advertencia");
+                                alert6.setHeaderText("Warning Dialog");
+                                alert6.setContentText("Falta Telefono");
+
+                                alert6.showAndWait();
+                            }
+                        }
+                    }
+                }
             }
         }
     }

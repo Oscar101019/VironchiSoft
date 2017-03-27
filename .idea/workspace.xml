@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/VironchiSoft/Main.class" afterPath="$PROJECT_DIR$/out/production/VironchiSoft/Main.class" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/VironchiSoft/Main.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ScriptsDB/Crear_DBVironchi.sql" afterPath="$PROJECT_DIR$/ScriptsDB/Crear_DBVironchi.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VironchiSoft.iml" afterPath="$PROJECT_DIR$/VironchiSoft.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Estilo.css" afterPath="$PROJECT_DIR$/src/Estilo.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.java" afterPath="$PROJECT_DIR$/src/Main.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
@@ -68,31 +67,27 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="528" column="464" lean-forward="false" selection-start-line="528" selection-start-column="464" selection-end-line="528" selection-end-column="464" />
+            <state relative-caret-position="477">
+              <caret line="123" column="31" lean-forward="true" selection-start-line="123" selection-start-column="31" selection-end-line="123" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#initUI#0;class#Main#0" expanded="false" />
-                <element signature="method#BtnHome#0;class#Main#0" expanded="false" />
                 <element signature="method#DerechaCM#0;class#Main#0" expanded="false" />
+                <element signature="method#CentroPrincipal#0;class#Main#0" expanded="false" />
+                <element signature="method#CentroLogin#0;class#Main#0" expanded="false" />
                 <element signature="method#BtnAbajoAgendarCita#0;class#Main#0" expanded="false" />
+                <element signature="method#CentroCM#0;class#Main#0" expanded="false" />
                 <element signature="method#cambiarModo#0;class#Main#0" expanded="false" />
                 <element signature="method#BotonesArribaPrincipal#0;class#Main#0" expanded="false" />
                 <element signature="method#DatosMascota#0;class#Main#0" expanded="false" />
+                <element signature="method#DatosCliente#0;class#Main#0" expanded="false" />
                 <element signature="method#CitaEstetica#0;class#Main#0" expanded="false" />
                 <element signature="method#DatosCliente#1;class#Main#0" expanded="false" />
                 <element signature="method#DatosMascota#1;class#Main#0" expanded="false" />
-                <element signature="method#CampoVacio#0;class#Main#0" expanded="false" />
-                <marker date="1490560982806" expanded="true" signature="26524:26639" ph="insert into cliente... " />
-                <marker date="1490560982806" expanded="true" signature="26695:26769" ph="insert into adeudo... " />
-                <marker date="1490560982806" expanded="true" signature="27964:28122" ph="insert into mascota... " />
-                <marker date="1490560982806" expanded="true" signature="32410:32779" ph="insert into citamed... " />
-                <marker date="1490560982806" expanded="true" signature="32410:32790" ph="insert into citamed... " />
-                <marker date="1490560982806" expanded="true" signature="32410:32791" ph="insert into citamed... " />
-                <marker date="1490560982806" expanded="true" signature="32410:32809" ph="insert into citamed... " />
-                <marker date="1490560982806" expanded="true" signature="32410:33097" ph="insert into citamed... " />
-                <marker date="1490560982806" expanded="true" signature="32410:33098" ph="insert into citamed... " />
-                <marker date="1490560982806" expanded="true" signature="32410:33245" ph="insert into citamed... " />
+                <element signature="method#guardarCitaA#0;class#Main#0" expanded="false" />
+                <marker date="1490584954801" expanded="true" signature="28653:28768" ph="insert into cliente... " />
+                <marker date="1490584954801" expanded="true" signature="28824:28898" ph="insert into adeudo... " />
+                <marker date="1490584954801" expanded="true" signature="30358:30540" ph="insert into mascota... " />
+                <marker date="1490584954801" expanded="true" signature="34940:35775" ph="insert into citamed... " />
               </folding>
             </state>
           </provider>
@@ -101,8 +96,8 @@
       <file leaf-file-name="Estilo.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Estilo.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1955">
-              <caret line="115" column="18" lean-forward="false" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+            <state relative-caret-position="272">
+              <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -114,6 +109,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -124,6 +120,7 @@
       <find>window</find>
       <find>GuardarBtn</find>
       <find>DERECHA</find>
+      <find>ComboHm</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -143,8 +140,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
-        <option value="$PROJECT_DIR$/src/Estilo.css" />
         <option value="$PROJECT_DIR$/src/asd.java" />
+        <option value="$PROJECT_DIR$/src/Estilo.css" />
+        <option value="$PROJECT_DIR$/src/LabelSombra.css" />
         <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
@@ -158,7 +156,7 @@
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="y" value="32" />
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
@@ -232,6 +230,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration default="false" name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -714,11 +713,12 @@
       <workItem from="1490505839275" duration="43000" />
       <workItem from="1490516154621" duration="15079000" />
       <workItem from="1490551805225" duration="9613000" />
+      <workItem from="1490571320820" duration="12439000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41364000" />
+    <option name="totallyTimeSpent" value="53803000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -730,7 +730,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="32" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -742,20 +742,21 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35130718" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34640524" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3480392" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41503268" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26701966" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28895614" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -766,8 +767,43 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39869282" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34640524" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3480392" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41503268" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28895614" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -798,7 +834,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>153</line>
+          <line>165</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -818,27 +854,58 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initUI#0;class#Main#0" expanded="false" />
-            <element signature="method#BtnHome#0;class#Main#0" expanded="false" />
             <element signature="method#DerechaCM#0;class#Main#0" expanded="false" />
+            <element signature="method#CentroPrincipal#0;class#Main#0" expanded="false" />
+            <element signature="method#CentroLogin#0;class#Main#0" expanded="false" />
             <element signature="method#BtnAbajoAgendarCita#0;class#Main#0" expanded="false" />
+            <element signature="method#CentroCM#0;class#Main#0" expanded="false" />
             <element signature="method#cambiarModo#0;class#Main#0" expanded="false" />
             <element signature="method#BotonesArribaPrincipal#0;class#Main#0" expanded="false" />
             <element signature="method#DatosMascota#0;class#Main#0" expanded="false" />
+            <element signature="method#DatosCliente#0;class#Main#0" expanded="false" />
             <element signature="method#CitaEstetica#0;class#Main#0" expanded="false" />
             <element signature="method#DatosCliente#1;class#Main#0" expanded="false" />
             <element signature="method#DatosMascota#1;class#Main#0" expanded="false" />
-            <element signature="method#CampoVacio#0;class#Main#0" expanded="false" />
-            <marker date="1490560982806" expanded="true" signature="26524:26639" ph="insert into cliente... " />
-            <marker date="1490560982806" expanded="true" signature="26695:26769" ph="insert into adeudo... " />
-            <marker date="1490560982806" expanded="true" signature="27964:28122" ph="insert into mascota... " />
-            <marker date="1490560982806" expanded="true" signature="32410:32779" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:32790" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:32791" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:32809" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:33097" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:33098" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:33245" ph="insert into citamed... " />
+            <element signature="method#guardarCitaA#0;class#Main#0" expanded="false" />
+            <marker date="1490584954801" expanded="true" signature="28653:28768" ph="insert into cliente... " />
+            <marker date="1490584954801" expanded="true" signature="28824:28898" ph="insert into adeudo... " />
+            <marker date="1490584954801" expanded="true" signature="30358:30540" ph="insert into mascota... " />
+            <marker date="1490584954801" expanded="true" signature="34940:35775" ph="insert into citamed... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Estilo.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1955">
+          <caret line="115" column="18" lean-forward="false" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DerechaCM#0;class#Main#0" expanded="false" />
+            <element signature="method#CentroPrincipal#0;class#Main#0" expanded="false" />
+            <element signature="method#CentroLogin#0;class#Main#0" expanded="false" />
+            <element signature="method#BtnAbajoAgendarCita#0;class#Main#0" expanded="false" />
+            <element signature="method#CentroCM#0;class#Main#0" expanded="false" />
+            <element signature="method#cambiarModo#0;class#Main#0" expanded="false" />
+            <element signature="method#BotonesArribaPrincipal#0;class#Main#0" expanded="false" />
+            <element signature="method#DatosMascota#0;class#Main#0" expanded="false" />
+            <element signature="method#DatosCliente#0;class#Main#0" expanded="false" />
+            <element signature="method#CitaEstetica#0;class#Main#0" expanded="false" />
+            <element signature="method#DatosCliente#1;class#Main#0" expanded="false" />
+            <element signature="method#DatosMascota#1;class#Main#0" expanded="false" />
+            <element signature="method#guardarCitaA#0;class#Main#0" expanded="false" />
+            <marker date="1490584954801" expanded="true" signature="28653:28768" ph="insert into cliente... " />
+            <marker date="1490584954801" expanded="true" signature="28824:28898" ph="insert into adeudo... " />
+            <marker date="1490584954801" expanded="true" signature="30358:30540" ph="insert into mascota... " />
+            <marker date="1490584954801" expanded="true" signature="34940:35775" ph="insert into citamed... " />
           </folding>
         </state>
       </provider>
@@ -881,42 +948,46 @@
     <entry file="file://$PROJECT_DIR$/src/sample/Controller.java" />
     <entry file="file://$PROJECT_DIR$/src/sample/sample.fxml" />
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java" />
+    <entry file="file://$PROJECT_DIR$/src/asd.java" />
     <entry file="file://$PROJECT_DIR$/src/Estilo.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1955">
-          <caret line="115" column="18" lean-forward="false" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+        <state relative-caret-position="272">
+          <caret line="16" column="1" lean-forward="true" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/asd.java" />
+    <entry file="file://$PROJECT_DIR$/src/LabelSombra.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="528" column="464" lean-forward="false" selection-start-line="528" selection-start-column="464" selection-end-line="528" selection-end-column="464" />
+        <state relative-caret-position="477">
+          <caret line="123" column="31" lean-forward="true" selection-start-line="123" selection-start-column="31" selection-end-line="123" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#initUI#0;class#Main#0" expanded="false" />
-            <element signature="method#BtnHome#0;class#Main#0" expanded="false" />
             <element signature="method#DerechaCM#0;class#Main#0" expanded="false" />
+            <element signature="method#CentroPrincipal#0;class#Main#0" expanded="false" />
+            <element signature="method#CentroLogin#0;class#Main#0" expanded="false" />
             <element signature="method#BtnAbajoAgendarCita#0;class#Main#0" expanded="false" />
+            <element signature="method#CentroCM#0;class#Main#0" expanded="false" />
             <element signature="method#cambiarModo#0;class#Main#0" expanded="false" />
             <element signature="method#BotonesArribaPrincipal#0;class#Main#0" expanded="false" />
             <element signature="method#DatosMascota#0;class#Main#0" expanded="false" />
+            <element signature="method#DatosCliente#0;class#Main#0" expanded="false" />
             <element signature="method#CitaEstetica#0;class#Main#0" expanded="false" />
             <element signature="method#DatosCliente#1;class#Main#0" expanded="false" />
             <element signature="method#DatosMascota#1;class#Main#0" expanded="false" />
-            <element signature="method#CampoVacio#0;class#Main#0" expanded="false" />
-            <marker date="1490560982806" expanded="true" signature="26524:26639" ph="insert into cliente... " />
-            <marker date="1490560982806" expanded="true" signature="26695:26769" ph="insert into adeudo... " />
-            <marker date="1490560982806" expanded="true" signature="27964:28122" ph="insert into mascota... " />
-            <marker date="1490560982806" expanded="true" signature="32410:32779" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:32790" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:32791" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:32809" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:33097" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:33098" ph="insert into citamed... " />
-            <marker date="1490560982806" expanded="true" signature="32410:33245" ph="insert into citamed... " />
+            <element signature="method#guardarCitaA#0;class#Main#0" expanded="false" />
+            <marker date="1490584954801" expanded="true" signature="28653:28768" ph="insert into cliente... " />
+            <marker date="1490584954801" expanded="true" signature="28824:28898" ph="insert into adeudo... " />
+            <marker date="1490584954801" expanded="true" signature="30358:30540" ph="insert into mascota... " />
+            <marker date="1490584954801" expanded="true" signature="34940:35775" ph="insert into citamed... " />
           </folding>
         </state>
       </provider>
