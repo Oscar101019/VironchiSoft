@@ -1,4 +1,5 @@
 
+import com.sun.javafx.scene.SceneHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -18,9 +19,9 @@ import javafx.stage.Stage;
 public class Diseño {
     Funciones funcion =new Funciones();
     Validacion validar = new Validacion();
-    public BorderPane root,root1,rootCM,rootCE,rootC,rootM,rootABAJOCM,rootLogin,rootBuscar,rootBuscarCliente;
+    public BorderPane root,root1,rootCM,rootCE,rootC,rootM,rootABAJOCM,rootLogin,rootBuscar,rootBuscarCliente,rootInventario,rootProveedores;
     public Stage window;
-    public Scene scene,sceneAgregar, sceneCitaM, sceneCitaE,sceneACliente,sceneAMascota,sceneLogin,sceneBuscar,sceneBuscarCliente;                    //M=Medica       E=Estetica
+    public Scene scene,sceneAgregar, sceneCitaM, sceneCitaE,sceneACliente,sceneAMascota,sceneLogin,sceneBuscar,sceneBuscarCliente,sceneInvetario,sceneProveedores;                    //M=Medica       E=Estetica
     Button GuardarBtn;
     TextArea textAreaProb;
     TextArea textAreaPlanesD;
@@ -41,7 +42,8 @@ public class Diseño {
         rootLogin = new BorderPane();
         rootBuscar = new BorderPane();
         rootBuscarCliente = new BorderPane();
-
+        rootInventario = new BorderPane();
+        rootProveedores = new BorderPane();
         rootLogin.setCenter(CentroLogin());
 
         root.setCenter(CentroPrincipal());
@@ -68,6 +70,10 @@ public class Diseño {
         rootCE.setCenter(CitaEstetica());
         rootCE.setTop(BotonesArribaPrincipal());
 
+        rootInventario.setTop(BotonesArribaPrincipal());
+
+        rootProveedores.setTop(BotonesArribaPrincipal());
+
         sceneLogin = new Scene(rootLogin,500,700);
         scene = new Scene(root,1150, 700 );
         sceneBuscar =new Scene(rootBuscar,1150,700);
@@ -77,6 +83,8 @@ public class Diseño {
         sceneCitaE =new Scene (rootCE,1150,700 );
         sceneACliente =new Scene (rootC,1150,700 );
         sceneAMascota = new Scene (rootM,1150,700);
+        sceneInvetario = new Scene(rootInventario,1150,700);
+        sceneProveedores = new Scene (rootProveedores,1150,700);
 
         sceneLogin.getStylesheets().add("Estilo.css");
         scene.getStylesheets().add("Estilo.css");
@@ -87,6 +95,9 @@ public class Diseño {
         sceneCitaE.getStylesheets().add("Estilo.css");
         sceneACliente.getStylesheets().add("Estilo.css");
         sceneAMascota.getStylesheets().add("Estilo.css");
+        sceneInvetario.getStylesheets().add("Estilo.css");
+        sceneProveedores.getStylesheets().add("Estilo.css");
+
 
         stage.setTitle("VironchiSoft");
         stage.setScene(sceneLogin);
@@ -96,7 +107,7 @@ public class Diseño {
 
     }
 
-///2.2
+
     public HBox DatosClienteCentro() {
 
         HBox root = new HBox(5);
@@ -401,6 +412,8 @@ public class Diseño {
         root.getChildren().addAll(CitaBtn, ACitaBtn, InvBtn, ProvBtn,MasBtn);
         ACitaBtn.setOnAction( e -> window.setScene (sceneBuscar));
         CitaBtn.setOnAction( e-> window.setScene(scene));
+        InvBtn.setOnAction(e->window.setScene(sceneInvetario));
+        ProvBtn.setOnAction(e->window.setScene(sceneProveedores));
 
         return root;
     }
