@@ -3,14 +3,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by juven on 29/3/2017.
@@ -218,9 +224,16 @@ public class Diseño {
         return root;
     }
 
-    public HBox CentroPrincipal() {
-        HBox root = new HBox(0);
-        root.setPadding(new Insets(0,0,0,0));
+    Button btn = new Button("Actualizar");
+
+    TableView<TablaMostrarCitas> table = new TableView<TablaMostrarCitas>();
+    private final ObservableList<TablaMostrarCitas> datos = FXCollections.observableArrayList(
+            new TablaMostrarCitas("Brian","Firulais","Cita Médica","2017-03-12")
+    );
+
+    public VBox CentroPrincipal() {
+        VBox root = new VBox(10);
+        root.setPadding(new Insets(0,20,0,20));
         root.setAlignment(Pos.CENTER);
         GridPane gridpane = new GridPane();
         gridpane.setPadding(new Insets(1,8,7,4));
@@ -235,10 +248,70 @@ public class Diseño {
         gridpane.add(lblPrueba, 10,20);
         root.getChildren().addAll(lbl,gridpane);
 
+        TableColumn columnaCliente = new TableColumn("Cliente");
+        columnaCliente.setCellValueFactory(
+                new PropertyValueFactory<TablaMostrarCitas, String>("cliente")
+        );
+        TableColumn columnaMascota = new TableColumn("Mascota");
+        columnaMascota.setCellValueFactory(
+                new PropertyValueFactory<TablaMostrarCitas, String>("mascota")
+        );
+        TableColumn columnaTipoCita = new TableColumn("Tipo de Cita");
+        columnaTipoCita.setCellValueFactory(
+                new PropertyValueFactory<TablaMostrarCitas, String>("tipocita")
+        );
+        TableColumn columnaFecha = new TableColumn("Fecha");
+        columnaFecha.setCellValueFactory(
+                new PropertyValueFactory<TablaMostrarCitas, String>("fecha")
+        );
+
+        //table.setItems(datos);
+        table.setItems(evento());
+        table.getColumns().addAll(
+                columnaCliente,
+                columnaMascota,
+                columnaTipoCita,
+                columnaFecha
+        );
+
+        btn.setOnAction(e->actualizarDatos());
+
+        //VBox vbox = new VBox();
+        root.getChildren().addAll(table,btn);
+
+        // scene.getRoot()).getChildren().addAll(root);
+
 
         return root;
 
     }
+
+    public void actualizarDatos(){
+        table.setItems(evento());
+    }
+
+    DbConnection dc = new DbConnection();
+    ObservableList<TablaMostrarCitas> data;
+
+    public ObservableList evento(){
+        try {
+            Connection conn = dc.Connect();
+            data = FXCollections.observableArrayList();
+            // Execute query and store result in a resultset
+            ResultSet rs = conn.createStatement().executeQuery("select * from vw_tabla_inicio");
+            while (rs.next()) {
+                //get string from db,whichever way
+                data.add(new TablaMostrarCitas(rs.getString(1),rs.getString(2), rs.getString(3), rs.getString(4) ));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error"+ex);
+        }
+        return data;
+
+    }
+
+
 
     public VBox CentroBuscar() {
 
