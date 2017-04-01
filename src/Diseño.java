@@ -535,43 +535,31 @@ public class Diseño {
         ComboHM.getItems().addAll("H", "M");
         ComboHM.setValue("-");
 
-
+        /*
         ObservableList<String> caninos =
                 FXCollections.observableArrayList(
-                        "QQQ",
-                        "WWWW"
+                        "Chihuaha",
+                        "SALCHICHA"
                 );
 
         ObservableList<String> gatuno =
                 FXCollections.observableArrayList(
-                        "wqweqwe",
-                        "rwrw"
+                        "Persa",
+                        "Rashado"
                 );
+                */
         ObservableList<String> especie =
                 FXCollections.observableArrayList(
                         "Canino",
                         "Gatos"
                 );
-        ComboBox ComboEspecie =new ComboBox();
+        ChoiceBox ComboEspecie =new ChoiceBox();
+        ComboBox ComboRaza = new ComboBox();
+        ComboEspecie.getItems().addAll(especie);
 
-            ComboEspecie.getItems().addAll(especie);
+        ComboEspecie.setValue("-");
+        ComboEspecie.getSelectionModel().selectedItemProperty().addListener((v,OldValue,newValue) -> cambiarDatoCombo(ComboEspecie,ComboRaza));
 
-            ComboEspecie.setValue("-");
-            ComboBox ComboRaza = new ComboBox();
-
-String seleccion;
-//seleccion = ComboEspecie.getValue().toString();
-seleccion = ComboEspecie.getId();
-        System.out.println(seleccion);
-
-  if (seleccion=="-"){
-      ComboRaza.setItems(caninos);
-      System.out.println(seleccion);
-      if (seleccion=="Canino"){
-
-          System.out.println(seleccion);
-      }
-  }
 
 
         gridpane.add(lblTitulo,1,20);
@@ -605,10 +593,39 @@ seleccion = ComboEspecie.getId();
         root.getChildren().addAll(gridpane);
         return root;
     }
+    public void cambiarDatoCombo(ChoiceBox ComboEspecie, ComboBox ComboRaza) {
+        
+
+        if (ComboEspecie.getValue().toString() == "Canino") {
+            ObservableList<String> caninos =
+                    FXCollections.observableArrayList(
+                            "Chihuaha",
+                            "SALCHICHA"
+                    );
+
+
+            ComboRaza.setItems(caninos);
+
+        }//if
+
+        if(ComboEspecie.getValue().toString() == "Gatos"){
+            ObservableList<String> gatuno =
+                    FXCollections.observableArrayList(
+                            "Persa",
+                            "Rashado"
+                    );
+            ComboRaza.setItems(gatuno);
+
+        }//if
+
+    }//CambiarDatoCombo
+
+
 
     public HBox CitaEstetica() {
 
         HBox root = new HBox(5);
+
         root.setPadding(new Insets(0,0,0,0));
         root.setAlignment(Pos.CENTER);
         GridPane gridpane = new GridPane();
