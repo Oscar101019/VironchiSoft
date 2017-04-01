@@ -98,43 +98,7 @@ create table Tabla_Citas_Inicio(
   id_Mascota int,
   TipoCit varchar(20),
   Fecha date
-)
-
-/*
-
-
-create trigger TR_CIT_MED BEFORE insert on citamed
-	for each row
-BEGIN
-	insert into Tabla_Citas_Inicio set Id_Mascota=New.Id_Mascota, TipoCit ='Cita Medica',Fecha= NEW.Fecha;
-
-END;
-
-
-
-
-create trigger TR_CIT_EST BEFORE insert on citaestetica
-	for each row
-BEGIN
-	insert into Tabla_Citas_Inicio set Id_Mascota=New.Id_Mascota, TipoCit ='Cita Estetica',Fecha= NEW.Fecha;
-
-END
-
-
-
-
-create view VW_Tabla_Inicio
-as
-(
-select CL.Nombre as Cliente,M.Nombre as Mascota,TCI.TipoCit,TCI.Fecha from  Tabla_Citas_Inicio TCI
-inner join mascota M on (M.id_Mascota=TCI.id_Mascota)
-inner join cliente CL on (CL.id_Cliente=M.id_Cliente)
 );
-
-select * from Tabla_Citas_Inicio;
-
-select * from vw_tabla_inicio
-*/
 
 /*Creación de tablas para inventario*/
 
@@ -143,22 +107,6 @@ CREATE TABLE Inventario
   ID_Inventario INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   Nombre VARCHAR(20),
   Descripcion VARCHAR(250)
-);
-
-CREATE TABLE Producto
-(
-  ID_Producto INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  ID_Inventario CHAR(2) NOT NULL,
-  ID_Proveedor INT NOT NULL,
-  ID_UnidadMedida INT NOT NULL,
-  Nombre VARCHAR(30),
-  CantidadPorUnidad VARCHAR(20),
-  PrecioUnitario DOUBLE(4,2),
-  UnidadesAlmacenadas INT,
-  Descontinuado BOOL,
-  CONSTRAINT FK_InventarioProducto FOREIGN KEY (ID_INVENTARIO) REFERENCES Inventario(ID_Inventario),
-  CONSTRAINT FK_UnidadMedProducto FOREIGN KEY (ID_UnidadMedida) REFERENCES UnidadMedida(ID_UnidadMedida),
-  CONSTRAINT FK_ProveedoresProducto FOREIGN KEY (ID_Proveedor) REFERENCES Proveedores(ID_Proveedor)
 );
 
 CREATE TABLE UnidadMedida
@@ -176,4 +124,48 @@ CREATE TABLE Proveedores
   Ciudad VARCHAR(20),
   Estado VARCHAR(20),
   Telefono VARCHAR(10)
-)
+);
+
+CREATE TABLE Producto
+(
+  ID_Producto INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  ID_Inventario INT NOT NULL,
+  ID_Proveedor INT NOT NULL,
+  ID_UnidadMedida INT NOT NULL,
+  Nombre VARCHAR(30),
+  CantidadPorUnidad VARCHAR(20),
+  PrecioUnitario DOUBLE(4,2),
+  UnidadesAlmacenadas INT,
+  Descontinuado BOOL,
+  CONSTRAINT FK_InventarioProducto FOREIGN KEY (ID_INVENTARIO) REFERENCES Inventario(ID_Inventario),
+  CONSTRAINT FK_UnidadMedProducto FOREIGN KEY (ID_UnidadMedida) REFERENCES UnidadMedida(ID_UnidadMedida),
+  CONSTRAINT FK_ProveedoresProducto FOREIGN KEY (ID_Proveedor) REFERENCES Proveedores(ID_Proveedor)
+);
+
+--Crear vista
+create view VW_Tabla_Inicio
+as
+(
+select CL.Nombre as Cliente,M.Nombre as Mascota,TCI.TipoCit,TCI.Fecha from  Tabla_Citas_Inicio TCI
+inner join mascota M on (M.id_Mascota=TCI.id_Mascota)
+inner join cliente CL on (CL.id_Cliente=M.id_Cliente)
+);
+
+--LOS TRIGGER SOLO HAN FUNCIONADO EN DATAGRIP
+--Primer trigger
+create trigger TR_CIT_MED BEFORE insert on citamed
+	for each row
+BEGIN
+	insert into Tabla_Citas_Inicio set Id_Mascota=New.Id_Mascota, TipoCit ='Cita Medica',Fecha= NEW.Fecha;
+END;
+-- Segundo Trigger
+create trigger TR_CIT_EST BEFORE insert on citaestetica
+	for each row
+BEGIN
+	insert into Tabla_Citas_Inicio set Id_Mascota=New.Id_Mascota, TipoCit ='Cita Estetica',Fecha= NEW.Fecha;
+END
+
+--Los SELECT
+select * from Tabla_Citas_Inicio;
+select * from vw_tabla_inicio
+
