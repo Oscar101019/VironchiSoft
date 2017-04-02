@@ -1,4 +1,5 @@
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -44,7 +45,7 @@ public class Validacion {
         }
     }
     //TextField IDCLIENTE
-   public void CampoVacioMascota (TextField IDCLIENTE, TextField Nombre, TextField Especie, TextField Raza,ComboBox Sexo, TextField Descripcion){
+   public void CampoVacioMascota (TextField IDCLIENTE, TextField Nombre, ChoiceBox Especie, ComboBox Raza, ComboBox Sexo, TextField Descripcion){
         if(IDCLIENTE.getText().toString() == "-") {
             Toolkit.getDefaultToolkit().beep();
 
@@ -65,7 +66,7 @@ public class Validacion {
                 alert2.setContentText("Falta Telefono");
 
                 alert2.showAndWait();
-                if (Especie.getText().length() == 0) {
+                if (Especie.getValue().toString().length() == 0) {
                     Toolkit.getDefaultToolkit().beep();
 
                     Alert alert3 = new Alert(Alert.AlertType.WARNING);
@@ -74,7 +75,7 @@ public class Validacion {
                     alert3.setContentText("Falta Telefono");
 
                     alert3.showAndWait();
-                    if (Raza.getText().length() == 0) {
+                    if (Raza.getValue().toString().length() == 0) {
                         Toolkit.getDefaultToolkit().beep();
 
                         Alert alert4 = new Alert(Alert.AlertType.WARNING);

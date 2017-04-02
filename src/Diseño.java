@@ -588,7 +588,7 @@ public class Diseño {
         gridpane.add(AtrasBtn,5,35);
         CitaMBtn.setOnAction( e -> window.setScene(sceneCitaM));
         CitaEBtn.setOnAction( e -> window.setScene(sceneCitaE));
-        GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(IDCLIENTETxt,NombreTxt,EspecieTxt,RazaTxt,ComboHM,EdadTxt));
+        GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(IDCLIENTETxt,NombreTxt,ComboEspecie,ComboRaza,ComboHM,EdadTxt));
         AtrasBtn.setOnAction( e -> window.setScene(sceneBuscar));
         root.getChildren().addAll(gridpane);
         return root;
