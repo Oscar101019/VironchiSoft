@@ -46,31 +46,18 @@ create table CitaMed(
 	Fecha date,
 	Temperatura varchar(5),
 	Peso varchar(5),
-	Apariencia_G varchar(1),
-        DesAG varchar(150),
-	Piel varchar(1),
-        DesPiel varchar(150),
-	MusculoEsqueleto varchar(1),
-        DesME varchar(150),
-	Circulatorio varchar(1),
-        DesCircu varchar(150),
-	Respiratorio varchar(1),
-        DesRes varchar(150),
-	Digestivo varchar(1),
-        DesDige varchar(150),
-	GenitoUrinario varchar(1),
-        DesGU varchar(150),
-	Ojos varchar(1),
-        DesOjos varchar(150),
-	Oidos varchar(1),
-        DesOidos varchar(150),
-	SistemaNervioso varchar(1),
-        DesSN varchar(150),
-	Ganglios varchar(1),
-        DesGanglios varchar(150),
-	Mucosa varchar(1),
-        DesMucosa varchar(150),
-      PlanesDiagnostico varchar(100),
+	Apariencia_G char(1),
+	Piel char(1),
+	MusculoEsqueleto char(1),
+	Circulatorio char(1),
+	Respiratorio char(1),
+	Digestivo char(1),
+	GenitoUrinario char(1),
+	Ojos char(1),
+	Oidos char(1),
+	SistemaNervioso char(1),
+	Ganglios char(1),
+	Mucosa char(1),
 	ProblemasTemporal varchar(100),
 	PlanesTerapeuticos varchar(100),
 	InstruccionesCli varchar(100),
@@ -99,6 +86,37 @@ create table Tabla_Citas_Inicio(
   TipoCit varchar(20),
   Fecha date
 );
+
+/*Creacion de tablas de relacion con cita medica*/
+
+create table Detalle_Citas (
+  Id_CitaMed int ,
+  Observacion varchar(250),
+  Tipo char(3) ,
+  constraint FK_DETCIT_CITMED FOREIGN KEY (id_CitaMed) REFERENCES CitaMed (id_CitaMed),
+  constraint FK_DETCIT_TIP FOREIGN KEY (Tipo) REFERENCES Tipos(id_Tipo)
+);
+
+
+create table Tipos(
+  id_Tipo char(3) primary key ,
+  Nombre varchar(20)
+);
+
+--Insertamos todos los tpo validos de observaciones
+
+insert into Tipos VALUES ('APG','Apariencia General'),
+('PIL','Piel'),
+('MES','	MusculoEsqueleto'),
+('CIR'	,'Circulatorio'),
+('RES','Respiratorio'),
+('DIJ','Dijestivo'),
+('OJO','Ojos'),
+('OID','Oidos'),
+('SNE','Sistema Nervioso'),
+('GAN','Ganglios'),
+('MUC','Mucosa');
+
 
 /*Creación de tablas para inventario*/
 
