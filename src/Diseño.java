@@ -1,18 +1,23 @@
 
 import com.sun.javafx.scene.SceneHelper;
+import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -25,9 +30,9 @@ import java.sql.SQLException;
 public class Diseño {
     Funciones funcion =new Funciones();
     Validacion validar = new Validacion();
-    public BorderPane root,root1,rootCM,rootCE,rootC,rootM,rootABAJOCM,rootLogin,rootBuscar,rootBuscarCliente,rootInventario,rootProveedores;
+    public BorderPane root,root1,rootCM,rootCE,rootC,rootM,rootABAJOCM,rootLogin,rootBuscar,rootBuscarCliente,rootInventario,rootProveedores,rootModificarInv,rootAgregarInv;
     public Stage window;
-    public Scene scene,sceneAgregar, sceneCitaM, sceneCitaE,sceneACliente,sceneAMascota,sceneLogin,sceneBuscar,sceneBuscarCliente,sceneInvetario,sceneProveedores;                    //M=Medica       E=Estetica
+    public Scene scene,sceneAgregar, sceneCitaM, sceneCitaE,sceneACliente,sceneAMascota,sceneLogin,sceneBuscar,sceneBuscarCliente,sceneInvetario,sceneProveedores,sceneModificarInv,sceneAgregarInv;                    //M=Medica       E=Estetica
     Button GuardarBtn;
     TextArea textAreaProb;
     TextArea textAreaPlanesD;
@@ -50,6 +55,8 @@ public class Diseño {
         rootBuscarCliente = new BorderPane();
         rootInventario = new BorderPane();
         rootProveedores = new BorderPane();
+        rootModificarInv = new BorderPane();
+        rootAgregarInv= new BorderPane();
         rootLogin.setCenter(CentroLogin());
 
         root.setCenter(CentroPrincipal());
@@ -77,8 +84,14 @@ public class Diseño {
         rootCE.setTop(BotonesArribaPrincipal());
 
         rootInventario.setTop(BotonesArribaPrincipal());
+        rootInventario.setCenter(CentroInventario());
+        rootAgregarInv.setTop(BotonesArribaPrincipal());
+        rootAgregarInv.setCenter(CentroAgregarInv());
+        rootModificarInv.setTop(BotonesArribaPrincipal());
+        rootModificarInv.setCenter(CentroModificarInv());
 
         rootProveedores.setTop(BotonesArribaPrincipal());
+
 
         sceneLogin = new Scene(rootLogin,500,700);
         scene = new Scene(root,1150, 700 );
@@ -91,6 +104,8 @@ public class Diseño {
         sceneAMascota = new Scene (rootM,1150,700);
         sceneInvetario = new Scene(rootInventario,1150,700);
         sceneProveedores = new Scene (rootProveedores,1150,700);
+        sceneAgregarInv= new Scene (rootAgregarInv,1150,700);
+        sceneModificarInv = new Scene (rootModificarInv,1150,700);
 
         sceneLogin.getStylesheets().add("Estilo.css");
         scene.getStylesheets().add("Estilo.css");
@@ -103,6 +118,8 @@ public class Diseño {
         sceneAMascota.getStylesheets().add("Estilo.css");
         sceneInvetario.getStylesheets().add("Estilo.css");
         sceneProveedores.getStylesheets().add("Estilo.css");
+        sceneModificarInv.getStylesheets().add("Estilo.css");
+        sceneAgregarInv.getStylesheets().add("Estilo.css");
 
 
         stage.setTitle("VironchiSoft");
@@ -250,13 +267,20 @@ public class Diseño {
         gridpane.setPadding(new Insets(1,8,7,4));
         gridpane.setHgap(0);
         gridpane.setVgap(0);
-        //javafx.scene.image.Image image = new javafx.scene.image.Image(getClass().getResourceAsStream("logoVironchi2.png"));
 
-        Label lblPrueba = new Label("");
+
         Label lbl = new Label("Bienvenido a VironchiSoft");
-        //  lblPrueba.setGraphic(new ImageView(image));
+        DropShadow sombra= new DropShadow();
+        sombra.setOffsetX(6.0f);
+        sombra.setOffsetY(5.0f);
+        sombra.setColor(Color.rgb(10,10,10,1));
+        lbl.setEffect(sombra);
 
-        gridpane.add(lblPrueba, 10,20);
+
+
+
+
+
         root.getChildren().addAll(lbl,gridpane);
 
         TableColumn columnaCliente = new TableColumn("Cliente");
@@ -322,8 +346,171 @@ public class Diseño {
 
     }
 
+    public VBox CentroInventario() {
+
+        VBox root = new VBox(50);
+        root.setPadding(new Insets(0,0,0,50));
+        root.setAlignment(Pos.CENTER_LEFT);
+
+        HBox root2 = new HBox(10);
+        root2.setPadding(new Insets(0,0,0,30));
+        root2.setAlignment(Pos.CENTER);
+
+        GridPane gridpane = new GridPane();
+        gridpane.setPadding(new Insets(0,0,0,0));
+        gridpane.setHgap(5);
+        gridpane.setVgap(10);
+        gridpane.setAlignment(Pos.CENTER);
+
+        ComboBox ComboInv =new ComboBox();
+        ComboInv.getItems().addAll("Inventario1", "Inventario2","Invetario3");
+
+        Button CerrarBtn = new Button("Cerrar");
+        Button AgregarBtn = new Button("Agregar");
+        Button ModicarBtn = new Button("Modificar");
+        Rectangle tabla = new Rectangle(900,400);
+
+        gridpane.add(tabla ,0,0);
+
+        CerrarBtn.setOnAction( e-> window.close());
+        ModicarBtn.setOnAction( e-> window.setScene(sceneModificarInv));
+        AgregarBtn.setOnAction( e-> window.setScene(sceneAgregarInv));
+        root2.getChildren().addAll(AgregarBtn,ModicarBtn,CerrarBtn);
+        root.getChildren().addAll(ComboInv,gridpane,root2);
+
+        return root;
+
+    }
+
+    public VBox CentroModificarInv() {
+
+        VBox root = new VBox(70);
+        root.setPadding(new Insets(0,0,0,50));
+        root.setAlignment(Pos.CENTER);
+
+        HBox root2 = new HBox(10);
+        root2.setPadding(new Insets(0,0,0,30));
+        root2.setAlignment(Pos.CENTER);
+
+        GridPane gridpane = new GridPane();
+        gridpane.setPadding(new Insets(0,0,0,0));
+        gridpane.setHgap(10);
+        gridpane.setVgap(15);
+        gridpane.setAlignment(Pos.CENTER);
+
+        ComboBox Comboproducto =new ComboBox();
+        Comboproducto.getItems().addAll("Producto1", "Producto2","Producto3");
+
+        Button CerrarBtn = new Button("Cerrar");
+        Button RegresarBtn = new Button("Regresar");
+        Button GuardarBtn = new Button("Guardar");
+        Button EliminarBtn = new Button("Eliminar");
 
 
+        Label lblProducto = new Label("Prudcto:");
+        Label lblPrecioCosto = new Label("Precio/Costo:");
+        Label lblPrecioVenta= new Label ("Precio Venta:");
+        Label lblCantidadAc= new Label ("Cantidad Actual");
+        Label lblAgregar= new Label ("Agregar");
+        Label lblMinimo= new Label ("Minimo");
+
+        TextField PrecioCostoTxt = new TextField();
+        TextField PrecioVentaTxt = new TextField();
+        TextField CantidadActualTxt = new TextField();
+        TextField AgregarTxt = new TextField();
+        TextField MinitmoTxt = new TextField();
+
+
+
+
+        gridpane.add(lblPrecioCosto,1,4);
+        gridpane.add(PrecioCostoTxt,2,4);
+
+        gridpane.add(lblPrecioVenta,5,4);
+        gridpane.add(PrecioVentaTxt,6,4);
+
+
+        gridpane.add(lblCantidadAc,1,10);
+        gridpane.add(CantidadActualTxt,2,10);
+            gridpane.add(lblAgregar,3,10);
+        gridpane.add(AgregarTxt,4,10);
+
+        gridpane.add(lblMinimo,5,10);
+        gridpane.add(MinitmoTxt,6,10);
+
+        CerrarBtn.setOnAction( e-> window.close());
+        RegresarBtn.setOnAction( e-> window.setScene(sceneInvetario));
+        root2.getChildren().addAll(GuardarBtn,EliminarBtn,RegresarBtn,CerrarBtn);
+        root.getChildren().addAll(lblProducto,Comboproducto,gridpane,root2);
+
+        return root;
+
+    }
+    public VBox CentroAgregarInv() {
+
+        VBox root = new VBox(70);
+        root.setPadding(new Insets(0,0,0,50));
+        root.setAlignment(Pos.CENTER);
+
+        HBox root2 = new HBox(10);
+        root2.setPadding(new Insets(0,0,0,30));
+        root2.setAlignment(Pos.CENTER);
+
+        GridPane gridpane = new GridPane();
+        gridpane.setPadding(new Insets(0,0,0,0));
+        gridpane.setHgap(10);
+        gridpane.setVgap(15);
+        gridpane.setAlignment(Pos.CENTER);
+
+        ComboBox Comboproducto =new ComboBox();
+        Comboproducto.getItems().addAll("Producto1", "Producto2","Producto3");
+
+        Button CerrarBtn = new Button("Cerrar");
+        Button RegresarBtn = new Button("Regresar");
+        Button GuardarBtn = new Button("Guardar");
+        Button EliminarBtn = new Button("Eliminar");
+
+
+        Label lblProducto = new Label("Prudcto:");
+        Label lblPrecioCosto = new Label("Precio/Costo:");
+        Label lblPrecioVenta= new Label ("Precio Venta:");
+        Label lblCantidadAc= new Label ("Cantidad Actual");
+        Label lblAgregar= new Label ("Agregar");
+        Label lblMinimo= new Label ("Minimo");
+        TextField ProductoTxt = new TextField();
+        TextField PrecioCostoTxt = new TextField();
+        TextField PrecioVentaTxt = new TextField();
+        TextField CantidadActualTxt = new TextField();
+        TextField AgregarTxt = new TextField();
+        TextField MinitmoTxt = new TextField();
+
+
+
+        gridpane.add(lblProducto,1,1);
+        gridpane.add(ProductoTxt,2,1);
+        gridpane.add(lblPrecioCosto,1,4);
+        gridpane.add(PrecioCostoTxt,2,4);
+
+        gridpane.add(lblPrecioVenta,5,4);
+        gridpane.add(PrecioVentaTxt,6,4);
+
+
+        gridpane.add(lblCantidadAc,1,10);
+        gridpane.add(CantidadActualTxt,2,10);
+        gridpane.add(lblAgregar,3,10);
+        gridpane.add(AgregarTxt,4,10);
+
+        gridpane.add(lblMinimo,5,10);
+        gridpane.add(MinitmoTxt,6,10);
+
+        CerrarBtn.setOnAction( e-> window.close());
+        RegresarBtn.setOnAction( e-> window.setScene(sceneInvetario));
+        root2.getChildren().addAll(GuardarBtn,EliminarBtn,RegresarBtn,CerrarBtn);
+        root.getChildren().addAll(gridpane,root2);
+
+        return root;
+
+    }
     public VBox CentroBuscar() {
 
         VBox root = new VBox(10);
@@ -401,6 +588,12 @@ public class Diseño {
         root2.setPadding(new Insets(0,0,0,30));
         root2.setAlignment(Pos.CENTER);
 
+        DropShadow sombra= new DropShadow();
+        sombra.setOffsetX(6.0f);
+        sombra.setOffsetY(5.0f);
+        sombra.setColor(Color.rgb(10,10,10,1));
+
+
         GridPane gridpane = new GridPane();
         gridpane.setPadding(new Insets(0,60,80,0));
         gridpane.setHgap(5);
@@ -410,6 +603,7 @@ public class Diseño {
         Label lblUsuario = new Label("Usuario");
         Label lblContraseña = new Label("Contraseña");
         TextField UsuarioTxt = new TextField ("");
+
         TextField ContraseñaTxt  = new TextField ("");
         Button AccederBtn = new Button("Acceder");
         Button CerrarBtn = new Button("Cerrar");
@@ -420,7 +614,8 @@ public class Diseño {
 
         Label lblBienvenida = new Label("Bienvenido a VironchiSoft");
 
-
+   lblPrueba.setEffect(sombra);
+       lblBienvenida.setEffect(sombra);
 
         // gridpane.add(lblBienvenida,1,0);
         gridpane.add(lblUsuario,15,15);
@@ -475,12 +670,22 @@ public class Diseño {
         root.setPadding(new Insets(5,0,0,0));
         root.setAlignment(Pos.TOP_CENTER);
 
+        DropShadow sombra= new DropShadow();
+        sombra.setOffsetX(2.5f);
+        sombra.setOffsetY(2.5f);
+        sombra.setColor(Color.rgb(10,10,30,0.2));
+
+
         Button CitaBtn = new Button("MOSTRAR CITA");
         Button ACitaBtn = new Button("AGENDAR CITA");
         Button InvBtn = new Button("INVENTARIO");
         Button ProvBtn = new Button("PROVEEDORES");
         Button MasBtn = new Button( "+");
-
+       CitaBtn.setEffect(sombra);
+        InvBtn.setEffect(sombra);
+        ProvBtn.setEffect(sombra);
+        MasBtn.setEffect(sombra);
+        ACitaBtn.setEffect(sombra);
 
         root.getChildren().addAll(CitaBtn, ACitaBtn, InvBtn, ProvBtn,MasBtn);
         ACitaBtn.setOnAction( e -> window.setScene (sceneBuscar));
@@ -554,6 +759,7 @@ public class Diseño {
                         "Gatos"
                 );
         ChoiceBox ComboEspecie =new ChoiceBox();
+
         ComboBox ComboRaza = new ComboBox();
         ComboEspecie.getItems().addAll(especie);
 

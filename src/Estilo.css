@@ -6,20 +6,20 @@
  -fx-font-size: 11pt;
  -fx-font-family: "Segoe UI Semibold";
  -fx-text-fill: white;
- -fx-opacity: 0.6;
+ -fx-opacity: 0.8;
 }
 
 .label-bright {
  -fx-font-size: 11pt;
  -fx-font-family: "Segoe UI Semibold";
- -fx-text-fill: white;
+ -fx-text-fill: black;
  -fx-opacity: 1;
 }
 
 .label-header {
  -fx-font-size: 32pt;
  -fx-font-family: "Segoe UI Light";
- -fx-text-fill: white;
+ -fx-text-fill: black;
  -fx-opacity: 1;
 }
 
@@ -63,6 +63,7 @@
 .split-pane:horizontal > .split-pane-divider {
  -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
  -fx-background-color: transparent, derive(#1d1d1d,20%);
+-fx-text-fill: white;
 }
 
 .split-pane {
@@ -100,6 +101,13 @@
  -fx-font-family: "Segoe UI Semibold";
  -fx-background-color: derive(#92a8d1,50%);
 }
+.choice-box{
+ -fx-font-size: 12pt;
+
+ -fx-font-family: "Segoe UI Semibold";
+ -fx-background-color: derive(#92a8d1,50%);
+}
+
 
 /*
  * Metro style Push Button
