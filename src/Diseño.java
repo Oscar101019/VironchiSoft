@@ -28,11 +28,13 @@ import java.sql.SQLException;
  * Created by juven on 29/3/2017.
  */
 public class Diseño {
-    Funciones funcion =new Funciones();
-    Validacion validar = new Validacion();
     public BorderPane root,root1,rootCM,rootCE,rootC,rootM,rootABAJOCM,rootLogin,rootBuscar,rootBuscarCliente,rootInventario,rootProveedores,rootModificarInv,rootAgregarInv;
     public Stage window;
     public Scene scene,sceneAgregar, sceneCitaM, sceneCitaE,sceneACliente,sceneAMascota,sceneLogin,sceneBuscar,sceneBuscarCliente,sceneInvetario,sceneProveedores,sceneModificarInv,sceneAgregarInv;                    //M=Medica       E=Estetica
+
+    Funciones funcion =new Funciones();
+    Validacion validar = new Validacion();
+
     Button GuardarBtn;
     TextArea textAreaProb;
     TextArea textAreaPlanesD;
@@ -41,13 +43,12 @@ public class Diseño {
 
     public  void initUI(Stage stage) {
 
-
-        window =stage;
+        window = stage;
         root = new BorderPane();
-        root1= new BorderPane();
-        rootCM =new BorderPane();
-        rootCE =new BorderPane();
-        rootC= new BorderPane();
+        root1 = new BorderPane();
+        rootCM = new BorderPane();
+        rootCE = new BorderPane();
+        rootC = new BorderPane();
         rootM = new BorderPane();
         rootABAJOCM = new BorderPane();
         rootLogin = new BorderPane();
@@ -56,13 +57,13 @@ public class Diseño {
         rootInventario = new BorderPane();
         rootProveedores = new BorderPane();
         rootModificarInv = new BorderPane();
-        rootAgregarInv= new BorderPane();
-        rootLogin.setCenter(CentroLogin());
+        rootAgregarInv = new BorderPane();
 
-        root.setCenter(CentroPrincipal());
-        root.setTop(BotonesArribaPrincipal());
+       rootLogin.setCenter(CentroLogin());
+       root.setCenter(CentroPrincipal());
+       root.setTop(BotonesArribaPrincipal());
 
-        rootBuscar.setTop(BotonesArribaPrincipal());
+       rootBuscar.setTop(BotonesArribaPrincipal());
         rootBuscar.setCenter(CentroBuscar());
 
         root1.setTop(BotonesArribaPrincipal());
@@ -93,19 +94,19 @@ public class Diseño {
         rootProveedores.setTop(BotonesArribaPrincipal());
 
 
-        sceneLogin = new Scene(rootLogin,500,700);
-        scene = new Scene(root,1150, 700 );
-        sceneBuscar =new Scene(rootBuscar,1150,700);
-        sceneBuscarCliente =new Scene(rootBuscarCliente,100,100);
-        sceneAgregar = new Scene (root1,1150, 700);
-        sceneCitaM =new Scene (rootCM,1150,700 );
-        sceneCitaE =new Scene (rootCE,1150,700 );
-        sceneACliente =new Scene (rootC,1150,700 );
-        sceneAMascota = new Scene (rootM,1150,700);
-        sceneInvetario = new Scene(rootInventario,1150,700);
-        sceneProveedores = new Scene (rootProveedores,1150,700);
-        sceneAgregarInv= new Scene (rootAgregarInv,1150,700);
-        sceneModificarInv = new Scene (rootModificarInv,1150,700);
+        sceneLogin = new Scene(rootLogin, 500, 700);
+        scene = new Scene(root, 1150, 700);
+        sceneBuscar = new Scene(rootBuscar, 1150, 700);
+        sceneBuscarCliente = new Scene(rootBuscarCliente, 100, 100);
+        sceneAgregar = new Scene(root1, 1150, 700);
+        sceneCitaM = new Scene(rootCM, 1150, 700);
+        sceneCitaE = new Scene(rootCE, 1150, 700);
+        sceneACliente = new Scene(rootC, 1150, 700);
+        sceneAMascota = new Scene(rootM, 1150, 700);
+        sceneInvetario = new Scene(rootInventario, 1150, 700);
+        sceneProveedores = new Scene(rootProveedores, 1150, 700);
+        sceneAgregarInv = new Scene(rootAgregarInv, 1150, 700);
+        sceneModificarInv = new Scene(rootModificarInv, 1150, 700);
 
         sceneLogin.getStylesheets().add("Estilo.css");
         scene.getStylesheets().add("Estilo.css");
@@ -693,18 +694,21 @@ public class Diseño {
         InvBtn.setOnAction(e->window.setScene(sceneInvetario));
         ProvBtn.setOnAction(e->window.setScene(sceneProveedores));
 
+
         return root;
     }
 
-    public HBox DatosMascota() {
+    public VBox DatosMascota() {
 
-        HBox root = new HBox(1);
+        VBox root = new VBox(25);
+        HBox root2 = new HBox (5);
         GridPane gridpane = new GridPane();
         gridpane.setPadding(new Insets(1));
         gridpane.setHgap(10);
         gridpane.setVgap(5);
-        root.setPadding(new Insets(5,0,5,0));
+        root.setPadding(new Insets(0,0,40,250));
         root.setAlignment(Pos.TOP_CENTER);
+
 
         Button GuardarMascotaBtn= new Button( "Guardar Mascota");
         Button CitaMBtn =new Button( "Cita Medica");
@@ -788,15 +792,13 @@ public class Diseño {
         gridpane.add(lblEdad,0,34);
         gridpane.add(EdadTxt,1,34);
 
-        gridpane.add(GuardarMascotaBtn,1,40);
-        gridpane.add(CitaMBtn,5,31);
-        gridpane.add(CitaEBtn,5,33);
-        gridpane.add(AtrasBtn,5,35);
+
         CitaMBtn.setOnAction( e -> window.setScene(sceneCitaM));
         CitaEBtn.setOnAction( e -> window.setScene(sceneCitaE));
         GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(IDCLIENTETxt,NombreTxt,ComboEspecie,ComboRaza,ComboHM,EdadTxt));
         AtrasBtn.setOnAction( e -> window.setScene(sceneBuscar));
-        root.getChildren().addAll(gridpane);
+        root2.getChildren().addAll(GuardarMascotaBtn,CitaMBtn,CitaEBtn,AtrasBtn);
+        root.getChildren().addAll(gridpane,root2);
         return root;
     }
     public void cambiarDatoCombo(ChoiceBox ComboEspecie, ComboBox ComboRaza) {
@@ -881,6 +883,7 @@ public class Diseño {
         gridpane.add(GuardarCitaBtn,1,40);
 
         gridpane.add(AtrasBtn,2,40);
+
        GuardarCitaBtn.setOnAction(e -> validar.CampoVacioCitaEstetica(FechaTxt,ComboTam,DesTxt,PrecioTxt));
 
 
@@ -1162,6 +1165,18 @@ public class Diseño {
         GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(FechaTxt,TemperaturaTxt,PesoTxt,Nor1Rbtn,Anor1Rbtn,textArea1,Nor2Rbtn,Anor2Rbtn,textArea2,Nor3Rbtn,Anor3Rbtn,textArea3,Nor4Rbtn,Anor4Rbtn,textArea4,Nor5Rbtn,Anor5Rbtn,textArea5,Nor6Rbtn,Anor6Rbtn,textArea6,Nor7Rbtn,Anor7Rbtn,textArea7,Nor8Rbtn,Anor8Rbtn,textArea8,Nor9Rbtn,Anor9Rbtn,textArea9,Nor10Rbtn,Anor10Rbtn,textArea10,Nor11Rbtn,Anor11Rbtn,textArea11,Nor12Rbtn,Anor12Rbtn,textArea12,textAreaPlanesD,textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));
       /*  GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(textArea1,textArea2,textArea3,textArea4,textArea5,textArea7,textArea8,textArea9,textArea10,textArea11,textArea12,
                 textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));*/
+
+
+        TextField PrecioTxt = new TextField();
+        TextField DescripcionTxt = new TextField();
+        GuardarBtn.setOnAction(e->validar.popUp2(PrecioTxt,DescripcionTxt));
+
+
+
+
+
+
+
         return  root;
     }
 }
