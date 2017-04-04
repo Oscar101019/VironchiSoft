@@ -1,16 +1,20 @@
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 
 import java.awt.*;
+import java.awt.Button;
+import java.util.Optional;
 
 /**
  * Created by juven on 29/3/2017.
  */
 public class Validacion {
-  public void CampoVacioCliente (TextField Nombre, TextField Telefono, TextField Direccion, ComboBox Sexo){
-        if(Nombre.getText().length()==0) {
+    public void CampoVacioCliente(TextField Nombre, TextField Telefono, TextField Direccion, ComboBox Sexo) {
+        if (Nombre.getText().length() == 0) {
             Toolkit.getDefaultToolkit().beep();
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -21,7 +25,7 @@ public class Validacion {
             alert.showAndWait();
 
 
-            if ( Direccion.getText().length() == 0) {
+            if (Direccion.getText().length() == 0) {
                 Toolkit.getDefaultToolkit().beep();
 
                 Alert alert2 = new Alert(Alert.AlertType.WARNING);
@@ -44,9 +48,10 @@ public class Validacion {
             }
         }
     }
+
     //TextField IDCLIENTE
-   public void CampoVacioMascota (TextField IDCLIENTE, TextField Nombre, ChoiceBox Especie, ComboBox Raza, ComboBox Sexo, TextField Descripcion){
-        if(IDCLIENTE.getText().toString() == "-") {
+    public void CampoVacioMascota(TextField IDCLIENTE, TextField Nombre, ChoiceBox Especie, ComboBox Raza, ComboBox Sexo, TextField Descripcion) {
+        if (IDCLIENTE.getText().toString() == "-") {
             Toolkit.getDefaultToolkit().beep();
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -109,8 +114,8 @@ public class Validacion {
         }
     }
 
-    public void CampoVacioCitaEstetica (TextField Fecha, ComboBox Tamaño, TextField Descripcion,TextField Precio){
-        if(Fecha.getText().length()== 0) {
+    public void CampoVacioCitaEstetica(TextField Fecha, ComboBox Tamaño, TextField Descripcion, TextField Precio) {
+        if (Fecha.getText().length() == 0) {
             Toolkit.getDefaultToolkit().beep();
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -150,11 +155,61 @@ public class Validacion {
                         alert4.showAndWait();
 
 
-
                     }
                 }
             }
         }
     }
 
+
+    public void popUp2(TextField username,TextField password){
+
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Confirmacion");
+
+
+
+
+
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(15);
+
+        Button AceptarBtn = new Button("Guardar");
+        Button CancelarBtn = new Button("Cancelar");
+        ButtonType loginButtonType = new ButtonType("Aceptar");
+        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+
+Label lblPrecio =new Label("Precio");
+lblPrecio.setStyle("-fx-text-fill: white");
+        Label lblDes =new Label("Descripcion");
+        Label lblCon =new Label("Confirmacion");
+        lblCon.setStyle("-fx-font-size: 40");
+        lblCon.setStyle("-fx-text-fill: white");
+        lblDes.setStyle("-fx-text-fill: white");
+        username.setPromptText("$");
+        password.setPromptText("...");
+grid.add(lblCon,0,0);
+        grid.add(lblPrecio, 0, 1);
+
+        grid.add(username, 1, 1);
+        grid.add(lblDes, 0, 2);
+        grid.add(password, 1, 2);
+
+// Enable/Disable login button depending on whether a username was entered.
+
+// Do some validation (using the Java 8 lambda syntax).
+
+
+        dialog.getDialogPane().setContent(grid);
+    dialog.getDialogPane().setStyle("-fx-background-color: #034f84;");
+
+
+
+
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+
+    }
 }
