@@ -269,7 +269,7 @@ public class Diseño {
     */
 
     TableView<TablaInventarios> tablaInventarios = new TableView<TablaInventarios>();
-    ObservableList<TablaInventarios> datosInventarios =  FXCollections.observableArrayList();
+    ObservableList<TablaInventarios> datosInventarios;
 
     public VBox CentroPrincipal() {
         VBox root = new VBox(10);
@@ -337,12 +337,12 @@ public class Diseño {
     }
 
     DbConnection dc = new DbConnection();
-    ObservableList<TablaMostrarCitas> datos = FXCollections.observableArrayList();
+    ObservableList<TablaMostrarCitas> datos;
 
     public ObservableList eventoMostrardatosEnTabla( ObservableList data){
         try {
             Connection conn = dc.Connect();
-            //data = FXCollections.observableArrayList();
+             data = FXCollections.observableArrayList();
             // Execute query and store result in a resultset
             ResultSet rs = conn.createStatement().executeQuery("select * from vw_tabla_inicio");
             while (rs.next()) {
@@ -360,7 +360,7 @@ public class Diseño {
     public ObservableList eventoMostrardatosEnTablaInventarios(ObservableList data){
         try {
             Connection conn = dc.Connect();
-            //data = FXCollections.observableArrayList();
+           data = FXCollections.observableArrayList();
             // Execute query and store result in a resultset
             ResultSet rs = conn.createStatement().executeQuery("select * from vw_buscar_prod");
             while (rs.next()) {
