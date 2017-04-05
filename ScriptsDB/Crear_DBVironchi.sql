@@ -89,6 +89,11 @@ create table Tabla_Citas_Inicio(
 
 /*Creacion de tablas de relacion con cita medica*/
 
+create table Tipos(
+  id_Tipo char(3) primary key ,
+  Nombre varchar(20)
+);
+
 create table Detalle_Citas (
   Id_CitaMed int ,
   Observacion varchar(250),
@@ -98,14 +103,10 @@ create table Detalle_Citas (
 );
 
 
-create table Tipos(
-  id_Tipo char(3) primary key ,
-  Nombre varchar(20)
-);
-
 --Insertamos todos los tpo validos de observaciones
 
-insert into Tipos VALUES ('APG','Apariencia General'),
+insert into Tipos VALUES 
+('APG','Apariencia General'),
 ('PIL','Piel'),
 ('MES','	MusculoEsqueleto'),
 ('CIR'	,'Circulatorio'),
@@ -186,4 +187,21 @@ END
 --Los SELECT
 select * from Tabla_Citas_Inicio;
 select * from vw_tabla_inicio
+
+--Creamos la vista para los productos de un inventario x
+create view vw_buscar_prod
+as
+(
+select p.Nombre,p.CantidadPorUnidad,p.PrecioUnitario,p.UnidadesAlmacenadas,i.Nombre as Inventario,i.ID_Inventario from producto p inner join
+inventario i on (p.ID_Inventario=i.ID_Inventario)
+);
+
+--De la siguiente manera es como se hace la consulta para mostrar los datos del producto deseado 
+
+select Nombre,CantidadPorUnidad,PrecioUnitario,UnidadesAlmacenadas from vw_buscar_prod where Inventario='Medicamentos';
+
+select Nombre,CantidadPorUnidad,PrecioUnitario,UnidadesAlmacenadas from vw_buscar_prod where Inventario='Insumos';
+
+select Nombre,CantidadPorUnidad,PrecioUnitario,UnidadesAlmacenadas from vw_buscar_prod where Inventario='Productos Tienda';
+
 
