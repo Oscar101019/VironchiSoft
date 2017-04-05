@@ -259,6 +259,16 @@ public class Funciones {
     }
 
 
-
+public void GuardarDatosAdeudoM(TextField Descripcion, TextField Costo){
+    double precio = Double.parseDouble(Costo.getText());
+    String descripcion = Descripcion.getText();
+    try {
+        Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
+        Statement statement = connection.createStatement();
+        ResultSet insertar = statement.executeQuery("insert into adeudo(concepto,Descripcion,CostoTotal) values('M','"+descripcion+"',"+precio+")");
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
 
 }

@@ -3,12 +3,17 @@ import com.sun.javafx.scene.SceneHelper;
 import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
@@ -20,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -1161,15 +1167,23 @@ public class Diseño {
         java.sql.Date fechasql2 = new java.sql.Date(fechasistema);
         String fechasql  = fechasql2.toString();
         FechaTxt.setText(fechasql);
+        TextField PrecioTxt = new TextField();
+        TextField DescripcionTxt = new TextField();
 
-        GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(FechaTxt,TemperaturaTxt,PesoTxt,Nor1Rbtn,Anor1Rbtn,textArea1,Nor2Rbtn,Anor2Rbtn,textArea2,Nor3Rbtn,Anor3Rbtn,textArea3,Nor4Rbtn,Anor4Rbtn,textArea4,Nor5Rbtn,Anor5Rbtn,textArea5,Nor6Rbtn,Anor6Rbtn,textArea6,Nor7Rbtn,Anor7Rbtn,textArea7,Nor8Rbtn,Anor8Rbtn,textArea8,Nor9Rbtn,Anor9Rbtn,textArea9,Nor10Rbtn,Anor10Rbtn,textArea10,Nor11Rbtn,Anor11Rbtn,textArea11,Nor12Rbtn,Anor12Rbtn,textArea12,textAreaPlanesD,textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));
+
+        ;
+
+        /*GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));*/
+        GuardarBtn.addEventHandler(ActionEvent.ACTION ,(e) -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));
+        GuardarBtn.addEventHandler(ActionEvent.ACTION ,(e) -> validar.popUp2(PrecioTxt,DescripcionTxt));
+
+
       /*  GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(textArea1,textArea2,textArea3,textArea4,textArea5,textArea7,textArea8,textArea9,textArea10,textArea11,textArea12,
                 textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));*/
 
 
-        TextField PrecioTxt = new TextField();
-        TextField DescripcionTxt = new TextField();
-        GuardarBtn.setOnAction(e->validar.popUp2(PrecioTxt,DescripcionTxt));
+
+        /*GuardarBtn.setOnAction(e->validar.popUp2(PrecioTxt,DescripcionTxt));*/
 
 
 

@@ -4,9 +4,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
+import sun.security.krb5.internal.crypto.Des;
 
 import java.awt.*;
 import java.awt.Button;
+import java.sql.*;
+import java.util.DoubleSummaryStatistics;
 import java.util.Optional;
 
 /**
@@ -162,9 +165,9 @@ public class Validacion {
     }
 
 
-    public void popUp2(TextField username,TextField password){
+    public void popUp2(TextField Precio, TextField Descripcion){
 
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Confirmacion");
 
 
@@ -176,9 +179,10 @@ public class Validacion {
         grid.setHgap(10);
         grid.setVgap(15);
 
-        Button AceptarBtn = new Button("Guardar");
-        Button CancelarBtn = new Button("Cancelar");
+        javafx.scene.control.Button AceptarBtn = new javafx.scene.control.Button("Guardar");
+        javafx.scene.control.Button CancelarBtn = new javafx.scene.control.Button("Cancelar");
         ButtonType loginButtonType = new ButtonType("Aceptar");
+        loginButtonType = ButtonType.OK;
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
 Label lblPrecio =new Label("Precio");
@@ -188,14 +192,14 @@ lblPrecio.setStyle("-fx-text-fill: white");
         lblCon.setStyle("-fx-font-size: 40");
         lblCon.setStyle("-fx-text-fill: white");
         lblDes.setStyle("-fx-text-fill: white");
-        username.setPromptText("$");
-        password.setPromptText("...");
+        Precio.setPromptText("$");
+        Descripcion.setPromptText("...");
 grid.add(lblCon,0,0);
         grid.add(lblPrecio, 0, 1);
 
-        grid.add(username, 1, 1);
+        grid.add(Precio, 1, 1);
         grid.add(lblDes, 0, 2);
-        grid.add(password, 1, 2);
+        grid.add(Descripcion, 1, 2);
 
 // Enable/Disable login button depending on whether a username was entered.
 
@@ -208,7 +212,15 @@ grid.add(lblCon,0,0);
 
 
 
-        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+        Optional<ButtonType> result = dialog.showAndWait();
+
+Funciones f = new Funciones();
+if (result.get() == loginButtonType) {
+     f.GuardarDatosAdeudoM(Descripcion,Precio);
+
+        }
+
 
 
     }
