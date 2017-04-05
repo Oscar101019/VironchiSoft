@@ -262,9 +262,14 @@ public class Diseño {
     Button btn = new Button("Actualizar");
 
     TableView<TablaMostrarCitas> table = new TableView<TablaMostrarCitas>();
+    /*
     private final ObservableList<TablaMostrarCitas> datos = FXCollections.observableArrayList(
             new TablaMostrarCitas("Brian","Firulais","Cita Médica","2017-03-12")
     );
+    */
+
+    TableView<TablaInventarios> tablaInventarios = new TableView<TablaInventarios>();
+    ObservableList<TablaInventarios> datosInventarios =  FXCollections.observableArrayList();
 
     public VBox CentroPrincipal() {
         VBox root = new VBox(10);
@@ -282,11 +287,6 @@ public class Diseño {
         sombra.setOffsetY(5.0f);
         sombra.setColor(Color.rgb(10,10,10,1));
         lbl.setEffect(sombra);
-
-
-
-
-
 
         root.getChildren().addAll(lbl,gridpane);
 
@@ -308,7 +308,7 @@ public class Diseño {
         );
 
         //table.setItems(datos);
-        table.setItems(evento());
+        table.setItems(eventoMostrardatosEnTabla(datos));
         table.getColumns().addAll(
                 columnaCliente,
                 columnaMascota,
@@ -327,31 +327,56 @@ public class Diseño {
         return root;
 
     }
-
     public void actualizarDatos(){
-        table.setItems(evento());
+        table.setItems(eventoMostrardatosEnTabla( datos));
+    }
+
+    public void actualizarDatosInventario(){
+        tablaInventarios.setItems(eventoMostrardatosEnTablaInventarios( datos));
+        System.out.println("Hola desdew actualizar Datos Inventario");
     }
 
     DbConnection dc = new DbConnection();
-    ObservableList<TablaMostrarCitas> data;
+    ObservableList<TablaMostrarCitas> datos = FXCollections.observableArrayList();
 
-    public ObservableList evento(){
+    public ObservableList eventoMostrardatosEnTabla( ObservableList data){
         try {
             Connection conn = dc.Connect();
-            data = FXCollections.observableArrayList();
+            //data = FXCollections.observableArrayList();
             // Execute query and store result in a resultset
             ResultSet rs = conn.createStatement().executeQuery("select * from vw_tabla_inicio");
             while (rs.next()) {
                 //get string from db,whichever way
-                data.add(new TablaMostrarCitas(rs.getString(1),rs.getString(2), rs.getString(3), rs.getString(4) ));
+                 data.add(new TablaMostrarCitas(rs.getString(1),rs.getString(2), rs.getString(3), rs.getString(4) ));
+                 //datosInventarios.add(new TablaInventarios(rs.getString(1),"Hola,","Gola","Hola" ));
             }
 
         } catch (SQLException ex) {
             System.err.println("Error"+ex);
         }
         return data;
-
     }
+
+    public ObservableList eventoMostrardatosEnTablaInventarios(ObservableList data){
+        try {
+            Connection conn = dc.Connect();
+            //data = FXCollections.observableArrayList();
+            // Execute query and store result in a resultset
+            ResultSet rs = conn.createStatement().executeQuery("select * from vw_buscar_prod");
+            while (rs.next()) {
+                //get string from db,whichever way
+                //datos.add(new TablaMostrarCitas(rs.getString(1),rs.getString(2), rs.getString(3), rs.getString(4) ));
+                data.add(new TablaInventarios(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error"+ex);
+        }
+        return data;
+    }
+
+
+
 
     public VBox CentroInventario() {
 
@@ -375,20 +400,52 @@ public class Diseño {
         Button CerrarBtn = new Button("Cerrar");
         Button AgregarBtn = new Button("Agregar");
         Button ModicarBtn = new Button("Modificar");
-        Rectangle tabla = new Rectangle(900,400);
+        Button ActualizarBtn = new Button("Actualizar");
+        //Rectangle rectangle = new Rectangle(900,400);
 
-        gridpane.add(tabla ,0,0);
+        TableColumn columnaNombre = new TableColumn("Nombre");
+        columnaNombre.setCellValueFactory(
+                new PropertyValueFactory<TablaInventarios, String>("nombre")
+        );
+        TableColumn columnaCantidadUnidad = new TableColumn("Cantidad por unidad");
+        columnaCantidadUnidad.setCellValueFactory(
+                new PropertyValueFactory<TablaInventarios, String>("cantidad_unidad")
+        );
+        TableColumn columnaPrecioUnidad = new TableColumn("Precio por unidad");
+        columnaPrecioUnidad.setCellValueFactory(
+                new PropertyValueFactory<TablaInventarios, String>("precio_unidad")
+        );
+        TableColumn columnaUnidadMedicion = new TableColumn("Unidad de Medicion");
+        columnaUnidadMedicion.setCellValueFactory(
+                new PropertyValueFactory<TablaInventarios, String>("unidad_medicion")
+        );
+
+        //tablaInventarios.setItems(eventoMostrardatosEnTabla("select * from vw_buscar_prod",datosInventarios));
+        tablaInventarios.setItems(eventoMostrardatosEnTablaInventarios(datosInventarios));
+        tablaInventarios.getColumns().addAll(
+                columnaNombre,
+                columnaCantidadUnidad,
+                columnaPrecioUnidad,
+                columnaUnidadMedicion
+        );
+
+        ActualizarBtn.setOnAction(e->actualizarDatosInventario());
+
+
+
+        //gridpane.add(rectangle ,0,0);
+         //gridpane.add(tablaInventarios,0,0);
+
 
         CerrarBtn.setOnAction( e-> window.close());
         ModicarBtn.setOnAction( e-> window.setScene(sceneModificarInv));
         AgregarBtn.setOnAction( e-> window.setScene(sceneAgregarInv));
-        root2.getChildren().addAll(AgregarBtn,ModicarBtn,CerrarBtn);
+        root2.getChildren().addAll(AgregarBtn,ModicarBtn,CerrarBtn,tablaInventarios,ActualizarBtn);
         root.getChildren().addAll(ComboInv,gridpane,root2);
 
         return root;
 
     }
-
     public VBox CentroModificarInv() {
 
         VBox root = new VBox(70);
@@ -584,7 +641,6 @@ public class Diseño {
         return root;
 
     }
-
     public VBox CentroLogin() {
 
         VBox root = new VBox(5);
@@ -644,7 +700,6 @@ public class Diseño {
         return root;
 
     }
-
     public  HBox BtnAbajoAgendarCita() {
 
         HBox root = new HBox(10);
@@ -671,7 +726,6 @@ public class Diseño {
 
         return  root;
     }
-
     public HBox BotonesArribaPrincipal () {
         HBox root = new HBox(5);
         root.setPadding(new Insets(5,0,0,0));
@@ -703,7 +757,6 @@ public class Diseño {
 
         return root;
     }
-
     public VBox DatosMascota() {
 
         VBox root = new VBox(25);
@@ -833,9 +886,6 @@ public class Diseño {
         }//if
 
     }//CambiarDatoCombo
-
-
-
     public HBox CitaEstetica() {
 
         HBox root = new HBox(5);
@@ -898,7 +948,6 @@ public class Diseño {
         root.getChildren().addAll(gridpane);
         return root;
     }
-
     public  VBox CentroCM() {
 
 
