@@ -3,12 +3,17 @@ import com.sun.javafx.scene.SceneHelper;
 import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
@@ -20,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -259,9 +265,14 @@ public class Diseño {
     Button btn = new Button("Actualizar");
 
     TableView<TablaMostrarCitas> table = new TableView<TablaMostrarCitas>();
+    /*
     private final ObservableList<TablaMostrarCitas> datos = FXCollections.observableArrayList(
             new TablaMostrarCitas("Brian", "Firulais", "Cita Médica", "2017-03-12")
     );
+    */
+
+    TableView<TablaInventarios> tablaInventarios = new TableView<TablaInventarios>();
+    ObservableList<TablaInventarios> datosInventarios;
 
     public VBox CentroPrincipal() {
         VBox root = new VBox(10);
@@ -280,9 +291,9 @@ public class Diseño {
         sombra.setColor(Color.rgb(10, 10, 10, 1));
         lbl.setEffect(sombra);
 
-
-        root.getChildren().addAll(lbl, gridpane);
-
+ 
+        root.getChildren().addAll(lbl,gridpane);
+ 
         TableColumn columnaCliente = new TableColumn("Cliente");
         columnaCliente.setCellValueFactory(
                 new PropertyValueFactory<TablaMostrarCitas, String>("cliente")
@@ -301,7 +312,7 @@ public class Diseño {
         );
 
         //table.setItems(datos);
-        table.setItems(evento());
+        table.setItems(eventoMostrardatosEnTabla(datos));
         table.getColumns().addAll(
                 columnaCliente,
                 columnaMascota,
@@ -320,31 +331,59 @@ public class Diseño {
         return root;
 
     }
+ 
+    public void actualizarDatos(){
+        table.setItems(eventoMostrardatosEnTabla( datos));
+    }
 
-    public void actualizarDatos() {
-        table.setItems(evento());
+    public void actualizarDatosInventario(){
+        tablaInventarios.setItems(eventoMostrardatosEnTablaInventarios( datos)); 
     }
 
     DbConnection dc = new DbConnection();
-    ObservableList<TablaMostrarCitas> data;
+    ObservableList<TablaMostrarCitas> datos;
 
-    public ObservableList evento() {
+ 
+    public ObservableList eventoMostrardatosEnTabla( ObservableList data){
+ 
         try {
             Connection conn = dc.Connect();
-            data = FXCollections.observableArrayList();
+             data = FXCollections.observableArrayList();
             // Execute query and store result in a resultset
             ResultSet rs = conn.createStatement().executeQuery("select * from vw_tabla_inicio");
             while (rs.next()) {
                 //get string from db,whichever way
+ 
                 data.add(new TablaMostrarCitas(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+ 
             }
 
         } catch (SQLException ex) {
             System.err.println("Error" + ex);
         }
         return data;
-
     }
+
+    public ObservableList eventoMostrardatosEnTablaInventarios(ObservableList data){
+        try {
+            Connection conn = dc.Connect();
+           data = FXCollections.observableArrayList();
+            // Execute query and store result in a resultset
+            ResultSet rs = conn.createStatement().executeQuery("select * from vw_buscar_prod");
+            while (rs.next()) {
+                //get string from db,whichever way
+                //datos.add(new TablaMostrarCitas(rs.getString(1),rs.getString(2), rs.getString(3), rs.getString(4) ));
+                data.add(new TablaInventarios(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error"+ex);
+        }
+        return data;
+    }
+
+
+
 
     public VBox CentroInventario() {
 
@@ -368,20 +407,54 @@ public class Diseño {
         Button CerrarBtn = new Button("Cerrar");
         Button AgregarBtn = new Button("Agregar");
         Button ModicarBtn = new Button("Modificar");
-        Rectangle tabla = new Rectangle(900, 400);
+ 
+        Button ActualizarBtn = new Button("Actualizar");
+        //Rectangle rectangle = new Rectangle(900,400);
 
-        gridpane.add(tabla, 0, 0);
+        TableColumn columnaNombre = new TableColumn("Nombre");
+        columnaNombre.setCellValueFactory(
+                new PropertyValueFactory<TablaInventarios, String>("nombre")
+        );
+        TableColumn columnaCantidadUnidad = new TableColumn("Cantidad por unidad");
+        columnaCantidadUnidad.setCellValueFactory(
+                new PropertyValueFactory<TablaInventarios, String>("cantidad_unidad")
+        );
+        TableColumn columnaPrecioUnidad = new TableColumn("Precio por unidad");
+        columnaPrecioUnidad.setCellValueFactory(
+                new PropertyValueFactory<TablaInventarios, String>("precio_unidad")
+        );
+        TableColumn columnaUnidadMedicion = new TableColumn("Unidad de Medicion");
+        columnaUnidadMedicion.setCellValueFactory(
+                new PropertyValueFactory<TablaInventarios, String>("unidad_medicion")
+        );
 
-        CerrarBtn.setOnAction(e -> window.close());
-        ModicarBtn.setOnAction(e -> window.setScene(sceneModificarInv));
-        AgregarBtn.setOnAction(e -> window.setScene(sceneAgregarInv));
-        root2.getChildren().addAll(AgregarBtn, ModicarBtn, CerrarBtn);
-        root.getChildren().addAll(ComboInv, gridpane, root2);
+        //tablaInventarios.setItems(eventoMostrardatosEnTabla("select * from vw_buscar_prod",datosInventarios));
+        tablaInventarios.setItems(eventoMostrardatosEnTablaInventarios(datosInventarios));
+        tablaInventarios.getColumns().addAll(
+                columnaNombre,
+                columnaCantidadUnidad,
+                columnaPrecioUnidad,
+                columnaUnidadMedicion
+        );
+
+        ActualizarBtn.setOnAction(e->actualizarDatosInventario());
+
+
+
+        //gridpane.add(rectangle ,0,0);
+         //gridpane.add(tablaInventarios,0,0);
+
+
+        CerrarBtn.setOnAction( e-> window.close());
+        ModicarBtn.setOnAction( e-> window.setScene(sceneModificarInv));
+        AgregarBtn.setOnAction( e-> window.setScene(sceneAgregarInv));
+        root2.getChildren().addAll(AgregarBtn,ModicarBtn,CerrarBtn,tablaInventarios,ActualizarBtn);
+        root.getChildren().addAll(ComboInv,gridpane,root2);
+ 
 
         return root;
 
     }
-
     public VBox CentroModificarInv() {
 
         VBox root = new VBox(70);
@@ -572,7 +645,6 @@ public class Diseño {
         return root;
 
     }
-
     public VBox CentroLogin() {
 
         VBox root = new VBox(5);
@@ -632,8 +704,9 @@ public class Diseño {
         return root;
 
     }
-
-    public HBox BtnAbajoAgendarCita() {
+ 
+    public  HBox BtnAbajoAgendarCita() {
+ 
 
         HBox root = new HBox(10);
         root.setPadding(new Insets(250, 50, 20, 50));
@@ -658,8 +731,9 @@ public class Diseño {
 
         return root;
     }
-
-    public HBox BotonesArribaPrincipal() {
+ 
+    public HBox BotonesArribaPrincipal () {
+ 
         HBox root = new HBox(5);
         root.setPadding(new Insets(5, 0, 0, 0));
         root.setAlignment(Pos.TOP_CENTER);
@@ -698,7 +772,6 @@ public class Diseño {
 
         return root;
     }
-
     public VBox DatosMascota() {
 
         VBox root = new VBox(25);
@@ -836,11 +909,11 @@ public class Diseño {
                     );
             ComboRaza.setItems(gatuno);
 
-        }
+ 
+        }//if
 
-    }
-
-
+    }//CambiarDatoCombo
+ 
     public HBox CitaEstetica() {
 
         HBox root = new HBox(5);
@@ -898,8 +971,9 @@ public class Diseño {
         root.getChildren().addAll(gridpane);
         return root;
     }
-
-    public VBox CentroCM() {
+ 
+    public  VBox CentroCM() {
+ 
 
 
         VBox root = new VBox(2);
@@ -1159,16 +1233,29 @@ public class Diseño {
         java.sql.Date fechasql2 = new java.sql.Date(fechasistema);
         String fechasql = fechasql2.toString();
         FechaTxt.setText(fechasql);
+        TextField PrecioTxt = new TextField();
+        TextField DescripcionTxt = new TextField();
 
+
+        ;
+
+        /*GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));*/
+        GuardarBtn.addEventHandler(ActionEvent.ACTION ,(e) -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));
+        GuardarBtn.addEventHandler(ActionEvent.ACTION ,(e) -> validar.popUp2(PrecioTxt,DescripcionTxt));
+
+
+ 
         GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));
+ 
       /*  GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(textArea1,textArea2,textArea3,textArea4,textArea5,textArea7,textArea8,textArea9,textArea10,textArea11,textArea12,
                 textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));*/
 
 
+ 
         TextField PrecioTxt = new TextField();
         TextField DescripcionTxt = new TextField();
         GuardarBtn.setOnAction(e -> validar.popUp2(PrecioTxt, DescripcionTxt));
-
+ 
 
         return root;
 
