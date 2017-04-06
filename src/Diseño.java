@@ -471,6 +471,8 @@ public class Diseño {
         return root;
 
     }
+
+     
     public VBox CentroModificarInv() {
 
         String arreglo="";
@@ -488,6 +490,8 @@ public class Diseño {
         gridpane.setHgap(10);
         gridpane.setVgap(15);
         gridpane.setAlignment(Pos.CENTER);
+
+        ComboBox Comboproducto =new ComboBox();
 
  
         try {
@@ -542,10 +546,6 @@ public class Diseño {
 
         gridpane.add(lblMinimo, 5, 10);
         gridpane.add(MinitmoTxt, 6, 10);
-
- 
-        gridpane.add(lblMinimo,5,10);
-        gridpane.add(MinitmoTxt,6,10);
 
         CerrarBtn.setOnAction( e-> window.close());
         RegresarBtn.setOnAction( e-> window.setScene(sceneInvetario));
