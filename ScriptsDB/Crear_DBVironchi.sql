@@ -188,6 +188,8 @@ END
 select * from Tabla_Citas_Inicio;
 select * from vw_tabla_inicio
 
+SELECT * FROM Inventario;
+
 --Creamos la vista para los productos de un inventario x
 create view vw_buscar_prod
 as

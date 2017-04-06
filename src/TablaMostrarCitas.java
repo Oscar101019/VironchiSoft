@@ -72,5 +72,4 @@ public class TablaMostrarCitas {
     public void setFecha(String fecha) {
         this.fecha.set(fecha);
     }
-
 }
