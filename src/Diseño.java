@@ -366,11 +366,8 @@ public class Diseño {
         try {
             Connection conn = dc.Connect();
            data = FXCollections.observableArrayList();
-            // Execute query and store result in a resultset
             ResultSet rs = conn.createStatement().executeQuery("select * from vw_buscar_prod");
             while (rs.next()) {
-                //get string from db,whichever way
-                //datos.add(new TablaMostrarCitas(rs.getString(1),rs.getString(2), rs.getString(3), rs.getString(4) ));
                 data.add(new TablaInventarios(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
             }
 
@@ -380,6 +377,23 @@ public class Diseño {
         return data;
     }
 
+    ObservableList<TablaInventarios> datosInventarioEspecifico;
+
+    //Para retornar la lisa observable con los datos del inventario
+    public ObservableList eventoMoverDatosAListaObservable_InventarioEspecifico(ObservableList data, String inventario){
+        try {
+            Connection conn = dc.Connect();
+            data = FXCollections.observableArrayList();
+            ResultSet rs = conn.createStatement().executeQuery("select Nombre,CantidadPorUnidad,PrecioUnitario,UnidadesAlmacenadas from vw_buscar_prod where Inventario='"+inventario+"';");
+            while (rs.next()) {
+                data.add(new TablaInventarios(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+            }//While
+
+        } catch (SQLException ex) {
+            System.err.println("Error"+ex);
+        }//catch
+        return data;
+    }//eventoMostrarDatosInventarios
 
 
 
@@ -399,8 +413,12 @@ public class Diseño {
         gridpane.setVgap(10);
         gridpane.setAlignment(Pos.CENTER);
 
-        ComboBox ComboInv = new ComboBox();
-        ComboInv.getItems().addAll("Inventario1", "Inventario2", "Invetario3");
+        //ComboBox ComboInv = new ComboBox();
+        //ComboInv.getItems().addAll("Inventario1", "Inventario2", "Invetario3");
+        ChoiceBox ComboInv = new ChoiceBox();
+        ComboInv.getItems().addAll("Todo","Medicamentos","Insumos","Productos Tienda");
+
+        ComboInv.getSelectionModel().selectedItemProperty().addListener((v, OldValue, newValue) -> cambiarDeInventario(ComboInv));
 
         Button CerrarBtn = new Button("Cerrar");
         Button AgregarBtn = new Button("Agregar");
@@ -446,8 +464,8 @@ public class Diseño {
         CerrarBtn.setOnAction( e-> window.close());
         ModicarBtn.setOnAction( e-> window.setScene(sceneModificarInv));
         AgregarBtn.setOnAction( e-> window.setScene(sceneAgregarInv));
-        root2.getChildren().addAll(AgregarBtn,ModicarBtn,CerrarBtn,tablaInventarios,ActualizarBtn);
-        root.getChildren().addAll(ComboInv,gridpane,root2);
+        root2.getChildren().addAll(AgregarBtn,ModicarBtn,CerrarBtn, ActualizarBtn);
+        root.getChildren().addAll(ComboInv,tablaInventarios,gridpane,root2);
  
 
         return root;
@@ -901,6 +919,25 @@ public class Diseño {
             root2.getChildren().addAll(GuardarMascotaBtn, CitaMBtn, CitaEBtn, AtrasBtn);
             root.getChildren().addAll(lblTitulo,gridpane, root2);
             return root;
+    }
+
+    public void cambiarDeInventario(ChoiceBox ComboInventario ){
+
+        if (ComboInventario.getValue().toString() == "Todo"){
+            tablaInventarios.setItems(eventoMostrardatosEnTablaInventarios(datosInventarios));
+        }//if
+
+        if(ComboInventario.getValue().toString() == "Medicamentos"){
+            tablaInventarios.setItems(eventoMoverDatosAListaObservable_InventarioEspecifico(datosInventarioEspecifico,"Medicamentos"));
+        }//If
+
+        if(ComboInventario.getValue().toString() == "Insumos"){
+            tablaInventarios.setItems(eventoMoverDatosAListaObservable_InventarioEspecifico(datosInventarioEspecifico,"Insumos"));
+        }//If
+
+        if(ComboInventario.getValue().toString() == "Productos Tienda"){
+            tablaInventarios.setItems(eventoMoverDatosAListaObservable_InventarioEspecifico(datosInventarioEspecifico,"Productos Tienda"));
+        }//If
     }
 
     public void cambiarDatoCombo(ChoiceBox ComboEspecie, ComboBox ComboRaza) {
