@@ -271,4 +271,71 @@ public void GuardarDatosAdeudoM(TextField Descripcion, TextField Costo){
     }
 }
 
+
+public void GuardarProducto(TextField Producto,TextField Precio,TextField Cantidad, TextField Agregar){
+String producto = Producto.getText();
+String precio = Precio.getText();
+String cantidad = Cantidad.getText();
+String agregar = Agregar.getText();
+
+    try {
+        Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
+        Statement statement = connection.createStatement();
+        ResultSet insertar = statement.executeQuery("insert into producto(ID_Inventario,ID_Proveedor,ID_UnidadMedida,Nombre,PrecioUnitario,CantidadPorUnidad,UnidadesAlmacenadas) values(1,1,1,'"+producto+"','"+precio+"','"+cantidad+"','"+agregar+"')");
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+}
+public void EliminarProducto(ComboBox cmbProducto){
+    String cmbproducto = cmbProducto.getValue().toString();
+    try {
+        Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
+        Statement statement = connection.createStatement();
+        ResultSet insertar = statement.executeQuery("DELETE FROM producto WHERE Nombre = '"+cmbproducto+"'");
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+public void ModificarProducto(ComboBox cmbProducto,TextField Precio, TextField Cantidad, TextField Agregar ){
+    String precio = Precio.getText();
+    String cantidad = Cantidad.getText();
+    String agregar = Agregar.getText();
+    String cmbproducto = cmbProducto.getValue().toString();
+    try {
+        Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
+        Statement statement = connection.createStatement();
+        ResultSet insertar = statement.executeQuery("UPDATE producto set PrecioUnitario = "+precio+",CantidadPorUnidad='"+cantidad+"',UnidadesAlmacenadas='"+agregar+"' WHERE Nombre ='"+cmbproducto+"' ");
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+/*public String[] BuscarProductos() {
+String extraccioncombo[] = {};
+
+    try {
+        Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
+        Statement statement = connection.createStatement();
+        ResultSet buscarcombo = statement.executeQuery("Select Nombre FROM producto ");
+
+        while (buscarcombo.next()) {
+
+            String em = buscarcombo.getString("Nombre");
+            String arr = em.replace("\n", ",");
+            extraccioncombo =new String[] {buscarcombo.getString("Nombre").concat(buscarcombo.getString("Nombre"))};
+
+
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    for (int i=0; i<extraccioncombo.length;i++){
+        System.out.println(extraccioncombo[i]);
+    }
+
+return  extraccioncombo;
+
+}*/
 }
