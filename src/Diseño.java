@@ -743,11 +743,11 @@ public class Diseño {
         sombra.setOffsetY(2.5f);
         sombra.setColor(Color.rgb(10, 10, 30, 0.2));
 
-        javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResourceAsStream("\\32x32px\\archive.png"));
-        javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResourceAsStream("\\32x32px\\clock.png"));
-        javafx.scene.image.Image image3 = new javafx.scene.image.Image(getClass().getResourceAsStream("\\32x32px\\delivery1.png"));
-        javafx.scene.image.Image image4 = new javafx.scene.image.Image(getClass().getResourceAsStream("\\32x32px\\note.png"));
-        javafx.scene.image.Image image5 = new javafx.scene.image.Image(getClass().getResourceAsStream("\\32x32px\\configuration2.png"));
+        javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/archive.png"));
+        javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/clock.png"));
+        javafx.scene.image.Image image3 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/delivery1.png"));
+         javafx.scene.image.Image image4 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/note.png"));
+         javafx.scene.image.Image image5 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/configuration2.png"));
         Button CitaBtn = new Button("MOSTRAR CITA"); //
         Button ACitaBtn = new Button("AGENDAR CITA");
         Button InvBtn = new Button("INVENTARIO");
@@ -759,10 +759,10 @@ public class Diseño {
         MasBtn.setEffect(sombra);
         ACitaBtn.setEffect(sombra);
         CitaBtn.setGraphic(new ImageView(image1));
-        ACitaBtn.setGraphic(new ImageView(image2));
-        InvBtn.setGraphic(new ImageView(image3));
-        ProvBtn.setGraphic(new ImageView(image4));
-        MasBtn.setGraphic(new ImageView(image5));
+         ACitaBtn.setGraphic(new ImageView(image2));
+         InvBtn.setGraphic(new ImageView(image3));
+         ProvBtn.setGraphic(new ImageView(image4));
+         MasBtn.setGraphic(new ImageView(image5));
         root.getChildren().addAll(CitaBtn, ACitaBtn, InvBtn, ProvBtn, MasBtn);
         ACitaBtn.setOnAction(e -> window.setScene(sceneBuscar));
         CitaBtn.setOnAction(e -> window.setScene(scene));
@@ -1252,9 +1252,9 @@ public class Diseño {
 
 
  
-        TextField PrecioTxt = new TextField();
-        TextField DescripcionTxt = new TextField();
-        GuardarBtn.setOnAction(e -> validar.popUp2(PrecioTxt, DescripcionTxt));
+        TextField PrecioTxt1 = new TextField();
+        TextField DescripcionTxt1 = new TextField();
+        GuardarBtn.setOnAction(e -> validar.popUp2(PrecioTxt1, DescripcionTxt1));
  
 
         return root;
