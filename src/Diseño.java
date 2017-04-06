@@ -26,9 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by juven on 29/3/2017.
@@ -391,6 +389,8 @@ public class Diseño {
 
     public VBox CentroModificarInv() {
 
+        String arreglo="";
+
         VBox root = new VBox(70);
         root.setPadding(new Insets(0,0,0,50));
         root.setAlignment(Pos.CENTER);
@@ -406,7 +406,24 @@ public class Diseño {
         gridpane.setAlignment(Pos.CENTER);
 
         ComboBox Comboproducto =new ComboBox();
-        Comboproducto.getItems().addAll("Producto1", "Producto2","Producto3");
+
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
+            Statement statement = connection.createStatement();
+            ResultSet buscarcombo = statement.executeQuery("Select Nombre FROM producto ");
+            String arr = null;
+            while (buscarcombo.next()) {
+                String extraccioncombo = buscarcombo.getString("Nombre");
+                arr = extraccioncombo.replace("\n", ",");
+                Comboproducto.getItems().addAll(extraccioncombo);
+               
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
         Button CerrarBtn = new Button("Cerrar");
         Button RegresarBtn = new Button("Regresar");
@@ -449,6 +466,8 @@ public class Diseño {
         RegresarBtn.setOnAction( e-> window.setScene(sceneInvetario));
         root2.getChildren().addAll(GuardarBtn,EliminarBtn,RegresarBtn,CerrarBtn);
         root.getChildren().addAll(lblProducto,Comboproducto,gridpane,root2);
+        GuardarBtn.setOnAction(event -> funcion.ModificarProducto(Comboproducto,PrecioCostoTxt,CantidadActualTxt,AgregarTxt));
+        EliminarBtn.setOnAction(event -> funcion.EliminarProducto(Comboproducto));
 
         return root;
 
@@ -514,6 +533,8 @@ public class Diseño {
         RegresarBtn.setOnAction( e-> window.setScene(sceneInvetario));
         root2.getChildren().addAll(GuardarBtn,EliminarBtn,RegresarBtn,CerrarBtn);
         root.getChildren().addAll(gridpane,root2);
+
+        GuardarBtn.setOnAction(e -> funcion.GuardarProducto(ProductoTxt,PrecioCostoTxt,CantidadActualTxt,AgregarTxt));
 
         return root;
 
