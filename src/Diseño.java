@@ -99,7 +99,7 @@ public class Diseño {
         rootProveedores.setTop(BotonesArribaPrincipal());
 
 
-        sceneLogin = new Scene(rootLogin, 500, 700);
+        sceneLogin = new Scene(rootLogin, 1150, 700);
         scene = new Scene(root, 1150, 700);
         sceneBuscar = new Scene(rootBuscar, 1150, 700);
         sceneBuscarCliente = new Scene(rootBuscarCliente, 100, 100);
@@ -451,9 +451,9 @@ public class Diseño {
                 new PropertyValueFactory<TablaInventarios, String>("unidad_medicion")
         );
         columnaNombre.setPrefWidth(150);
-        columnaPrecioUnidad.setPrefWidth(200);
-        columnaCantidadUnidad.setPrefWidth(200);
-        columnaUnidadMedicion.setPrefWidth(200);
+        columnaPrecioUnidad.setPrefWidth(230);
+        columnaCantidadUnidad.setPrefWidth(250);
+        columnaUnidadMedicion.setPrefWidth(230);
         //tablaInventarios.setItems(eventoMostrardatosEnTabla("select * from vw_buscar_prod",datosInventarios));
         tablaInventarios.setItems(eventoMostrardatosEnTablaInventarios(datosInventarios));
         tablaInventarios.getColumns().addAll(
@@ -840,11 +840,11 @@ gridpane.add(lblProducto,1,1);
         sombra.setOffsetY(2.5f);
         sombra.setColor(Color.rgb(10, 10, 30, 0.2));
 
-        javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/archive.png"));
-        javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/clock.png"));
-        javafx.scene.image.Image image3 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/delivery1.png"));
-         javafx.scene.image.Image image4 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/note.png"));
-         javafx.scene.image.Image image5 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/configuration2.png"));
+        javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/archive.png"));
+        javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/clock.png"));
+        javafx.scene.image.Image image3 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/delivery1.png"));
+         javafx.scene.image.Image image4 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/note.png"));
+         javafx.scene.image.Image image5 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/configuration2.png"));
         Button CitaBtn = new Button("MOSTRAR CITA"); //
         Button ACitaBtn = new Button("AGENDAR CITA");
         Button InvBtn = new Button("INVENTARIO");
