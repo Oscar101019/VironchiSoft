@@ -62,7 +62,7 @@
  -fx-font-size: 20pt;
  -fx-font-family: "Segoe UI Light";
  -fx-text-fill: white;
- -fx-alignment: baseline-center;
+ -fx-alignment: baseline-left;
  -fx-opacity: 1;
 
 }
@@ -137,7 +137,7 @@
  -fx-background-radius: 5;
  -fx-background-color: #1C6190;
  -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
- -fx-font-size: 13pt;
+ -fx-font-size: 12pt;
  -fx-text-fill: #deeaee;
  -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
@@ -195,6 +195,7 @@
  -fx-background-color: cadetblue;
  -fx-font-style: italic;
 }
+
 
 
 
