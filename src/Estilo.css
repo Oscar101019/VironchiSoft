@@ -92,11 +92,14 @@
 }
 
 .menu-bar {
+
  -fx-background-color: derive(#1d1d1d,20%);
 }
 
 .context-menu {
- -fx-background-color: derive(#1d1d1d,50%);
+ -fx-font-size: 12pt;
+ -fx-font-family: "Segoe UI Semibold";
+ -fx-background-color: whitesmoke;
 }
 
 .menu-bar .label {
