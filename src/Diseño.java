@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.sql.*;
+import java.time.LocalDate;
 
 /**
  * Created by juven on 29/3/2017.
@@ -98,7 +99,7 @@ public class Diseño {
         rootProveedores.setTop(BotonesArribaPrincipal());
 
 
-        sceneLogin = new Scene(rootLogin, 500, 700);
+        sceneLogin = new Scene(rootLogin, 1150, 700);
         scene = new Scene(root, 1150, 700);
         sceneBuscar = new Scene(rootBuscar, 1150, 700);
         sceneBuscarCliente = new Scene(rootBuscarCliente, 100, 100);
@@ -295,7 +296,9 @@ public class Diseño {
         TableColumn columnaCliente = new TableColumn("Cliente");
         columnaCliente.setCellValueFactory(
                 new PropertyValueFactory<TablaMostrarCitas, String>("cliente")
+
         );
+
         TableColumn columnaMascota = new TableColumn("Mascota");
         columnaMascota.setCellValueFactory(
                 new PropertyValueFactory<TablaMostrarCitas, String>("mascota")
@@ -308,6 +311,10 @@ public class Diseño {
         columnaFecha.setCellValueFactory(
                 new PropertyValueFactory<TablaMostrarCitas, String>("fecha")
         );
+        columnaCliente.setPrefWidth(200);
+        columnaFecha.setPrefWidth(200);
+        columnaTipoCita.setPrefWidth(200);
+        columnaMascota.setPrefWidth(200);
 
         //table.setItems(datos);
         table.setItems(eventoMostrardatosEnTabla(datos));
@@ -399,9 +406,9 @@ public class Diseño {
 
     public VBox CentroInventario() {
 
-        VBox root = new VBox(50);
-        root.setPadding(new Insets(0, 0, 0, 50));
-        root.setAlignment(Pos.CENTER_LEFT);
+        VBox root = new VBox(30);
+        root.setPadding(new Insets(0, 30, 0, 30));
+        root.setAlignment(Pos.CENTER);
 
         HBox root2 = new HBox(10);
         root2.setPadding(new Insets(0, 0, 0, 30));
@@ -443,7 +450,10 @@ public class Diseño {
         columnaUnidadMedicion.setCellValueFactory(
                 new PropertyValueFactory<TablaInventarios, String>("unidad_medicion")
         );
-
+        columnaNombre.setPrefWidth(150);
+        columnaPrecioUnidad.setPrefWidth(230);
+        columnaCantidadUnidad.setPrefWidth(250);
+        columnaUnidadMedicion.setPrefWidth(230);
         //tablaInventarios.setItems(eventoMostrardatosEnTabla("select * from vw_buscar_prod",datosInventarios));
         tablaInventarios.setItems(eventoMostrardatosEnTablaInventarios(datosInventarios));
         tablaInventarios.getColumns().addAll(
@@ -477,7 +487,7 @@ public class Diseño {
 
         String arreglo="";
 
-        VBox root = new VBox(70);
+        VBox root = new VBox(30);
         root.setPadding(new Insets(0, 0, 0, 50));
         root.setAlignment(Pos.CENTER);
 
@@ -518,12 +528,15 @@ public class Diseño {
         Button EliminarBtn = new Button("Eliminar");
 
 
-        Label lblProducto = new Label("Prudcto:");
+        Label lblProducto = new Label("Producto:");
         Label lblPrecioCosto = new Label("Precio/Costo:");
-        Label lblPrecioVenta = new Label("Precio Venta:");
+        Label lblPrecioVenta = new Label("Precio/Venta:");
         Label lblCantidadAc = new Label("Cantidad Actual");
-        Label lblAgregar = new Label("Agregar");
-        Label lblMinimo = new Label("Minimo");
+        Label lblAgregar = new Label("Agregar:");
+        Label lblMinimo = new Label("Minimo:");
+        Label lblUnidad = new Label("Unidad de medida:");
+        Label lblTitulo= new Label("Selecciona el inventario y el producto para modificarlo");
+        lblTitulo.setStyle("-fx-font-size: 20");
 
         TextField PrecioCostoTxt = new TextField();
         TextField PrecioVentaTxt = new TextField();
@@ -531,26 +544,48 @@ public class Diseño {
         TextField AgregarTxt = new TextField();
         TextField MinitmoTxt = new TextField();
 
-
-        gridpane.add(lblPrecioCosto, 1, 4);
-        gridpane.add(PrecioCostoTxt, 2, 4);
-
-        gridpane.add(lblPrecioVenta, 5, 4);
-        gridpane.add(PrecioVentaTxt, 6, 4);
+        TextField CantidadPorUnidad = new TextField();
 
 
-        gridpane.add(lblCantidadAc, 1, 10);
-        gridpane.add(CantidadActualTxt, 2, 10);
-        gridpane.add(lblAgregar, 3, 10);
-        gridpane.add(AgregarTxt, 4, 10);
+        ComboBox ComboUnidad = new ComboBox();
+        ComboUnidad.getItems().addAll("Kilogramo (kg)", "Gramo (g)","Miligramo (mg)","Microgramo (mcg)","Litro (lt)","Decilitro (dl)","Mililitro (ml)");
 
-        gridpane.add(lblMinimo, 5, 10);
-        gridpane.add(MinitmoTxt, 6, 10);
+
+        ComboBox ComboAgregar = new ComboBox();
+        ComboAgregar.getItems().addAll("Caja(s)","Pieza(s)","Frasco(s)");
+
+        ChoiceBox ComboInv = new ChoiceBox();
+        ComboInv.getItems().addAll("Selecciona...","Medicamentos","Insumos","Productos Tienda");
+
+
+gridpane.add(lblProducto,1,1);
+        gridpane.add(ComboInv,2,1);
+        gridpane.add(Comboproducto,3,1);
+
+        gridpane.add(lblUnidad,1,2);
+        gridpane.add(CantidadPorUnidad ,2,2);
+        gridpane.add(ComboUnidad,3,2);
+        gridpane.add(lblPrecioCosto, 1, 3);
+        gridpane.add(PrecioCostoTxt, 2, 3);
+
+        gridpane.add(lblPrecioVenta, 5, 1);
+        gridpane.add(PrecioVentaTxt, 6, 1);
+
+
+        gridpane.add(lblCantidadAc, 1, 4);
+        gridpane.add(CantidadActualTxt, 2, 4);
+        gridpane.add(lblAgregar, 1, 5);
+        gridpane.add(AgregarTxt, 2, 5);
+        gridpane.add(ComboAgregar, 3, 5);
+
+
+        gridpane.add(lblMinimo, 5, 2);
+        gridpane.add(MinitmoTxt, 6, 2);
 
         CerrarBtn.setOnAction( e-> window.close());
         RegresarBtn.setOnAction( e-> window.setScene(sceneInvetario));
         root2.getChildren().addAll(GuardarBtn,EliminarBtn,RegresarBtn,CerrarBtn);
-        root.getChildren().addAll(lblProducto,Comboproducto,gridpane,root2);
+        root.getChildren().addAll(lblTitulo,gridpane,root2);
         GuardarBtn.setOnAction(event -> funcion.ModificarProducto(Comboproducto,PrecioCostoTxt,CantidadActualTxt,AgregarTxt));
         EliminarBtn.setOnAction(event -> funcion.EliminarProducto(Comboproducto));
  
@@ -584,41 +619,60 @@ public class Diseño {
         Button EliminarBtn = new Button("Eliminar");
 
 
-        Label lblProducto = new Label("Prudcto:");
-        Label lblPrecioCosto = new Label("Precio/Costo:");
-        Label lblPrecioVenta = new Label("Precio Venta:");
+
+        Label lblProducto = new Label("Producto:");
+        Label lblPrecioCosto = new Label("Precio Costo:");
+        Label lblPrecioVenta = new Label("Precio de Venta:");
         Label lblCantidadAc = new Label("Cantidad Actual");
         Label lblAgregar = new Label("Agregar");
-        Label lblMinimo = new Label("Minimo");
+        Label lblMinimo = new Label("Minimo en existencia");
+        Label lblUnidad = new Label("Unidad de medida");
+        Label lblTitulo= new Label("Introduce los datos del producto a agregar");
+        lblTitulo.setStyle("-fx-font-size: 20");
         TextField ProductoTxt = new TextField();
         TextField PrecioCostoTxt = new TextField();
         TextField PrecioVentaTxt = new TextField();
         TextField CantidadActualTxt = new TextField();
+        CantidadActualTxt.setPromptText("0");
         TextField AgregarTxt = new TextField();
         TextField MinitmoTxt = new TextField();
+        TextField CantidadPorUnidad = new TextField();
+        ComboBox ComboUnidad = new ComboBox();
+        ComboUnidad.getItems().addAll("Kilogramo (kg)", "Gramo (g)","Miligramo (mg)","Microgramo (mcg)","Litro (lt)","Decilitro (dl)","Mililitro (ml)");
 
+        ComboBox ComboAgregar = new ComboBox();
+        ComboAgregar.getItems().addAll("Caja(s)","Pieza(s)","Frasco(s)");
+
+        ChoiceBox ComboInv = new ChoiceBox();
+        ComboInv.getItems().addAll("Selecciona...","Medicamentos","Insumos","Productos Tienda");
 
         gridpane.add(lblProducto, 1, 1);
         gridpane.add(ProductoTxt, 2, 1);
-        gridpane.add(lblPrecioCosto, 1, 4);
-        gridpane.add(PrecioCostoTxt, 2, 4);
+        gridpane.add(ComboInv,3,1);
+        gridpane.add(lblUnidad,1,2);
+        gridpane.add(CantidadPorUnidad ,2,2);
+        gridpane.add(ComboUnidad,3,2);
+        gridpane.add(lblPrecioCosto, 1, 3);
+        gridpane.add(PrecioCostoTxt, 2, 3);
 
-        gridpane.add(lblPrecioVenta, 5, 4);
-        gridpane.add(PrecioVentaTxt, 6, 4);
+        gridpane.add(lblPrecioVenta, 5, 1);
+        gridpane.add(PrecioVentaTxt, 6, 1);
 
 
-        gridpane.add(lblCantidadAc, 1, 10);
-        gridpane.add(CantidadActualTxt, 2, 10);
-        gridpane.add(lblAgregar, 3, 10);
-        gridpane.add(AgregarTxt, 4, 10);
+        gridpane.add(lblCantidadAc, 1, 4);
+        gridpane.add(CantidadActualTxt, 2, 4);
+        gridpane.add(lblAgregar, 1, 5);
+        gridpane.add(AgregarTxt, 2, 5);
+        gridpane.add(ComboAgregar, 3, 5);
 
-        gridpane.add(lblMinimo, 5, 10);
-        gridpane.add(MinitmoTxt, 6, 10);
+
+        gridpane.add(lblMinimo, 5, 2);
+        gridpane.add(MinitmoTxt, 6, 2);
 
         CerrarBtn.setOnAction(e -> window.close());
         RegresarBtn.setOnAction(e -> window.setScene(sceneInvetario));
         root2.getChildren().addAll(GuardarBtn, EliminarBtn, RegresarBtn, CerrarBtn);
-        root.getChildren().addAll(gridpane, root2);
+        root.getChildren().addAll(lblTitulo,gridpane, root2);
 
         GuardarBtn.setOnAction(e -> funcion.GuardarProducto(ProductoTxt,PrecioCostoTxt,CantidadActualTxt,AgregarTxt));
 
@@ -786,11 +840,11 @@ public class Diseño {
         sombra.setOffsetY(2.5f);
         sombra.setColor(Color.rgb(10, 10, 30, 0.2));
 
-        javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/archive.png"));
-        javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/clock.png"));
-        javafx.scene.image.Image image3 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/delivery1.png"));
-         javafx.scene.image.Image image4 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/note.png"));
-         javafx.scene.image.Image image5 = new javafx.scene.image.Image(getClass().getResourceAsStream("32x32px/configuration2.png"));
+        javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/archive.png"));
+        javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/clock.png"));
+        javafx.scene.image.Image image3 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/delivery1.png"));
+         javafx.scene.image.Image image4 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/note.png"));
+         javafx.scene.image.Image image5 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/configuration2.png"));
         Button CitaBtn = new Button("MOSTRAR CITA"); //
         Button ACitaBtn = new Button("AGENDAR CITA");
         Button InvBtn = new Button("INVENTARIO");
@@ -1006,8 +1060,10 @@ public class Diseño {
         Label lblDes = new Label("Descripcion:");
         Label lblPrecio = new Label("Precio:");
 
-        TextField FechaTxt = new TextField();
-        TextField TamañoTxt = new TextField();
+       // TextField FechaTxt = new TextField();
+        DatePicker FechaTxt = new DatePicker();
+        FechaTxt.setValue(LocalDate.now());
+
         TextField DesTxt = new TextField();
         TextField PrecioTxt = new TextField();
 
@@ -1071,7 +1127,9 @@ public class Diseño {
         Label lblFecha = new Label("Fecha: ");
         Label lblTemperatura = new Label("Temperatura: ");
         Label lblPeso = new Label("Peso: ");
-        TextField FechaTxt = new TextField();
+     //   TextField FechaTxt = new TextField();
+        DatePicker FechaTxt = new DatePicker();
+        FechaTxt.setValue(LocalDate.now());
         TextField TemperaturaTxt = new TextField();
         TextField PesoTxt = new TextField();
 
@@ -1290,24 +1348,28 @@ public class Diseño {
 
 
         root.getChildren().addAll(hBox, gridpane, hBox2);
-        java.util.Date fecha = new java.util.Date();
+      /*  java.util.Date fecha = new java.util.Date();
         long fechasistema = fecha.getTime();
         java.sql.Date fechasql2 = new java.sql.Date(fechasistema);
         String fechasql = fechasql2.toString();
         FechaTxt.setText(fechasql);
-        TextField PrecioTxt = new TextField();
+        */
+      TextField PrecioTxt = new TextField();
         TextField DescripcionTxt = new TextField();
 
 
         ;
 
         /*GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));*/
-        GuardarBtn.addEventHandler(ActionEvent.ACTION ,(e) -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));
-        GuardarBtn.addEventHandler(ActionEvent.ACTION ,(e) -> validar.popUp2(PrecioTxt,DescripcionTxt));
+
+
+       //APLICAR CAMBIOS DE DATE PICKER
+        //GuardarBtn.addEventHandler(ActionEvent.ACTION ,(e) -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));
+        //GuardarBtn.addEventHandler(ActionEvent.ACTION ,(e) -> validar.popUp2(PrecioTxt,DescripcionTxt));
 
 
  
-        GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));
+     //   GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(FechaTxt, TemperaturaTxt, PesoTxt, Nor1Rbtn, Anor1Rbtn, textArea1, Nor2Rbtn, Anor2Rbtn, textArea2, Nor3Rbtn, Anor3Rbtn, textArea3, Nor4Rbtn, Anor4Rbtn, textArea4, Nor5Rbtn, Anor5Rbtn, textArea5, Nor6Rbtn, Anor6Rbtn, textArea6, Nor7Rbtn, Anor7Rbtn, textArea7, Nor8Rbtn, Anor8Rbtn, textArea8, Nor9Rbtn, Anor9Rbtn, textArea9, Nor10Rbtn, Anor10Rbtn, textArea10, Nor11Rbtn, Anor11Rbtn, textArea11, Nor12Rbtn, Anor12Rbtn, textArea12, textAreaPlanesD, textAreaProb, textAreaPlanesT, textAreaInstrucciones, txtIDMASCOTA, txtIDADEUDO));
  
       /*  GuardarBtn.setOnAction(event -> funcion.eventoguardarcitaA(textArea1,textArea2,textArea3,textArea4,textArea5,textArea7,textArea8,textArea9,textArea10,textArea11,textArea12,
                 textAreaProb,textAreaPlanesT,textAreaInstrucciones,txtIDMASCOTA,txtIDADEUDO));*/

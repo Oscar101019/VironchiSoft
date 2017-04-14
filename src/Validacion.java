@@ -117,14 +117,14 @@ public class Validacion {
         }
     }
 
-    public void CampoVacioCitaEstetica(TextField Fecha, ComboBox Tamaño, TextField Descripcion, TextField Precio) {
-        if (Fecha.getText().length() == 0) {
+    public void CampoVacioCitaEstetica(DatePicker Fecha, ComboBox Tamaño, TextField Descripcion, TextField Precio) {
+        if (Fecha.getPromptText().length() == 0) {
             Toolkit.getDefaultToolkit().beep();
 
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Advertencia");
             alert.setHeaderText("Warning Dialog");
-            alert.setContentText("Falta nombre");
+            alert.setContentText("Falta Fecha");
 
             alert.showAndWait();
 
