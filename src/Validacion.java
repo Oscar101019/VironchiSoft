@@ -1,14 +1,22 @@
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import sun.security.krb5.internal.crypto.Des;
 
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.Button;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.DoubleSummaryStatistics;
 import java.util.Optional;
 
@@ -224,4 +232,111 @@ if (result.get() == loginButtonType) {
 
 
     }
-}
+
+    public void SoloLetras(TextField Generico){
+
+        Generico.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent evt) {
+                char C = evt.getCharacter().charAt(0);
+
+                if(Character.isDigit(C)){
+                    Toolkit.getDefaultToolkit().beep();
+                    evt.consume();
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Advertencia");
+                    alert.setHeaderText("Warning Dialog");
+                    alert.setContentText("Solo puede Ingresar Letras para el Nombre");
+
+                    alert.showAndWait();
+                }
+
+                else if((int)evt.getCharacter().charAt(0)>33 && (int)evt.getCharacter().charAt(0)<=47
+                        || (int)evt.getCharacter().charAt(0)>58 && (int)evt.getCharacter().charAt(0)<=64
+                        || (int)evt.getCharacter().charAt(0)>91 && (int)evt.getCharacter().charAt(0)<=96
+                        || (int)evt.getCharacter().charAt(0)>122 && (int)evt.getCharacter().charAt(0)<=238
+                        || (int)evt.getCharacter().charAt(0)>239 && (int)evt.getCharacter().charAt(0)<=255){
+                    Toolkit.getDefaultToolkit().beep();
+                    evt.consume();
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Advertencia");
+                    alert.setHeaderText("Warning Dialog");
+                    alert.setContentText("Solo puede Ingresar Letras para el Nombre");
+
+                    alert.showAndWait();
+                }
+            }
+
+
+        });
+
+
+
+    }
+
+
+    public void LetrasCaracterEspecial(TextField Generico){
+
+        Generico.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent evt) {
+                char C = evt.getCharacter().charAt(0);
+
+
+
+                if((int)evt.getCharacter().charAt(0)>32 && (int)evt.getCharacter().charAt(0)<=34
+                        || (int)evt.getCharacter().charAt(0)>36 && (int)evt.getCharacter().charAt(0)<=43
+                        || (int)evt.getCharacter().charAt(0)==47
+                        || (int)evt.getCharacter().charAt(0)>58 && (int)evt.getCharacter().charAt(0)<=64
+                        || evt.getCharacter().charAt(0)>123 && evt.getCharacter().charAt(0)<=255){
+                    Toolkit.getDefaultToolkit().beep();
+                    evt.consume();
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Advertencia");
+                    alert.setHeaderText("Warning Dialog");
+                    alert.setContentText("Solo puede Ingresar Letras y Estos Carecteres Especiales: "
+                            +". , - #");
+
+                    alert.showAndWait();
+                }
+            }
+
+
+        });
+
+
+
+    }
+
+    public void SoloNumeros(TextField Generico){
+
+        Generico.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent evt) {
+                char C = evt.getCharacter().charAt(0);
+
+                if(!Character.isDigit(C) && !Character.isISOControl(C)){
+                    Toolkit.getDefaultToolkit().beep();
+                    evt.consume();
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Advertencia");
+                    alert.setHeaderText("Warning Dialog");
+                    alert.setContentText("Solo puede Ingresar Numeros");
+                    alert.showAndWait();
+                }
+
+
+
+
+            }
+
+
+        });
+
+
+
+    }
+
+
+
+}//class

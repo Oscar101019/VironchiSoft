@@ -4,6 +4,7 @@ import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -27,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
@@ -85,7 +87,7 @@ public class Diseño {
 
         System.out.println("initUi");
         rootC.setLeft(DatosClienteIzquierda());
-        rootC.setRight(DatosClienteIzquierdaDerecha());
+        rootC.setRight(DatosClienteDerecha());
         rootC.setTop(BotonesArribaPrincipal());
 
         rootM.setCenter(DatosMascota());
@@ -184,7 +186,8 @@ public class Diseño {
         TextField RazaTxt = new TextField();
         TextField EdadTxt = new TextField();
         TextField IDCLIENTETxt = new TextField("-");
-
+        validar.SoloLetras(NombreTxt);
+        validar.SoloNumeros(EdadTxt);
         ObservableList<String> options =
                 FXCollections.observableArrayList(
                         "H",
@@ -218,6 +221,8 @@ public class Diseño {
 
         gridpane.add(lblEspecie, 0, 7);
         gridpane.add(ComboEspecie, 1, 7);
+
+
 
         gridpane.add(lblRaza, 0, 8);
         gridpane.add(ComboRaza, 1, 8);
@@ -278,11 +283,12 @@ public class Diseño {
         TextField NombreTxt = new TextField();
         TextField DireccionTxt = new TextField();
         TextField TelefonoTxt = new TextField();
-
+        validar.SoloLetras(NombreTxt);
+        validar.LetrasCaracterEspecial(DireccionTxt);
 
         GuardarClienteBtn.setAlignment(Pos.CENTER);
 
-        GuardarClienteBtn.setOnAction(e -> funcion.DatosCliente(NombreTxt, DireccionTxt, TelefonoTxt, ComboHM));
+        //GuardarClienteBtn.setOnAction(e -> funcion.DatosCliente(NombreTxt, DireccionTxt, TelefonoTxt, ComboHM));
         gridpane.add(lblTitulo, 1, 0);
         gridpane.add(lblNombre, 0, 2);
         gridpane.add(NombreTxt, 1, 2);
