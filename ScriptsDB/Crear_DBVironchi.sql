@@ -1,13 +1,11 @@
 -- VIRONCHISOFT
 -- Crear base de datos
-/*Los cambios fueron los siguinetes
---Se le agrego el campo e fecha a la tabla CitamED
---Se le agrego el campo sexo a la tabla Cliente
---Se agrego la tabla Tabla_Citas_Inicio
---Se crearon 2 triggers
---Se creo una vista
-*/
-
+-- Los cambios fueron los siguinetes
+-- Se le agrego el campo e fecha a la tabla CitamED
+-- Se le agrego el campo sexo a la tabla Cliente
+-- Se agrego la tabla Tabla_Citas_Inicio
+-- Se crearon 2 triggers
+-- Se creo una vista
 
 create database BDVIRONCHI;
 
@@ -103,7 +101,7 @@ create table Detalle_Citas (
 );
 
 
---Insertamos todos los tpo validos de observaciones
+-- Insertamos todos los tpo validos de observaciones
 
 insert into Tipos VALUES 
 ('APG','Apariencia General'),
@@ -161,7 +159,7 @@ CREATE TABLE Producto
   CONSTRAINT FK_ProveedoresProducto FOREIGN KEY (ID_Proveedor) REFERENCES Proveedores(ID_Proveedor)
 );
 
---Crear vista
+-- Crear vista
 create view VW_Tabla_Inicio
 as
 (
@@ -170,8 +168,8 @@ inner join mascota M on (M.id_Mascota=TCI.id_Mascota)
 inner join cliente CL on (CL.id_Cliente=M.id_Cliente)
 );
 
---LOS TRIGGER SOLO HAN FUNCIONADO EN DATAGRIP
---Primer trigger
+-- LOS TRIGGER SOLO HAN FUNCIONADO EN DATAGRIP
+-- Primer trigger
 create trigger TR_CIT_MED BEFORE insert on citamed
 	for each row
 BEGIN
@@ -182,11 +180,11 @@ create trigger TR_CIT_EST BEFORE insert on citaestetica
 	for each row
 BEGIN
 	insert into Tabla_Citas_Inicio set Id_Mascota=New.Id_Mascota, TipoCit ='Cita Estetica',Fecha= NEW.Fecha;
-END
+END;
 
---Los SELECT
+-- Los SELECT
 select * from Tabla_Citas_Inicio;
-select * from vw_tabla_inicio
+select * from vw_tabla_inicio;
 
 SELECT * FROM Inventario;
 
@@ -198,7 +196,13 @@ select p.Nombre,p.CantidadPorUnidad,p.PrecioUnitario,p.UnidadesAlmacenadas,i.Nom
 inventario i on (p.ID_Inventario=i.ID_Inventario)
 );
 
---De la siguiente manera es como se hace la consulta para mostrar los datos del producto deseado 
+CREATE VIEW vistaBuscarCliente AS
+(
+select c.Nombre as Cliente, m.Nombre as Mascota, c.Telefono, c.Direccion FROM cliente c
+INNER JOIN Mascota m ON (c.id_Cliente = m.id_Cliente));
+
+select * FROM vistaBuscarCliente
+-- De la siguiente manera es como se hace la consulta para mostrar los datos del producto deseado
 
 select Nombre,CantidadPorUnidad,PrecioUnitario,UnidadesAlmacenadas from vw_buscar_prod where Inventario='Medicamentos';
 

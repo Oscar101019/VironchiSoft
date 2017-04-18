@@ -61,18 +61,7 @@ public class Validacion {
     }
 
     //TextField IDCLIENTE
-    public void CampoVacioMascota(TextField IDCLIENTE, TextField Nombre, ChoiceBox Especie, ComboBox Raza, ComboBox Sexo, TextField Descripcion) {
-        if (IDCLIENTE.getText().toString() == "-") {
-            Toolkit.getDefaultToolkit().beep();
-
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Advertencia");
-            alert.setHeaderText("Warning Dialog");
-            alert.setContentText("Falta nombre");
-
-            alert.showAndWait();
-
-
+    public void CampoVacioMascota(TextField Nombre, ChoiceBox Especie, ComboBox Raza, ComboBox Sexo, TextField Descripcion) {
             if (Nombre.getText().length() == 0) {
                 Toolkit.getDefaultToolkit().beep();
 
@@ -123,7 +112,6 @@ public class Validacion {
                 }
             }
         }
-    }
 
     public void CampoVacioCitaEstetica(DatePicker Fecha, ComboBox Tamaño, TextField Descripcion, TextField Precio) {
         if (Fecha.getPromptText().length() == 0) {
