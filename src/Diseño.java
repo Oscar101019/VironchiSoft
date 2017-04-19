@@ -4,6 +4,8 @@ import com.sun.org.apache.regexp.internal.RE;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -27,10 +29,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.function.Predicate;
+
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  * Created by juven on 29/3/2017.
@@ -49,6 +58,15 @@ public class Diseño {
     TextArea textAreaPlanesD;
     TextArea textAreaPlanesT;
     TextArea textAreaInstrucciones;
+    PreparedStatement pst = null;
+    Connection con;
+
+    //VARIABLES GLOBALES PARA CLIENTE DESDE LA BASE DE DATOS
+    String idCliente="", nombreCliente="", direccionCliente="", telefonoCliente="", sexoCliente="";
+    TextField NombreTxt = new TextField();
+    TextField DireccionTxt = new TextField();
+    TextField TelefonoTxt = new TextField();
+    ComboBox ComboHM = new ComboBox();
 
     public void initUI(Stage stage) {
 
@@ -85,7 +103,7 @@ public class Diseño {
 
         System.out.println("initUi");
         rootC.setLeft(DatosClienteIzquierda());
-        rootC.setRight(DatosClienteIzquierdaDerecha());
+        rootC.setRight(DatosClienteDerecha());
         rootC.setTop(BotonesArribaPrincipal());
 
         rootM.setCenter(DatosMascota());
@@ -133,7 +151,6 @@ public class Diseño {
         sceneAgregarInv.getStylesheets().add("Estilo.css");
 
 
-
         evento.Mensaje(scene);
         evento.Cerrar(window);
         evento.PantallaCompleta(window);
@@ -176,23 +193,21 @@ public class Diseño {
         Label lblRaza = new Label("Raza:");
         Label lblSexo = new Label("Sexo:");
         Label lblEdad = new Label("Edad:");
-        Label lblIDCLIENTE = new Label("ID CLIENTE:");
 
 
-        TextField NombreTxt = new TextField();
-        TextField EspecieTxt = new TextField();
-        TextField RazaTxt = new TextField();
+        //TextField NombreTxt = new TextField();
+        //TextField EspecieTxt = new TextField();
+        //TextField RazaTxt = new TextField();
         TextField EdadTxt = new TextField();
-        TextField IDCLIENTETxt = new TextField("-");
-
+        //TextField IDCLIENTETxt = new TextField("-");
+        validar.SoloLetras(NombreTxt);
+        validar.SoloNumeros(EdadTxt);
         ObservableList<String> options =
                 FXCollections.observableArrayList(
                         "H",
                         "M"
                 );
 
-
-        ComboBox ComboHM = new ComboBox();
         ComboHM.getItems().addAll("H", "M");
         ComboHM.setValue("-");
         ObservableList<String> especie =
@@ -210,14 +225,13 @@ public class Diseño {
         ComboEspecie.setValue("-");
         ComboEspecie.getSelectionModel().selectedItemProperty().addListener((v, OldValue, newValue) -> cambiarDatoCombo(ComboEspecie, ComboRaza));
 
-        gridpane.add(lblIDCLIENTE, 0, 5);
-        gridpane.add(IDCLIENTETxt, 1, 5);
-
         gridpane.add(lblNombre, 0, 6);
         gridpane.add(NombreTxt, 1, 6);
 
         gridpane.add(lblEspecie, 0, 7);
         gridpane.add(ComboEspecie, 1, 7);
+
+
 
         gridpane.add(lblRaza, 0, 8);
         gridpane.add(ComboRaza, 1, 8);
@@ -231,7 +245,7 @@ public class Diseño {
 
         CitaMBtn.setOnAction(e -> window.setScene(sceneCitaM));
         CitaEBtn.setOnAction(e -> window.setScene(sceneCitaE));
-        GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(IDCLIENTETxt, NombreTxt, ComboEspecie, ComboRaza, ComboHM, EdadTxt));
+        GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(NombreTxt, ComboEspecie, ComboRaza, ComboHM, EdadTxt));
         AtrasBtn.setOnAction(e -> window.setScene(sceneBuscar));
         root2.getChildren().addAll(GuardarMascotaBtn, AtrasBtn);
         root.getChildren().addAll(lblTitulo,gridpane, root2);
@@ -274,15 +288,16 @@ public class Diseño {
         Label lblTelefono = new Label("Telefono:");
         Label lblSexo = new Label(" Sexo:");
 
-        TextField IDCLIENTETxt = new TextField();
+        //TextField IDCLIENTETxt = new TextField();
         TextField NombreTxt = new TextField();
         TextField DireccionTxt = new TextField();
         TextField TelefonoTxt = new TextField();
-
+        validar.SoloLetras(NombreTxt);
+        validar.LetrasCaracterEspecial(DireccionTxt);
 
         GuardarClienteBtn.setAlignment(Pos.CENTER);
 
-        GuardarClienteBtn.setOnAction(e -> funcion.DatosCliente(NombreTxt, DireccionTxt, TelefonoTxt, ComboHM));
+        //GuardarClienteBtn.setOnAction(e -> funcion.DatosCliente(NombreTxt, DireccionTxt, TelefonoTxt, ComboHM));
         gridpane.add(lblTitulo, 1, 0);
         gridpane.add(lblNombre, 0, 2);
         gridpane.add(NombreTxt, 1, 2);
@@ -298,9 +313,6 @@ public class Diseño {
 
 
         gridpane.add(GuardarClienteBtn, 1, 6);
-
-
-
 
         System.out.println("SceneDatosCliente()");
 
@@ -783,6 +795,51 @@ gridpane.add(lblProducto,1,1);
 
     }
 
+    private TextField txtBuscarCliente;
+    private TableColumn<TablaBusqueda, String> columnaNombreCliente;
+    private TableColumn<TablaBusqueda, String> columnaNombreMascota;
+    private TableColumn<TablaBusqueda, String> columnaTelefono;
+    private TableColumn<TablaBusqueda, String> columnaDireccion;
+
+    final TableView<TablaBusqueda> tablaBuscarCliente = new TableView<>();
+    final ObservableList<TablaBusqueda> datosBuscarCliente = FXCollections.observableArrayList();
+
+
+   /* public ObservableList eventoBuscarCliente(ObservableList data){
+        try{
+            Connection conn = dc.Connect();
+            data = FXCollections.observableArrayList();
+            ResultSet rs = conn.createStatement().executeQuery("select * from vistaBuscarCliente");
+            while (rs.next()) {
+                data.add(new TablaBusqueda(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+            }
+        }catch (SQLException ex) {
+            System.err.println("No se pudo mostrar la tabla"+ex);
+        }
+        return data;
+    }//FIN BUSCAR CLIENTE*/
+   ResultSet rs;
+   public void actualizarTabla(){
+       datosBuscarCliente.clear();
+       try{
+           Connection conn = dc.Connect();
+           String query = "SELECT * FROM vistaBuscarCliente";
+           rs = conn.createStatement().executeQuery(query);
+           while(rs.next()){
+               datosBuscarCliente.add(new TablaBusqueda(
+                       rs.getString(1),
+                       rs.getString(2),
+                       rs.getString(3),
+                       rs.getString(4)
+               ));
+               tablaBuscarCliente.setItems(datosBuscarCliente);
+           }//FIN WHILE
+           rs.close();
+       }catch (SQLException ex){
+           System.err.println("No se pudo mostrar la tabla");
+       }
+   }
+
     public VBox CentroBuscar() {
 
         VBox root = new VBox(10);
@@ -794,18 +851,27 @@ gridpane.add(lblProducto,1,1);
         root2.setAlignment(Pos.CENTER);
 
         GridPane gridpane = new GridPane();
+        GridPane gridpane2 = new GridPane();
+        GridPane gridpane3 = new GridPane();
         gridpane.setPadding(new Insets(0, 0, 0, 0));
         gridpane.setHgap(5);
         gridpane.setVgap(10);
         gridpane.setAlignment(Pos.CENTER);
 
+        gridpane2.setPadding(new Insets(0,0,0,0));
+        gridpane2.setHgap(5);
+        gridpane2.setVgap(10);
 
-        TextField BuscarClienteTxt = new TextField("");
-        TextField BuscarMascotaTxt = new TextField("");
+        gridpane3.setPadding(new Insets(0,0,0,0));
+        gridpane3.setHgap(5);
+        gridpane3.setVgap(10);
+
+        txtBuscarCliente = new TextField("");
+        txtBuscarCliente.setPromptText("Puede realizar una busqueda por Cliente o por Mascota");
+        //BuscarClienteTxt.getOnKeyPressed();
         Button AgregarClienteBtn = new Button("Agregar Cliente");
         Button AgregarMascotaBtn = new Button("Agregar Mascota");
-        Button BuscarClienteBtn = new Button("Buscar Cliente");
-        Button BuscarMascotaBtn = new Button("Buscar Mascota");
+        Button BuscarClienteBtn = new Button("Historial");
         Button AccederBtn = new Button("Acceder");
         Button CerrarBtn = new Button("Cerrar");
         Button CitaMBtn = new Button("Cita Medica");
@@ -814,23 +880,98 @@ gridpane.add(lblProducto,1,1);
 
         Label lblBienvenida = new Label("Busca o agrega un Cliente o Mascota");
         lblBienvenida.setStyle("-fx-font-size: 20");
-        Label lblCliente = new Label("Cliente:");
-        Label lblMascota = new Label("Mascota:");
+        Label lblCliente = new Label("Buscar por:");
+
+        //TABLA BUSCAR CLIENTE
+
+        columnaNombreCliente = new TableColumn<>("Cliente");
+        columnaNombreMascota = new TableColumn<>("Mascota");
+        columnaTelefono = new TableColumn<>("Telefono");
+        columnaDireccion = new TableColumn<>("Dirección");
+
+        columnaNombreCliente.setCellValueFactory(cellData -> cellData.getValue().nombreClienteProperty());
+        columnaNombreMascota.setCellValueFactory(cellData -> cellData.getValue().nombreMascotaProperty());
+        columnaTelefono.setCellValueFactory(cellData -> cellData.getValue().telefonoProperty());
+        columnaDireccion.setCellValueFactory(cellData -> cellData.getValue().direccionProperty());
+
+        tablaBuscarCliente.getColumns().addAll(
+                columnaNombreCliente,
+                columnaNombreMascota,
+                columnaTelefono,
+                columnaDireccion
+        );
+        actualizarTabla();
+        //FILTRAR DATOS EN LA TABLA
+        FilteredList<TablaBusqueda> filteredData = new FilteredList<>(datosBuscarCliente, e -> true);
+        txtBuscarCliente.setOnKeyPressed(e ->{
+            txtBuscarCliente.textProperty().addListener((observableValue, oldValue, newValue) ->{
+                filteredData.setPredicate((Predicate<? super TablaBusqueda>) user->{
+                    if(newValue == null || newValue.isEmpty()){
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if(user.getNombreCliente().contains(newValue)){
+                        return true;
+                    }else if(user.getNombreMascota().toLowerCase().contains(lowerCaseFilter)){
+                        return true;
+                    }
+                    return false;
+                });
+            });
+            SortedList<TablaBusqueda> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(tablaBuscarCliente.comparatorProperty());
+            tablaBuscarCliente.setItems(sortedData);
+        });
+        //TAMAÑO DE COLUMNA
+
+        columnaNombreCliente.setPrefWidth(200);
+        columnaNombreMascota.setPrefWidth(125);
+        columnaTelefono.setPrefWidth(125);
+        columnaDireccion.setPrefWidth(200);
+        //FIN DE LA TABLA PARA BUSCAR CLIENTE
+
+        //TOMAR DATOS AL HACER CLIC EN LA TABLA
+        tablaBuscarCliente.setOnMouseClicked(event -> {
+            try{
+                Connection conn = dc.Connect();
+                TablaBusqueda tablaBusqueda = (TablaBusqueda) tablaBuscarCliente.getSelectionModel().getSelectedItem();
+                nombreCliente = String.valueOf(tablaBusqueda.getNombreCliente());
+                rs = conn.createStatement().executeQuery("select * from Cliente WHERE Nombre ='"+nombreCliente+"'");
+
+                while(rs.next()){
+                    idCliente = rs.getString(1);
+                    nombreCliente = rs.getString(2);
+                    direccionCliente = rs.getString(3);
+                    telefonoCliente = rs.getString(4);
+                    sexoCliente = rs.getString(5);
+                }
+            }catch(SQLException ex){
+                System.err.println("No se pudo realizar la consulta");
+            }
+            finally {
+                System.err.println(idCliente);
+                System.err.println(nombreCliente);
+                System.err.println(direccionCliente);
+                System.err.println(telefonoCliente);
+                System.err.println(sexoCliente);
+            }
+
+        });
+
+        //FIN PARA TOMAR DATOS AL HACER CLIC EN LA TABLA
+
+        gridpane.add(txtBuscarCliente,3,1);
+        gridpane.add(tablaBuscarCliente,3,2);
+        gridpane3.add(BuscarClienteBtn,0,0);
+        gridpane.add(gridpane3, 3, 5);
+        gridpane3.add(AgregarClienteBtn, 1, 0);
 
 
-        gridpane.add(lblCliente, 14, 15);
-        gridpane.add(BuscarClienteTxt, 15, 15);
-        gridpane.add(BuscarClienteBtn, 16, 15);
-        gridpane.add(AgregarClienteBtn, 17, 15);
-
-        gridpane.add(lblMascota, 14, 16);
-        gridpane.add(BuscarMascotaTxt, 15, 16);
-        gridpane.add(BuscarMascotaBtn, 16, 16);
-        gridpane.add(AgregarMascotaBtn, 17, 16);
+        gridpane3.add(AgregarMascotaBtn, 2, 0);
         gridpane.add(CitaMBtn, 16, 18);
         gridpane.add(CitaEBtn, 17, 18);
 
-        AgregarMascotaBtn.setOnAction(e -> window.setScene(sceneAMascota));
+        AgregarMascotaBtn.setOnAction(e -> window.setScene(sceneACliente));
         AgregarClienteBtn.setOnAction(e -> window.setScene(sceneACliente));
         CerrarBtn.setOnAction(e -> window.close());
         AccederBtn.setOnAction(e -> window.setScene(scene));
@@ -841,10 +982,15 @@ gridpane.add(lblProducto,1,1);
         //   root2.getChildren().addAll(AccederBtn,CerrarBtn);
         root.getChildren().addAll(lblBienvenida, gridpane, root2);
 
+       // root.getChildren().addAll(tablaBuscarCliente, gridpane, root2);
+
 
         return root;
 
-    }
+    }//Fin centro buscar
+
+
+
     public VBox CentroLogin() {
 
         VBox root = new VBox(5);
@@ -999,14 +1145,12 @@ gridpane.add(lblProducto,1,1);
         Label lblRaza = new Label("Raza:");
         Label lblSexo = new Label("Sexo:");
         Label lblEdad = new Label("Edad:");
-        Label lblIDCLIENTE = new Label("ID CLIENTE:");
 
 
         TextField NombreTxt = new TextField();
-        TextField EspecieTxt = new TextField();
-        TextField RazaTxt = new TextField();
+        //TextField EspecieTxt = new TextField();
+        //TextField RazaTxt = new TextField();
         TextField EdadTxt = new TextField();
-        TextField IDCLIENTETxt = new TextField("-");
 
         ObservableList<String> options =
                 FXCollections.observableArrayList(
@@ -1035,10 +1179,6 @@ gridpane.add(lblProducto,1,1);
 
 
 
-
-            gridpane.add(lblIDCLIENTE, 0, 5);
-            gridpane.add(IDCLIENTETxt, 1, 5);
-
             gridpane.add(lblNombre, 0, 6);
             gridpane.add(NombreTxt, 1, 6);
 
@@ -1057,7 +1197,7 @@ gridpane.add(lblProducto,1,1);
 
             CitaMBtn.setOnAction(e -> window.setScene(sceneCitaM));
             CitaEBtn.setOnAction(e -> window.setScene(sceneCitaE));
-            GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(IDCLIENTETxt, NombreTxt, ComboEspecie, ComboRaza, ComboHM, EdadTxt));
+            GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(NombreTxt, ComboEspecie, ComboRaza, ComboHM, EdadTxt));
             AtrasBtn.setOnAction(e -> window.setScene(sceneBuscar));
             root2.getChildren().addAll(GuardarMascotaBtn, CitaMBtn, CitaEBtn, AtrasBtn);
             root.getChildren().addAll(lblTitulo,gridpane, root2);
