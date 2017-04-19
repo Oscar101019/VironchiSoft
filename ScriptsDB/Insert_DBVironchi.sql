@@ -5,12 +5,12 @@ use BDVIRONCHI;
 -- Query para inserción de primer dato
 insert into Cliente (Nombre, Direccion, Telefono)
 values('Brian Efren Padilla Simon','Esteban Vaca Calderon #51','3111610756'),
-	  ('Juventino Perez Peraza','Cetro #65','3112564565'),
-	  ('Brian Alejandro Casas Lopez','No me acuerdo #432','3112587898'),
-	  ('Cristobal Eluhi Vega Luna','Tampoco se #132','311987822'),
-	  ('Oscar Alberto Cordero Villa','lata #95','3241028986')
+	  ('Juventino Perez Peraza','Miñon #65','3112564565'),
+	  ('Brian Alejandro Casas Lopez','Carrillo Puerto #300','3112587898'),
+	  ('Cristobal Eluhi Vega Luna','Cerro de las campanas #132','311987822'),
+	  ('Oscar Alberto Cordero Villa','lata #95','3241028986');
 	  
-
+SELECT * FROM cliente;
 -- Se inserta primero el adeudo
 -- luego explico porque 
 insert into Adeudo (Concepto, Descripcion, CostoTotal)
@@ -20,7 +20,8 @@ values('M','Baño y corte de pelo', '180');
 insert into Mascota(id_Cliente, Nombre, Especie, Raza, Sexo, Descripcion)
 values (1,'Max','P','Mimiga','M','Perro conejo raro blanco'),
        (1,'Marilina','P','Mimiga','H','Otro perro conejo raro'),
-       (5,'Simba','Felino','Callejero','H','Ta chido')
+       (3,'Bianca','P','Criollo','H','Pos otro registro'),
+       (5,'Simba','Felino','Callejero','H','Ta chido');
 
 --Inserciones para cita medica
 insert into CitaMed(Id_Mascota,Fecha,Oidos,Ojos,Id_Adeudo)
