@@ -59,11 +59,15 @@ public class Diseño {
     Connection con;
 
     //VARIABLES GLOBALES PARA CLIENTE DESDE LA BASE DE DATOS
-    String idCliente="", nombreCliente="", direccionCliente="", telefonoCliente="", sexoCliente="";
+    String idCliente="", nombreCliente="", direccionCliente="", telefonoCliente="", sexoCliente="",nombreMascota="";
+
+    TextField idClienteTxt = new TextField();
     TextField NombreTxt = new TextField();
     TextField DireccionTxt = new TextField();
     TextField TelefonoTxt = new TextField();
     ComboBox ComboHM = new ComboBox();
+    Label lblNombre = new Label();
+    Label lblMascota = new Label();
 
     public void initUI(Stage stage) {
 
@@ -103,7 +107,7 @@ public class Diseño {
 
         rootC.setTop(BotonesArribaPrincipal());
 
-        rootM.setCenter(DatosMascota());
+       rootM.setCenter(DatosMascota());
         rootM.setTop(BotonesArribaPrincipal());
 
         rootCE.setCenter(CitaEstetica());
@@ -212,7 +216,6 @@ public class Diseño {
         validar.LetrasCaracterEspecial(DireccionTxt);
 
 
-       // gridpane.add(lblTitulo, 0, 0);
         gridpane.add(lblNombre, 0, 2);
         gridpane.add(NombreTxt, 1, 2);
 
@@ -282,10 +285,10 @@ public class Diseño {
         //ComboRaza.setPrefHeight(100);
         ComboRaza.setPrefWidth(220);
         ComboEspecie.getItems().addAll(especie);
-
+        idClienteTxt.setVisible(false);
         ComboEspecie.setValue("-");
         ComboEspecie.getSelectionModel().selectedItemProperty().addListener((v, OldValue, newValue) -> cambiarDatoCombo(ComboEspecie, ComboRaza));
-
+        gridpanem.add(idClienteTxt, 1, 1);
         gridpanem.add(lblNombreMascota, 0, 2);
         gridpanem.add(NombreMascotaTxt, 1, 2);
 
@@ -304,7 +307,7 @@ public class Diseño {
 
         CitaMBtn.setOnAction(e -> window.setScene(sceneCitaM));
         CitaEBtn.setOnAction(e -> window.setScene(sceneCitaE));
-        GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(NombreTxt, ComboEspecie, ComboRaza, ComboHM, EdadTxt));
+        GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(idClienteTxt,NombreMascotaTxt, ComboEspecie, ComboRaza, ComboHMmascota, EdadTxt));
         AtrasBtn.setOnAction(e -> window.setScene(sceneBuscar));
 
         //root2M.getChildren().addAll(GuardarMascotaBtn, AtrasBtn);
@@ -593,6 +596,7 @@ evento.foco(textAreaProb,textAreaPlanesD,textAreaPlanesT,textAreaInstrucciones);
                 columnaUnidadMedicion
         );
 
+
         ActualizarBtn.setOnAction(e->actualizarDatosInventario());
 
 
@@ -613,7 +617,7 @@ evento.foco(textAreaProb,textAreaPlanesD,textAreaPlanesT,textAreaInstrucciones);
      
     public VBox CentroModificarInv() {
 
-        String arreglo="";
+
 
         VBox root = new VBox(30);
         root.setPadding(new Insets(0, 0, 0, 50));
@@ -647,8 +651,6 @@ evento.foco(textAreaProb,textAreaPlanesD,textAreaPlanesT,textAreaInstrucciones);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
- 
 
         Button CerrarBtn = new Button("Cerrar");
         Button RegresarBtn = new Button("Regresar");
@@ -952,7 +954,9 @@ gridpane.add(lblProducto,1,1);
                 Connection conn = dc.Connect();
                 TablaBusqueda tablaBusqueda = (TablaBusqueda) tablaBuscarCliente.getSelectionModel().getSelectedItem();
                 nombreCliente = String.valueOf(tablaBusqueda.getNombreCliente());
+
                 rs = conn.createStatement().executeQuery("select * from Cliente WHERE Nombre ='"+nombreCliente+"'");
+
 
                 while(rs.next()){
                     idCliente = rs.getString(1);
@@ -960,12 +964,17 @@ gridpane.add(lblProducto,1,1);
                     direccionCliente = rs.getString(3);
                     telefonoCliente = rs.getString(4);
                     sexoCliente = rs.getString(5);
+
+
                 }
             }catch(SQLException ex){
                 System.err.println("No se pudo realizar la consulta");
             }
             finally {
+                idClienteTxt.setText(idCliente);
                 NombreTxt.setText(nombreCliente);
+                lblNombre.setText(nombreCliente+"                ");
+               // lblMascota.setText(nombreMascota+"                ");
                 DireccionTxt.setText(direccionCliente);
                 TelefonoTxt.setText(telefonoCliente);
                 ComboHM.setValue(sexoCliente);
@@ -980,7 +989,7 @@ gridpane.add(lblProducto,1,1);
 
 
 
-        AgregarMascotaBtn.setOnAction(e -> window.setScene(sceneACliente));
+        AgregarMascotaBtn.setOnAction(e -> window.setScene(sceneAMascota));
         AgregarClienteBtn.setOnAction(e -> window.setScene(sceneACliente));
         CerrarBtn.setOnAction(e -> window.close());
         AccederBtn.setOnAction(e -> window.setScene(scene));
@@ -1171,17 +1180,16 @@ root.getChildren().addAll(Ventalbl,gridpane);
     }
     public VBox DatosMascota() {
 
-        VBox root = new VBox(25);
-        HBox root2 = new HBox(5);
-        GridPane gridpane = new GridPane();
-        gridpane.setPadding(new Insets(0,0,0,0));
-        gridpane.setHgap(10);
-        gridpane.setVgap(5);
-        root.setPadding(new Insets(0, 0, 0, 0));
-        root.setAlignment(Pos.CENTER);
-        root2.setAlignment(Pos.CENTER);
-        gridpane.setAlignment(Pos.CENTER);
-
+        VBox rootM = new VBox(25);
+        HBox root2M = new HBox(220);
+        GridPane gridpanem = new GridPane();
+        gridpanem.setPadding(new Insets(0,0,0,0));
+        gridpanem.setHgap(10);
+        gridpanem.setVgap(5);
+        rootM.setPadding(new Insets(0, 0, 0, 0));
+        root2M.setAlignment(Pos.CENTER);
+        rootM.setAlignment(Pos.CENTER);
+        gridpanem.setAlignment(Pos.CENTER);
 
         Button GuardarMascotaBtn = new Button("Guardar Mascota");
         Button CitaMBtn = new Button("Cita Medica");
@@ -1189,70 +1197,70 @@ root.getChildren().addAll(Ventalbl,gridpane);
         Button AtrasBtn = new Button("Atras");
 
 
-        Label lblTitulo = new Label("FORMULARIO PARA AGREGAR MASCOTA");
-        lblTitulo.setStyle("-fx-font-size: 20");
-        Label lblNombre = new Label("Nombre:");
+        Label lblTituloM = new Label(" MASCOTA");
+       // lblTitulo.setStyle("-fx-font-size: 20");
+        Label lblNombreMascota = new Label("Nombre:");
         Label lblEspecie = new Label("Especie:");
         Label lblRaza = new Label("Raza:");
-        Label lblSexo = new Label("Sexo:");
+        Label lblSexoM = new Label("Sexo:");
         Label lblEdad = new Label("Edad:");
+        Label lblCliente = new Label("Cliente:");
 
 
-        TextField NombreTxt = new TextField();
-        //TextField EspecieTxt = new TextField();
-        //TextField RazaTxt = new TextField();
+        TextField NombreMascotaTxt = new TextField();
+
         TextField EdadTxt = new TextField();
 
-        ObservableList<String> options =
-                FXCollections.observableArrayList(
-                        "H",
-                        "M"
-                );
-        // ComboBox ComboHM =new ComboBox(options);
+        validar.SoloLetras(NombreTxt);
+        validar.SoloNumeros(EdadTxt);
 
-        ComboBox ComboHM = new ComboBox();
-        ComboHM.getItems().addAll("H", "M");
-        ComboHM.setValue("-");
+        ComboBox ComboHMmascota =new ComboBox();
+        ComboHMmascota.getItems().addAll("H", "M");
+        ComboHMmascota.setValue("-");
         ObservableList<String> especie =
                 FXCollections.observableArrayList(
                         "Canino",
                         "Gatos"
                 );
-                 ChoiceBox ComboEspecie = new ChoiceBox();
+        ChoiceBox ComboEspecie = new ChoiceBox();
 
 
-                ComboBox ComboRaza = new ComboBox();
+        ComboBox ComboRaza = new ComboBox();
+        //ComboRaza.setPrefHeight(100);
+        ComboRaza.setPrefWidth(220);
+        ComboEspecie.getItems().addAll(especie);
+        idClienteTxt.setVisible(false);
+        ComboEspecie.setValue("-");
+        ComboEspecie.getSelectionModel().selectedItemProperty().addListener((v, OldValue, newValue) -> cambiarDatoCombo(ComboEspecie, ComboRaza));
+        gridpanem.add(lblCliente, 0, 1);
+        gridpanem.add(lblNombre, 1, 1);
 
-             ComboEspecie.getItems().addAll(especie);
+        gridpanem.add(lblNombreMascota, 0, 2);
+        gridpanem.add(NombreMascotaTxt, 1, 2);
 
-                 ComboEspecie.setValue("-");
-                 ComboEspecie.getSelectionModel().selectedItemProperty().addListener((v, OldValue, newValue) -> cambiarDatoCombo(ComboEspecie, ComboRaza));
+        gridpanem.add(lblEspecie, 0, 3);
+        gridpanem.add(ComboEspecie, 1, 3);
 
+        gridpanem.add(lblRaza, 0, 4);
+        gridpanem.add(ComboRaza, 1, 4);
 
+        gridpanem.add(lblSexoM, 0, 5);
+        gridpanem.add(ComboHMmascota, 1, 5);
 
-            gridpane.add(lblNombre, 0, 6);
-            gridpane.add(NombreTxt, 1, 6);
-
-            gridpane.add(lblEspecie, 0, 7);
-            gridpane.add(ComboEspecie, 1, 7);
-
-            gridpane.add(lblRaza, 0, 8);
-            gridpane.add(ComboRaza, 1, 8);
-
-            gridpane.add(lblSexo, 0, 9);
-            gridpane.add(ComboHM, 1, 9);
-
-            gridpane.add(lblEdad, 0, 10);
-            gridpane.add(EdadTxt, 1, 10);
+        gridpanem.add(lblEdad, 0, 6);
+        gridpanem.add(EdadTxt, 1, 6);
 
 
-            CitaMBtn.setOnAction(e -> window.setScene(sceneCitaM));
-            CitaEBtn.setOnAction(e -> window.setScene(sceneCitaE));
-            GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(NombreTxt, ComboEspecie, ComboRaza, ComboHM, EdadTxt));
-            AtrasBtn.setOnAction(e -> window.setScene(sceneBuscar));
-            root2.getChildren().addAll(GuardarMascotaBtn, CitaMBtn, CitaEBtn, AtrasBtn);
-            root.getChildren().addAll(lblTitulo,gridpane, root2);
-            return root;
+        CitaMBtn.setOnAction(e -> window.setScene(sceneCitaM));
+        CitaEBtn.setOnAction(e -> window.setScene(sceneCitaE));
+        GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(idClienteTxt,NombreMascotaTxt, ComboEspecie, ComboRaza, ComboHMmascota, EdadTxt));
+        AtrasBtn.setOnAction(e -> window.setScene(sceneBuscar));
+
+        //root2M.getChildren().addAll(GuardarMascotaBtn, AtrasBtn);
+        rootM.getChildren().addAll(lblTituloM,gridpanem,GuardarMascotaBtn,AtrasBtn);
+return rootM;
+
+
     }
 
     public void cambiarDeInventario(ChoiceBox ComboInventario ){
@@ -1384,6 +1392,11 @@ root.getChildren().addAll(Ventalbl,gridpane);
         hBox2.setPadding(new Insets(0, 0, 0, 38));
         hBox2.setAlignment(Pos.CENTER);
 
+        HBox hBox0 = new HBox(10);
+        hBox0.setPadding(new Insets(0, 0, 0,0 ));
+        hBox0.setAlignment(Pos.CENTER);
+        hBox0.setStyle("-fx-background-color: skyblue");
+
         GridPane gridpane = new GridPane();
         gridpane.setPadding(new Insets(10));
         gridpane.setHgap(5);
@@ -1403,6 +1416,12 @@ root.getChildren().addAll(Ventalbl,gridpane);
         Label lbl10 = new Label("SISTEMA NERVIOSO");
         Label lbl11 = new Label("GANGLIOS");
         Label lbl12 = new Label("MUCOSAS");
+
+        Label lblCliente =new Label("Cliente:");
+lblCliente.setStyle("-fx-text-fill:  white");
+        Label lblMascota =new Label("Mascota:");
+        lblMascota.setStyle("-fx-text-fill:  white");
+            hBox0.getChildren().addAll(lblCliente,lblNombre,lblMascota);
 
         Label lblFecha = new Label("Fecha: ");
         Label lblTemperatura = new Label("Temperatura: ");
@@ -1627,7 +1646,7 @@ root.getChildren().addAll(Ventalbl,gridpane);
         Anor12Rbtn.setOnAction(e -> funcion.cambiarModo(Anor12Rbtn, textArea12));
 
 
-        root.getChildren().addAll(hBox, gridpane, hBox2);
+        root.getChildren().addAll(hBox0,hBox, gridpane, hBox2);
       /*  java.util.Date fecha = new java.util.Date();
         long fechasistema = fecha.getTime();
         java.sql.Date fechasql2 = new java.sql.Date(fechasistema);

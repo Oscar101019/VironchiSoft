@@ -49,25 +49,26 @@ public class Funciones {
         DatosCliente(Nombre.getText(),Direccion.getText(),Telefono.getText());
     }*/
 
-    public void DatosMascota( TextField Nombre, ChoiceBox Especie, ComboBox Raza, ComboBox Sexo, TextField Descripcion) {
+    public void DatosMascota( TextField idCliente,TextField Nombre, ChoiceBox Especie, ComboBox Raza, ComboBox Sexo, TextField Descripcion) {
+        String idcliente = idCliente.getText();
         String nombre = Nombre.getText();
         String especie = Especie.getValue().toString();
         String raza = Raza.getValue().toString();
         String sexo = Sexo.getValue().toString();
         String descripcion = Descripcion.getText();
 
-        if (Nombre.getText().length() != 0 && Especie.getValue().toString().length() != 0 && Raza.getValue().toString().length() != 0 && Sexo.getValue().toString() != "-" && Descripcion.getText().length() != 0) {
+        if (idCliente.getText().length()!=0 && Nombre.getText().length() != 0 && Especie.getValue().toString().length() != 0 && Raza.getValue().toString().length() != 0 && Sexo.getValue().toString() != "-" && Descripcion.getText().length() != 0) {
             try {
                 Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
                 Statement statement = connection.createStatement();
-                ResultSet insertar = statement.executeQuery("insert into mascota (Nombre,Especie,Raza,Sexo,Descripcion) values(" + nombre + "','" + especie + "','" + raza + "','" + sexo + "','" + descripcion + "')");
+                ResultSet insertar = statement.executeQuery("insert into mascota (id_Cliente,Nombre,Especie,Raza,Sexo,Descripcion) values('" + idcliente + "','" + nombre + "','" + especie + "','" + raza + "','" + sexo + "','" + descripcion + "')");
 
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            validar.CampoVacioMascota(Nombre, Especie, Raza, Sexo, Descripcion);
+            //validar.CampoVacioMascota(Nombre, Especie, Raza, Sexo, Descripcion);
         }
     }
 
