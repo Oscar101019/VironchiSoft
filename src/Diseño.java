@@ -21,10 +21,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -45,9 +42,9 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * Created by juven on 29/3/2017.
  */
 public class Diseño {
-    public BorderPane root, root1, rootCM, rootCE, rootC, rootM, rootABAJOCM, rootLogin, rootBuscar, rootBuscarCliente, rootInventario,root4, rootProveedores, rootModificarInv, rootAgregarInv;
+    public BorderPane root, root1, rootCM, rootCE, rootC, rootM, rootABAJOCM, rootLogin, rootBuscar, rootBuscarCliente, rootInventario,root4, rootVentas, rootModificarInv, rootAgregarInv;
     public Stage window;
-    public Scene scene, sceneAgregar, sceneCitaM, sceneCitaE, sceneACliente, sceneAMascota, sceneLogin, sceneBuscar, sceneBuscarCliente, sceneInvetario, sceneProveedores, sceneModificarInv, sceneAgregarInv;                    //M=Medica       E=Estetica
+    public Scene scene, sceneAgregar, sceneCitaM, sceneCitaE, sceneACliente, sceneAMascota, sceneLogin, sceneBuscar, sceneBuscarCliente, sceneInvetario, sceneVentas, sceneModificarInv, sceneAgregarInv;                    //M=Medica       E=Estetica
 
     Funciones funcion = new Funciones();
     Validacion validar = new Validacion();
@@ -82,7 +79,7 @@ public class Diseño {
         rootBuscar = new BorderPane();
         rootBuscarCliente = new BorderPane();
         rootInventario = new BorderPane();
-        rootProveedores = new BorderPane();
+        rootVentas = new BorderPane();
         rootModificarInv = new BorderPane();
         rootAgregarInv = new BorderPane();
 
@@ -102,8 +99,8 @@ public class Diseño {
         rootCM.setRight(DerechaCM());
 
         System.out.println("initUi");
-        rootC.setLeft(DatosClienteIzquierda());
-        rootC.setRight(DatosClienteDerecha());
+        rootC.setCenter(DatosClienteCentro());
+
         rootC.setTop(BotonesArribaPrincipal());
 
         rootM.setCenter(DatosMascota());
@@ -119,7 +116,8 @@ public class Diseño {
         rootModificarInv.setTop(BotonesArribaPrincipal());
         rootModificarInv.setCenter(CentroModificarInv());
 
-        rootProveedores.setTop(BotonesArribaPrincipal());
+        rootVentas.setTop(BotonesArribaPrincipal());
+        rootVentas.setCenter(CentroVentas());
 
 
         sceneLogin = new Scene(rootLogin, 1150, 700);
@@ -132,7 +130,7 @@ public class Diseño {
         sceneACliente = new Scene(rootC, 1150, 700);
         sceneAMascota = new Scene(rootM, 1150, 700);
         sceneInvetario = new Scene(rootInventario, 1150, 700);
-        sceneProveedores = new Scene(rootProveedores, 1150, 700);
+        sceneVentas = new Scene(rootVentas, 1150, 700);
         sceneAgregarInv = new Scene(rootAgregarInv, 1150, 700);
         sceneModificarInv = new Scene(rootModificarInv, 1150, 700);
 
@@ -146,7 +144,7 @@ public class Diseño {
         sceneACliente.getStylesheets().add("Estilo.css");
         sceneAMascota.getStylesheets().add("Estilo.css");
         sceneInvetario.getStylesheets().add("Estilo.css");
-        sceneProveedores.getStylesheets().add("Estilo.css");
+        sceneVentas.getStylesheets().add("Estilo.css");
         sceneModificarInv.getStylesheets().add("Estilo.css");
         sceneAgregarInv.getStylesheets().add("Estilo.css");
 
@@ -154,7 +152,7 @@ public class Diseño {
         evento.Mensaje(scene);
         evento.Cerrar(window);
         evento.PantallaCompleta(window);
-        evento.cambiar(scene,sceneBuscar,sceneInvetario,sceneProveedores,window);
+        evento.cambiar(scene,sceneBuscar,sceneInvetario,sceneVentas,window);
         stage.setTitle("VironchiSoft");
 
         stage.setScene(sceneLogin);
@@ -166,104 +164,22 @@ public class Diseño {
 
     }
 
-    public VBox  DatosClienteDerecha() {
 
-        VBox root = new VBox(25);
-        HBox root2 = new HBox(5);
+
+
+    public VBox DatosClienteCentro() {
+        VBox rootMaster =new VBox(20);
+        rootMaster.setAlignment(Pos.CENTER);
+
+
+        VBox root = new VBox(45);
+
+        root.setAlignment(Pos.CENTER);
         GridPane gridpane = new GridPane();
         gridpane.setPadding(new Insets(0,0,0,0));
         gridpane.setHgap(10);
         gridpane.setVgap(5);
-        root.setPadding(new Insets(0, 0, 0, 0));
-        root.setAlignment(Pos.CENTER);
-        root2.setAlignment(Pos.CENTER);
         gridpane.setAlignment(Pos.CENTER);
-
-
-        Button GuardarMascotaBtn = new Button("Guardar Mascota");
-        Button CitaMBtn = new Button("Cita Medica");
-        Button CitaEBtn = new Button("Cita Estetica");
-        Button AtrasBtn = new Button("Atras");
-
-
-        Label lblTitulo = new Label("FORMULARIO PARA AGREGAR MASCOTA");
-        lblTitulo.setStyle("-fx-font-size: 20");
-        Label lblNombre = new Label("Nombre:");
-        Label lblEspecie = new Label("Especie:");
-        Label lblRaza = new Label("Raza:");
-        Label lblSexo = new Label("Sexo:");
-        Label lblEdad = new Label("Edad:");
-
-
-        //TextField NombreTxt = new TextField();
-        //TextField EspecieTxt = new TextField();
-        //TextField RazaTxt = new TextField();
-        TextField EdadTxt = new TextField();
-        //TextField IDCLIENTETxt = new TextField("-");
-        validar.SoloLetras(NombreTxt);
-        validar.SoloNumeros(EdadTxt);
-        ObservableList<String> options =
-                FXCollections.observableArrayList(
-                        "H",
-                        "M"
-                );
-
-        ComboHM.getItems().addAll("H", "M");
-        ComboHM.setValue("-");
-        ObservableList<String> especie =
-                FXCollections.observableArrayList(
-                        "Canino",
-                        "Gatos"
-                );
-        ChoiceBox ComboEspecie = new ChoiceBox();
-
-
-        ComboBox ComboRaza = new ComboBox();
-
-        ComboEspecie.getItems().addAll(especie);
-
-        ComboEspecie.setValue("-");
-        ComboEspecie.getSelectionModel().selectedItemProperty().addListener((v, OldValue, newValue) -> cambiarDatoCombo(ComboEspecie, ComboRaza));
-
-        gridpane.add(lblNombre, 0, 6);
-        gridpane.add(NombreTxt, 1, 6);
-
-        gridpane.add(lblEspecie, 0, 7);
-        gridpane.add(ComboEspecie, 1, 7);
-
-
-
-        gridpane.add(lblRaza, 0, 8);
-        gridpane.add(ComboRaza, 1, 8);
-
-        gridpane.add(lblSexo, 0, 9);
-        gridpane.add(ComboHM, 1, 9);
-
-        gridpane.add(lblEdad, 0, 10);
-        gridpane.add(EdadTxt, 1, 10);
-
-
-        CitaMBtn.setOnAction(e -> window.setScene(sceneCitaM));
-        CitaEBtn.setOnAction(e -> window.setScene(sceneCitaE));
-        GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(NombreTxt, ComboEspecie, ComboRaza, ComboHM, EdadTxt));
-        AtrasBtn.setOnAction(e -> window.setScene(sceneBuscar));
-        root2.getChildren().addAll(GuardarMascotaBtn, AtrasBtn);
-        root.getChildren().addAll(lblTitulo,gridpane, root2);
-        return root;
-    }
-
-
-    public HBox DatosClienteIzquierda() {
-
-
-        HBox root = new HBox(5);
-        root.setPadding(new Insets(40, 0, 0, 40));
-        root.setAlignment(Pos.CENTER);
-        GridPane gridpane = new GridPane();
-        gridpane.setPadding(new Insets(0,0,0,0));
-        gridpane.setHgap(10);
-        gridpane.setVgap(5);
-
 
 
         Label lblTitulo = new Label("CLIENTE");
@@ -276,9 +192,9 @@ public class Diseño {
                         "H",
                         "M"
                 );
-        // ComboBox ComboHM =new ComboBox(options);
+         ComboBox ComboHM =new ComboBox(options);
 
-        ComboBox ComboHM = new ComboBox();
+
         ComboHM.getItems().addAll("H", "M");
         ComboHM.setValue("-");
 
@@ -289,16 +205,14 @@ public class Diseño {
         Label lblSexo = new Label(" Sexo:");
 
         //TextField IDCLIENTETxt = new TextField();
-        TextField NombreTxt = new TextField();
-        TextField DireccionTxt = new TextField();
-        TextField TelefonoTxt = new TextField();
+   //     TextField NombreTxt = new TextField();
+       // TextField DireccionTxt = new TextField();
+   //     TextField TelefonoTxt = new TextField();
         validar.SoloLetras(NombreTxt);
         validar.LetrasCaracterEspecial(DireccionTxt);
 
-        GuardarClienteBtn.setAlignment(Pos.CENTER);
 
-        //GuardarClienteBtn.setOnAction(e -> funcion.DatosCliente(NombreTxt, DireccionTxt, TelefonoTxt, ComboHM));
-        gridpane.add(lblTitulo, 1, 0);
+       // gridpane.add(lblTitulo, 0, 0);
         gridpane.add(lblNombre, 0, 2);
         gridpane.add(NombreTxt, 1, 2);
 
@@ -311,14 +225,109 @@ public class Diseño {
         gridpane.add(lblSexo, 0, 5);
         gridpane.add(ComboHM, 1, 5);
 
-
-        gridpane.add(GuardarClienteBtn, 1, 6);
+        //gridpane.add(GuardarClienteBtn, 1, 6);
+        GuardarClienteBtn.setOnAction(e -> funcion.DatosCliente(NombreTxt, DireccionTxt, TelefonoTxt, ComboHM));
 
         System.out.println("SceneDatosCliente()");
+            root.getChildren().addAll(lblTitulo,gridpane,GuardarClienteBtn);
 
 
-        root.getChildren().addAll(gridpane);
-        return root;
+
+
+        VBox rootM = new VBox(25);
+        HBox root2M = new HBox(220);
+        GridPane gridpanem = new GridPane();
+        gridpanem.setPadding(new Insets(0,0,0,0));
+        gridpanem.setHgap(10);
+        gridpanem.setVgap(5);
+        rootM.setPadding(new Insets(0, 0, 0, 0));
+        root2M.setAlignment(Pos.CENTER);
+        rootM.setAlignment(Pos.CENTER);
+        gridpanem.setAlignment(Pos.CENTER);
+
+        Button GuardarMascotaBtn = new Button("Guardar Mascota");
+        Button CitaMBtn = new Button("Cita Medica");
+        Button CitaEBtn = new Button("Cita Estetica");
+        Button AtrasBtn = new Button("Atras");
+
+
+        Label lblTituloM = new Label(" MASCOTA");
+        lblTitulo.setStyle("-fx-font-size: 20");
+        Label lblNombreMascota = new Label("Nombre:");
+        Label lblEspecie = new Label("Especie:");
+        Label lblRaza = new Label("Raza:");
+        Label lblSexoM = new Label("Sexo:");
+        Label lblEdad = new Label("Edad:");
+
+
+        TextField NombreMascotaTxt = new TextField();
+
+        TextField EdadTxt = new TextField();
+
+        validar.SoloLetras(NombreTxt);
+        validar.SoloNumeros(EdadTxt);
+
+        ComboBox ComboHMmascota =new ComboBox();
+        ComboHMmascota.getItems().addAll("H", "M");
+        ComboHMmascota.setValue("-");
+        ObservableList<String> especie =
+                FXCollections.observableArrayList(
+                        "Canino",
+                        "Gatos"
+                );
+        ChoiceBox ComboEspecie = new ChoiceBox();
+
+
+        ComboBox ComboRaza = new ComboBox();
+        //ComboRaza.setPrefHeight(100);
+        ComboRaza.setPrefWidth(220);
+        ComboEspecie.getItems().addAll(especie);
+
+        ComboEspecie.setValue("-");
+        ComboEspecie.getSelectionModel().selectedItemProperty().addListener((v, OldValue, newValue) -> cambiarDatoCombo(ComboEspecie, ComboRaza));
+
+        gridpanem.add(lblNombreMascota, 0, 2);
+        gridpanem.add(NombreMascotaTxt, 1, 2);
+
+        gridpanem.add(lblEspecie, 0, 3);
+        gridpanem.add(ComboEspecie, 1, 3);
+
+        gridpanem.add(lblRaza, 0, 4);
+        gridpanem.add(ComboRaza, 1, 4);
+
+        gridpanem.add(lblSexoM, 0, 5);
+        gridpanem.add(ComboHMmascota, 1, 5);
+
+        gridpanem.add(lblEdad, 0, 6);
+        gridpanem.add(EdadTxt, 1, 6);
+
+
+        CitaMBtn.setOnAction(e -> window.setScene(sceneCitaM));
+        CitaEBtn.setOnAction(e -> window.setScene(sceneCitaE));
+        GuardarMascotaBtn.setOnAction(e -> funcion.DatosMascota(NombreTxt, ComboEspecie, ComboRaza, ComboHM, EdadTxt));
+        AtrasBtn.setOnAction(e -> window.setScene(sceneBuscar));
+
+        //root2M.getChildren().addAll(GuardarMascotaBtn, AtrasBtn);
+        rootM.getChildren().addAll(lblTituloM,gridpanem,GuardarMascotaBtn);
+
+
+
+
+
+
+        Label lblPrincipal = new Label("FORMULARIO PARA AGREGAR UN CLIENTE Y/O MASCOTA");
+         lblPrincipal.setStyle("-fx-font-size: 24");
+            root2M.getChildren().addAll(root,rootM);
+
+            javafx.scene.image.Image agregar = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/plus.png"));
+            GuardarClienteBtn.setGraphic(new ImageView(agregar));
+            GuardarMascotaBtn.setGraphic(new ImageView(agregar));
+        javafx.scene.image.Image atras = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/back.png"));
+        AtrasBtn.setGraphic(new ImageView(atras));
+
+
+            rootMaster.getChildren().addAll(lblPrincipal,root2M,AtrasBtn);
+        return rootMaster;
     }
 
 
@@ -547,7 +556,13 @@ evento.foco(textAreaProb,textAreaPlanesD,textAreaPlanesT,textAreaInstrucciones);
         Button ModicarBtn = new Button("Modificar");
  
         Button ActualizarBtn = new Button("Actualizar");
-        //Rectangle rectangle = new Rectangle(900,400);
+        javafx.scene.image.Image agregar = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/pencil.png"));
+        AgregarBtn.setGraphic(new ImageView(agregar));
+        javafx.scene.image.Image cerrar = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/minimimiga.png"));
+        CerrarBtn.setGraphic(new ImageView(cerrar));
+        javafx.scene.image.Image modificar = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/configuration2.png"));
+        ModicarBtn.setGraphic(new ImageView(modificar));
+
 
         TableColumn columnaNombre = new TableColumn("Nombre");
         columnaNombre.setCellValueFactory(
@@ -582,8 +597,6 @@ evento.foco(textAreaProb,textAreaPlanesD,textAreaPlanesT,textAreaInstrucciones);
 
 
 
-        //gridpane.add(rectangle ,0,0);
-         //gridpane.add(tablaInventarios,0,0);
 
 
         CerrarBtn.setOnAction( e-> window.close());
@@ -805,6 +818,12 @@ gridpane.add(lblProducto,1,1);
     final ObservableList<TablaBusqueda> datosBuscarCliente = FXCollections.observableArrayList();
 
 
+
+
+
+
+
+
    /* public ObservableList eventoBuscarCliente(ObservableList data){
         try{
             Connection conn = dc.Connect();
@@ -850,21 +869,18 @@ gridpane.add(lblProducto,1,1);
         root2.setPadding(new Insets(0, 0, 0, 30));
         root2.setAlignment(Pos.CENTER);
 
+        HBox root3 = new HBox(10);
+        root3.setPadding(new Insets(0, 0, 0, 30));
+        root3.setAlignment(Pos.CENTER);
+
         GridPane gridpane = new GridPane();
-        GridPane gridpane2 = new GridPane();
-        GridPane gridpane3 = new GridPane();
         gridpane.setPadding(new Insets(0, 0, 0, 0));
         gridpane.setHgap(5);
         gridpane.setVgap(10);
         gridpane.setAlignment(Pos.CENTER);
 
-        gridpane2.setPadding(new Insets(0,0,0,0));
-        gridpane2.setHgap(5);
-        gridpane2.setVgap(10);
 
-        gridpane3.setPadding(new Insets(0,0,0,0));
-        gridpane3.setHgap(5);
-        gridpane3.setVgap(10);
+
 
         txtBuscarCliente = new TextField("");
         txtBuscarCliente.setPromptText("Puede realizar una busqueda por Cliente o por Mascota");
@@ -949,11 +965,10 @@ gridpane.add(lblProducto,1,1);
                 System.err.println("No se pudo realizar la consulta");
             }
             finally {
-                System.err.println(idCliente);
-                System.err.println(nombreCliente);
-                System.err.println(direccionCliente);
-                System.err.println(telefonoCliente);
-                System.err.println(sexoCliente);
+                NombreTxt.setText(nombreCliente);
+                DireccionTxt.setText(direccionCliente);
+                TelefonoTxt.setText(telefonoCliente);
+                ComboHM.setValue(sexoCliente);
             }
 
         });
@@ -962,14 +977,8 @@ gridpane.add(lblProducto,1,1);
 
         gridpane.add(txtBuscarCliente,3,1);
         gridpane.add(tablaBuscarCliente,3,2);
-        gridpane3.add(BuscarClienteBtn,0,0);
-        gridpane.add(gridpane3, 3, 5);
-        gridpane3.add(AgregarClienteBtn, 1, 0);
 
 
-        gridpane3.add(AgregarMascotaBtn, 2, 0);
-        gridpane.add(CitaMBtn, 16, 18);
-        gridpane.add(CitaEBtn, 17, 18);
 
         AgregarMascotaBtn.setOnAction(e -> window.setScene(sceneACliente));
         AgregarClienteBtn.setOnAction(e -> window.setScene(sceneACliente));
@@ -979,8 +988,9 @@ gridpane.add(lblProducto,1,1);
         CitaEBtn.setOnAction(e -> window.setScene(sceneCitaE));
 
 
-        //   root2.getChildren().addAll(AccederBtn,CerrarBtn);
-        root.getChildren().addAll(lblBienvenida, gridpane, root2);
+          root2.getChildren().addAll(BuscarClienteBtn,AgregarClienteBtn,AgregarMascotaBtn);
+        root3.getChildren().addAll(CitaMBtn,CitaEBtn);
+        root.getChildren().addAll(lblBienvenida, gridpane, root2,root3);
 
        // root.getChildren().addAll(tablaBuscarCliente, gridpane, root2);
 
@@ -1050,7 +1060,48 @@ gridpane.add(lblProducto,1,1);
         return root;
 
     }
- 
+
+    public VBox CentroVentas() {
+
+        VBox root = new VBox(5);
+        root.setPadding(new Insets(0, 0, 0, 0));
+        root.setAlignment(Pos.CENTER);
+
+        HBox root2 = new HBox(10);
+        root2.setPadding(new Insets(0, 0, 0, 30));
+        root2.setAlignment(Pos.CENTER);
+
+
+        GridPane gridpane = new GridPane();
+        gridpane.setPadding(new Insets(0, 60, 80, 0));
+        gridpane.setHgap(5);
+        gridpane.setVgap(5);
+        gridpane.setAlignment(Pos.CENTER);
+
+        Label Ventalbl =new Label("MODULO DE VENTA");
+        Label Cantidadlbl =new Label("Cantidad");
+
+         Spinner<Integer> spinner = new Spinner<Integer>();
+        SpinnerValueFactory<Integer> valueFactory =
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 99);
+spinner.setPrefWidth(55);
+        spinner.setPrefHeight(20);
+        spinner.setValueFactory(valueFactory);
+
+        Rectangle rectangle = new Rectangle(400,200);
+        gridpane.add(rectangle,0,1 );
+gridpane.add(Cantidadlbl,2,2);
+        gridpane.add(spinner,3,2);
+
+
+root.getChildren().addAll(Ventalbl,gridpane);
+
+
+
+        return root;
+
+    }
+
     public  HBox BtnAbajoAgendarCita() {
  
 
@@ -1092,12 +1143,12 @@ gridpane.add(lblProducto,1,1);
         javafx.scene.image.Image image1 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/archive.png"));
         javafx.scene.image.Image image2 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/clock.png"));
         javafx.scene.image.Image image3 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/delivery1.png"));
-         javafx.scene.image.Image image4 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/note.png"));
+         javafx.scene.image.Image image4 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/basket.png"));
          javafx.scene.image.Image image5 = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/configuration2.png"));
         Button CitaBtn = new Button("MOSTRAR CITA"); //
         Button ACitaBtn = new Button("AGENDAR CITA");
         Button InvBtn = new Button("INVENTARIO");
-        Button ProvBtn = new Button("PROVEEDORES");
+        Button ProvBtn = new Button("VENTAS");
         Button MasBtn = new Button("+");
         CitaBtn.setEffect(sombra);
         InvBtn.setEffect(sombra);
@@ -1113,8 +1164,8 @@ gridpane.add(lblProducto,1,1);
         ACitaBtn.setOnAction(e -> window.setScene(sceneBuscar));
         CitaBtn.setOnAction(e -> window.setScene(scene));
         InvBtn.setOnAction(e -> window.setScene(sceneInvetario));
-        ProvBtn.setOnAction(e -> window.setScene(sceneProveedores));
-
+        ProvBtn.setOnAction(e -> window.setScene(sceneVentas));
+        //btn.setOnAction(e -> actualizarDatos());
 
         return root;
     }
