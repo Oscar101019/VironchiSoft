@@ -22,7 +22,7 @@ public class Eventos {
     }
     public void Cerrar(Stage stage) {
         stage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode().equals(KeyCode.C)) {
+            if (event.getCode().equals(KeyCode.F1)) {
                 stage.close();
             }
         });
