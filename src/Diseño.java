@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -463,7 +464,7 @@ evento.foco(textAreaProb,textAreaPlanesD,textAreaPlanesT,textAreaInstrucciones);
         return root;
 
     }
- 
+
     public void actualizarDatos(){
         table.setItems(eventoMostrardatosEnTabla( datos));
     }
@@ -557,7 +558,7 @@ evento.foco(textAreaProb,textAreaPlanesD,textAreaPlanesT,textAreaInstrucciones);
         Button CerrarBtn = new Button("Cerrar");
         Button AgregarBtn = new Button("Agregar");
         Button ModicarBtn = new Button("Modificar");
- 
+ Label lblTituloInv = new Label("Inventario");
         Button ActualizarBtn = new Button("Actualizar");
         javafx.scene.image.Image agregar = new javafx.scene.image.Image(getClass().getResourceAsStream("Recursos/pencil.png"));
         AgregarBtn.setGraphic(new ImageView(agregar));
@@ -818,9 +819,23 @@ gridpane.add(lblProducto,1,1);
 
     final TableView<TablaBusqueda> tablaBuscarCliente = new TableView<>();
     final ObservableList<TablaBusqueda> datosBuscarCliente = FXCollections.observableArrayList();
+/////////////////////////////////////////////////////// VENTAS
 
+    private TextField txtBuscarProducto;
+    private TableColumn<TablaProductosVenta, String> columnaNombreProducto;
+    private TableColumn<TablaProductosVenta, String> columnaPrecioUnidadProducto;
+    private TableColumn<TablaProductosVenta, String>  columnaCantidad;
 
+    final TableView<TablaProductosVenta> tablaProductosVenta = new TableView<>();
+    final ObservableList<TablaProductosVenta> datosBuscarProductos = FXCollections.observableArrayList();
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private TableColumn<TablaProductosCobrar, String> columnaNombreProductoVenta;
+    private TableColumn<TablaProductosCobrar, String> columnaPrecio;
+    private TableColumn<TablaProductosCobrar, String>  columnaCantidaVenta;
+
+    final TableView<TablaProductosCobrar> tablaProductosCobrar = new TableView<>();
+  //  final ObservableList<TablaProductosCobrar> datosBuscarProductos = FXCollections.observableArrayList();
 
 
 
@@ -841,25 +856,45 @@ gridpane.add(lblProducto,1,1);
     }//FIN BUSCAR CLIENTE*/
    ResultSet rs;
    public void actualizarTabla(){
-       datosBuscarCliente.clear();
-       try{
-           Connection conn = dc.Connect();
-           String query = "SELECT * FROM vistaBuscarCliente";
-           rs = conn.createStatement().executeQuery(query);
-           while(rs.next()){
-               datosBuscarCliente.add(new TablaBusqueda(
-                       rs.getString(1),
-                       rs.getString(2),
-                       rs.getString(3),
-                       rs.getString(4)
-               ));
-               tablaBuscarCliente.setItems(datosBuscarCliente);
-           }//FIN WHILE
-           rs.close();
-       }catch (SQLException ex){
-           System.err.println("No se pudo mostrar la tabla");
-       }
-   }
+        datosBuscarCliente.clear();
+        try{
+            Connection conn = dc.Connect();
+            String query = "SELECT * FROM vistaBuscarCliente";
+            rs = conn.createStatement().executeQuery(query);
+            while(rs.next()){
+                datosBuscarCliente.add(new TablaBusqueda(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4)
+                ));
+                tablaBuscarCliente.setItems(datosBuscarCliente);
+            }//FIN WHILE
+            rs.close();
+        }catch (SQLException ex){
+            System.err.println("No se pudo mostrar la tabla");
+        }
+    }
+    public void actualizarTablaProducto(){
+        datosBuscarProductos.clear();
+        try{
+            Connection conn = dc.Connect();
+            String query = "SELECT * FROM producto";
+            rs = conn.createStatement().executeQuery(query);
+            while(rs.next()){
+                datosBuscarProductos.add(new TablaProductosVenta(
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7)
+
+                ));
+                tablaProductosVenta.setItems(datosBuscarProductos);
+            }//FIN WHILE
+            rs.close();
+        }catch (SQLException ex){
+            System.err.println("No se pudo mostrar la tabla");
+        }
+    }
 
     public VBox CentroBuscar() {
 
@@ -1072,15 +1107,24 @@ gridpane.add(lblProducto,1,1);
 
     public VBox CentroVentas() {
 
-        VBox root = new VBox(5);
+        VBox root = new VBox(20);
         root.setPadding(new Insets(0, 0, 0, 0));
-        root.setAlignment(Pos.CENTER);
+        root.setAlignment(Pos.TOP_CENTER);
 
         HBox root2 = new HBox(10);
         root2.setPadding(new Insets(0, 0, 0, 30));
         root2.setAlignment(Pos.CENTER);
 
+        HBox root3 = new HBox(10);
+        root3.setPadding(new Insets(0, 0, 0, 60));
+        root3.setAlignment(Pos.CENTER_LEFT);
 
+        HBox root4 = new HBox(10);
+        root4.setPadding(new Insets(0, 0, 0, 0));
+        root4.setAlignment(Pos.CENTER);
+
+        txtBuscarProducto = new TextField("");
+        txtBuscarProducto.setPromptText("Producto");
         GridPane gridpane = new GridPane();
         gridpane.setPadding(new Insets(0, 60, 80, 0));
         gridpane.setHgap(5);
@@ -1089,7 +1133,12 @@ gridpane.add(lblProducto,1,1);
 
         Label Ventalbl =new Label("MODULO DE VENTA");
         Label Cantidadlbl =new Label("Cantidad");
+        Label NombreProductolbl =new Label("Buscar:");
 
+        Button Agregarbtn = new Button (" Agrega");
+        Button Cancelarbtn = new Button (" Cancelar"); //Borrar la tabla
+        Button GenerarTicketbtn = new Button ("Cobrar");
+        Button Eliminarbtn = new Button (" Eliminar");
          Spinner<Integer> spinner = new Spinner<Integer>();
         SpinnerValueFactory<Integer> valueFactory =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 99);
@@ -1097,13 +1146,83 @@ spinner.setPrefWidth(55);
         spinner.setPrefHeight(20);
         spinner.setValueFactory(valueFactory);
 
-        Rectangle rectangle = new Rectangle(400,200);
-        gridpane.add(rectangle,0,1 );
-gridpane.add(Cantidadlbl,2,2);
-        gridpane.add(spinner,3,2);
+///Tabla Mostrar Productos
+        columnaNombreProducto = new TableColumn<>("Producto");
+        columnaCantidad = new TableColumn<>("Unidad ");
+        columnaPrecioUnidadProducto = new TableColumn<>("Precio");
+
+        columnaNombreProducto.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        columnaCantidad.setCellValueFactory(cellData -> cellData.getValue().precio_unidadProperty());
+        columnaPrecioUnidadProducto.setCellValueFactory(cellData -> cellData.getValue().unidad_medidaProperty());
+/////TAMAÑO
+        tablaProductosVenta.getColumns().addAll(
+                columnaNombreProducto,
+                columnaCantidad,
+                columnaPrecioUnidadProducto
+        );
+        columnaNombreProducto.setPrefWidth(120);
+        columnaCantidad.setPrefWidth(120);
+        columnaPrecioUnidadProducto.setPrefWidth(120);
+       tablaProductosVenta.setPrefSize(450,180);
+        actualizarTablaProducto();
+/////////////Buscar producto
+        FilteredList<TablaProductosVenta> filteredData= new FilteredList<>(datosBuscarProductos, e -> true);
+        txtBuscarProducto.setOnKeyPressed(e ->{
+            txtBuscarProducto.textProperty().addListener((observableValue, oldValue, newValue) ->{
+                filteredData.setPredicate((Predicate<? super TablaProductosVenta>) user->{
+                    if(newValue == null || newValue.isEmpty()){
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if(user.getNombre().contains(newValue)){
+                        return true;
+                    }else if(user.getPrecio_unidad().toLowerCase().contains(lowerCaseFilter)){
+                        return true;
+                    }
+                    return false;
+                });
+            });
+            SortedList<TablaProductosVenta> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(tablaProductosVenta.comparatorProperty());
+            tablaProductosVenta.setItems(sortedData);
+        });
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-root.getChildren().addAll(Ventalbl,gridpane);
+        ///Tabla Productos agregados
+        columnaNombreProductoVenta = new TableColumn<>("Producto");
+        columnaPrecio = new TableColumn<>("Cantidad ");
+        columnaCantidaVenta = new TableColumn<>("Precio");
+
+        columnaNombreProductoVenta.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        columnaPrecio.setCellValueFactory(cellData -> cellData.getValue().precio_unidadProperty());
+        columnaCantidaVenta.setCellValueFactory(cellData -> cellData.getValue().unidad_medidaProperty());
+/////TAMAÑO
+        tablaProductosCobrar.getColumns().addAll(
+                columnaNombreProductoVenta,
+                columnaPrecio,
+                columnaCantidaVenta
+        );
+        columnaNombreProductoVenta.setPrefWidth(120);
+        columnaPrecio.setPrefWidth(120);
+        columnaCantidaVenta.setPrefWidth(120);
+        tablaProductosCobrar.setPrefSize(450,320);
+
+
+
+
+
+
+///////////////////ACOMODO
+gridpane.add(Cantidadlbl,2,6);
+        gridpane.add(spinner,3,6);
+        gridpane.add(NombreProductolbl,0,6);
+        gridpane.add(txtBuscarProducto,1,6);
+gridpane.add(Agregarbtn,4,6);
+root4.getChildren().addAll(GenerarTicketbtn,Cancelarbtn);
+root3.getChildren().addAll(tablaProductosCobrar,Eliminarbtn);
+        root2.getChildren().addAll(gridpane,tablaProductosVenta);
+root.getChildren().addAll(Ventalbl,root2,root3,root4);
 
 
 
@@ -1176,8 +1295,13 @@ root.getChildren().addAll(Ventalbl,gridpane);
         ProvBtn.setOnAction(e -> window.setScene(sceneVentas));
         //btn.setOnAction(e -> actualizarDatos());
 
+
+
+
+
         return root;
     }
+
     public VBox DatosMascota() {
 
         VBox rootM = new VBox(25);
