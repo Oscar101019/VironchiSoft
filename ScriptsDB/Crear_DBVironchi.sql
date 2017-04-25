@@ -36,7 +36,9 @@ create table Adeudo(
 	Id_Adeudo int primary key AUTO_INCREMENT,
 	concepto varchar(1),
 	Descripcion VARCHAR(100),
-	CostoTotal double(6,2)
+	CostoTotal double(6,2),
+	Id_Cliente INT NOT NULL,
+	CONSTRAINT FK_AdeudoCliente FOREIGN KEY (Id_Cliente) REFERENCES Cliente(Id_Cliente)
 );
 
 create table CitaMed(
@@ -56,6 +58,7 @@ create table CitaMed(
 	SistemaNervioso char(1),
 	Ganglios char(1),
 	Mucosa char(1),
+	PlanesDiagnostico varchar(100),
 	ProblemasTemporal varchar(100),
 	PlanesTerapeuticos varchar(100),
 	InstruccionesCli varchar(100),
@@ -65,8 +68,8 @@ create table CitaMed(
 	CONSTRAINT FK_Adeudo FOREIGN KEY (Id_Adeudo) REFERENCES Adeudo(Id_Adeudo)
 );
 
-
-
+ALTER TABLE CitaMed ADD COLUMN PlanesDiagnostico VARCHAR(100);
+SELECT * FROM CitaMed;
 create table CitaEstetica(
 	Id_CitaEst int primary key AUTO_INCREMENT,
 	Fecha date,
@@ -93,7 +96,7 @@ create table Tipos(
 );
 
 create table Detalle_Citas (
-  Id_CitaMed int ,
+  Id_CitaMed int,
   Observacion varchar(250),
   Tipo char(3) ,
   constraint FK_DETCIT_CITMED FOREIGN KEY (id_CitaMed) REFERENCES CitaMed (id_CitaMed),
@@ -103,11 +106,11 @@ create table Detalle_Citas (
 
 -- Insertamos todos los tpo validos de observaciones
 
-insert into Tipos VALUES 
+insert into Tipos VALUES
 ('APG','Apariencia General'),
 ('PIL','Piel'),
-('MES','	MusculoEsqueleto'),
-('CIR'	,'Circulatorio'),
+('MES','Musculo Esqueleto'),
+('CIR','Circulatorio'),
 ('RES','Respiratorio'),
 ('DIJ','Dijestivo'),
 ('OJO','Ojos'),
@@ -115,7 +118,6 @@ insert into Tipos VALUES
 ('SNE','Sistema Nervioso'),
 ('GAN','Ganglios'),
 ('MUC','Mucosa');
-
 
 /*Creación de tablas para inventario*/
 
@@ -188,7 +190,7 @@ select * from vw_tabla_inicio;
 
 SELECT * FROM Inventario;
 
---Creamos la vista para los productos de un inventario x
+-- Creamos la vista para los productos de un inventario x
 create view vw_buscar_prod
 as
 (
@@ -200,14 +202,13 @@ CREATE VIEW vistaBuscarCliente AS
 (
 select c.Nombre as Cliente, m.Nombre as Mascota, c.Telefono, c.Direccion FROM cliente c
 INNER JOIN Mascota m ON (c.id_Cliente = m.id_Cliente));
-
-select * FROM vistaBuscarCliente
+/*
+select * FROM vistaBuscarCliente;
 -- De la siguiente manera es como se hace la consulta para mostrar los datos del producto deseado
 
 select Nombre,CantidadPorUnidad,PrecioUnitario,UnidadesAlmacenadas from vw_buscar_prod where Inventario='Medicamentos';
 
 select Nombre,CantidadPorUnidad,PrecioUnitario,UnidadesAlmacenadas from vw_buscar_prod where Inventario='Insumos';
 
-select Nombre,CantidadPorUnidad,PrecioUnitario,UnidadesAlmacenadas from vw_buscar_prod where Inventario='Productos Tienda';
-
+select Nombre,CantidadPorUnidad,PrecioUnitario,UnidadesAlmacenadas from vw_buscar_prod where Inventario='Productos Tienda';*/
 
