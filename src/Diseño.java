@@ -59,12 +59,13 @@ public class Diseño {
     TextArea textAreaInstrucciones;
     PreparedStatement pst = null;
     Connection con;
-
+ 
     //VARIABLES GLOBALES PARA CLIENTE Y MASCOTA DESDE LA BASE DE DATOS
     //CLIENTE
     String idCliente=null, nombreCliente="", direccionCliente="", telefonoCliente="", sexoCliente="";
     //MASCOTA
     String idMascota = "", nombreMascota="", especieMascota = "", razaMascota = "", sexoMascota = "", descripcionMascota = "";
+ 
 
     TextField idClienteTxt = new TextField();
     TextField nombreClienteTxt = new TextField();
@@ -835,19 +836,29 @@ gridpane.add(lblProducto,1,1);
     private TableColumn<TablaProductosVenta, String> columnaPrecioUnidadProducto;
     private TableColumn<TablaProductosVenta, String>  columnaCantidad;
 
-    final TableView<TablaProductosVenta> tablaProductosVenta = new TableView<>();
-    final ObservableList<TablaProductosVenta> datosBuscarProductos = FXCollections.observableArrayList();
+     TableView<TablaProductosVenta> tablaProductosVenta = new TableView<>();
+     ObservableList<TablaProductosVenta> datosBuscarProductos = FXCollections.observableArrayList();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    private TableColumn<TablaProductosCobrar, String> columnaNombreProductoVenta;
-    private TableColumn<TablaProductosCobrar, String> columnaPrecio;
-    private TableColumn<TablaProductosCobrar, String>  columnaCantidaVenta;
+    private TableColumn<TablaProductosVenta, String> columnaNombreProductoVenta;
+    private TableColumn<TablaProductosVenta, String> columnaPrecio;
+    private TableColumn<TablaProductosVenta, String>  columnaCantidaVenta;
 
-    final TableView<TablaProductosCobrar> tablaProductosCobrar = new TableView<>();
+  TableView<TablaProductosVenta> tablaProductosCobrar = new TableView<>();
   //  final ObservableList<TablaProductosCobrar> datosBuscarProductos = FXCollections.observableArrayList();
 
+    ObservableList<TablaProductosVenta> datosVenta = FXCollections.observableArrayList();
 
-
+public void llenarTabla(){
+    tablaProductosCobrar.setItems(moverDatosTablaVentas(nombreProducto,cantidad,precio));
+}
+public ObservableList moverDatosTablaVentas(String nombreProducto,String cantidad,String precio){
+    datosVenta.add(new TablaProductosVenta(nombreProducto,cantidad,precio));
+    return datosVenta;
+}
+public void limpiartabla(){
+    datosVenta.clear();
+}
 
 
    /* public ObservableList eventoBuscarCliente(ObservableList data){
@@ -1175,10 +1186,10 @@ gridpane.add(lblProducto,1,1);
          Spinner<Integer> spinner = new Spinner<Integer>();
         SpinnerValueFactory<Integer> valueFactory =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 99);
-spinner.setPrefWidth(55);
+        spinner.setPrefWidth(55);
         spinner.setPrefHeight(20);
         spinner.setValueFactory(valueFactory);
-
+        int a =spinner.getValue();
 ///Tabla Mostrar Productos
         columnaNombreProducto = new TableColumn<>("Producto");
         columnaCantidad = new TableColumn<>("Unidad ");
@@ -1219,6 +1230,34 @@ spinner.setPrefWidth(55);
             sortedData.comparatorProperty().bind(tablaProductosVenta.comparatorProperty());
             tablaProductosVenta.setItems(sortedData);
         });
+/////////////////////////////Tomar datos
+        tablaProductosVenta.setOnMouseClicked(event -> {
+            try{
+                Connection conn = dc.Connect();
+                TablaProductosVenta tablaBusqueda = (TablaProductosVenta) tablaProductosVenta.getSelectionModel().getSelectedItem();
+                nombreProducto = String.valueOf(tablaBusqueda.getNombre());
+
+                rs = conn.createStatement().executeQuery("select * from producto WHERE Nombre ='"+nombreProducto+"'");
+
+
+                while(rs.next()){
+                    nombreProducto = rs.getString(5);
+                    cantidad = rs.getString(6);
+                    precio = rs.getString(7);
+
+                }
+            }catch(SQLException ex){
+                System.err.println("No se pudo realizar la consulta");
+            }
+            finally {
+              System.err.print(nombreProducto+"\n");
+                System.err.print(cantidad+"\n");
+                System.err.print(precio+"\n");
+                System.err.print("\n"+a+"\n");
+            }
+
+        });
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1240,7 +1279,7 @@ spinner.setPrefWidth(55);
         columnaPrecio.setPrefWidth(120);
         columnaCantidaVenta.setPrefWidth(120);
         tablaProductosCobrar.setPrefSize(450,320);
-
+        ////////////////////////// TOMAR VALORES
 
 
 
@@ -1257,11 +1296,15 @@ root3.getChildren().addAll(tablaProductosCobrar,Eliminarbtn);
         root2.getChildren().addAll(gridpane,tablaProductosVenta);
 root.getChildren().addAll(Ventalbl,root2,root3,root4);
 
-
+Agregarbtn.setOnAction(e -> llenarTabla());
+Eliminarbtn.setOnAction(e -> limpiartabla());
 
         return root;
 
     }
+
+
+
 
     public  HBox BtnAbajoAgendarCita() {
  
