@@ -161,7 +161,7 @@ public class Validacion {
     }
 
 
-    public void popUp2(TextField Precio, TextField Descripcion){
+    public void popUp2(TextField Precio, TextField Descripcion, String Id_Cliente){
 
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Confirmacion");
@@ -175,7 +175,7 @@ public class Validacion {
         grid.setHgap(10);
         grid.setVgap(15);
 
-        javafx.scene.control.Button AceptarBtn = new javafx.scene.control.Button("Guardar");
+        javafx.scene.control.Button AceptarBtn = new javafx.scene.control.Button("Guardarrrrr");
         javafx.scene.control.Button CancelarBtn = new javafx.scene.control.Button("Cancelar");
         ButtonType loginButtonType = new ButtonType("Aceptar");
         loginButtonType = ButtonType.OK;
@@ -213,7 +213,7 @@ grid.add(lblCon,0,0);
 
 Funciones f = new Funciones();
 if (result.get() == loginButtonType) {
-     f.GuardarDatosAdeudoM(Descripcion,Precio);
+     f.GuardarDatosAdeudoM(Descripcion,Precio,Id_Cliente);
 
         }
 
