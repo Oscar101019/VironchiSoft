@@ -1,6 +1,7 @@
 import javafx.scene.control.*;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 /**
  * Created by juven on 29/3/2017.
@@ -20,7 +21,13 @@ public class Funciones {
         String nombre = Nombre.getText();
         String direccion = Direccion.getText();
         String telefono = Telefono.getText();
-        String sexo = Sexo.getValue().toString();
+        String sexo = "";
+        if(Sexo.getValue().toString() == "Hombre"){
+            sexo = "H";
+        }
+        if(Sexo.getValue().toString() == "Mujer"){
+            sexo = "M";
+        }
 
 
         if (Nombre.getText().length()!=0 && Telefono.getText().length() != 0 && Sexo.getValue().toString() != "-") {
@@ -49,15 +56,21 @@ public class Funciones {
         DatosCliente(Nombre.getText(),Direccion.getText(),Telefono.getText());
     }*/
 
-    public void DatosMascota( TextField idCliente,TextField Nombre, ChoiceBox Especie, ComboBox Raza, ComboBox Sexo, TextField Descripcion) {
-        String idcliente = idCliente.getText();
+    public void DatosMascota( String idCliente,TextField Nombre, ChoiceBox Especie, ComboBox Raza, ComboBox Sexo, TextField Descripcion) {
+        String idcliente = idCliente;
         String nombre = Nombre.getText();
         String especie = Especie.getValue().toString();
         String raza = Raza.getValue().toString();
-        String sexo = Sexo.getValue().toString();
+        String sexo = "";
+        if (Sexo.getValue().toString() == "Hembra"){
+            sexo = "H";
+        }
+        if (Sexo.getValue().toString() == "Macho"){
+            sexo = "M";
+        }
         String descripcion = Descripcion.getText();
 
-        if (idCliente.getText().length()!=0 && Nombre.getText().length() != 0 && Especie.getValue().toString().length() != 0 && Raza.getValue().toString().length() != 0 && Sexo.getValue().toString() != "-" && Descripcion.getText().length() != 0) {
+        if (Nombre.getText().length() != 0 && Especie.getValue().toString().length() != 0 && Raza.getValue().toString().length() != 0 && Sexo.getValue().toString() != "-" && Descripcion.getText().length() != 0) {
             try {
                 Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
                 Statement statement = connection.createStatement();
@@ -78,7 +91,7 @@ public class Funciones {
 
     public void guardarCitaA(String Fecha, String Temperatura, String Peso, RadioButton Norbox, RadioButton AnorBox, String DesAG, RadioButton NorBox2, RadioButton AnorBox2, String DesPiel, RadioButton Norbox3, RadioButton AnorBox3, String DesME, RadioButton NorBox4, RadioButton AnorBox4, String DesCircu, RadioButton Norbox5, RadioButton AnorBox5, String DesRes,
                              RadioButton Norbox6, RadioButton AnorBox6, String DesDige, RadioButton Norbox7, RadioButton Anorbox7, String DesGU, RadioButton Norbox8, RadioButton AnorBox8, String DesOjos, RadioButton Norbox9, RadioButton AnorBox9, String DesOidos, RadioButton Norbox10, RadioButton AnorBox10, String DesSN, RadioButton Norbox11, RadioButton AnorBox11, String DesGanglios, RadioButton Norbox12, RadioButton AnorBox12, String DesMucosa, String PlanesDiagnostico, String ProblemasTemporal,
-                             String PlanesTerapeuticos, String InstruccionesCliente, int IDMASCOTA, int IDADEUDO) {
+                             String PlanesTerapeuticos, String InstruccionesCliente, String IDMASCOTA, String IDADEUDO) {
         String N1 = "";
         String N2 = "";
         String N3 = "";
@@ -92,6 +105,17 @@ public class Funciones {
         String N11 = "";
         String N12 = "";
 
+        String APG = DesAG;
+        String CIR = DesCircu;
+        String DIJ = DesDige;
+        String GAN = DesGanglios;
+        String MES = DesME;
+        String MUC = DesMucosa;
+        String OID = DesOidos;
+        String OJO = DesOjos;
+        String PIL = DesPiel;
+        String RES = DesRes;
+        String SNE = DesSN;
 
         java.text.SimpleDateFormat myFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
         java.text.SimpleDateFormat usuario = new java.text.SimpleDateFormat("dd/MM/yyyy");
@@ -101,20 +125,22 @@ public class Funciones {
             if (Fecha == usuario.toString()) {
                 Fecha = myFormat.format(usuario.parse(Fecha));
             }
-
-
         } catch (java.text.ParseException e) {
             e.printStackTrace();
         }
 
 
         try {
+            Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
+            Statement statement = connection.createStatement();
+
             if (Norbox.isSelected()) {
                 N1 = "N";
             }
 
             if (AnorBox.isSelected()) {
                 N1 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + APG + "','APG')");
             }
 
             if (NorBox2.isSelected()) {
@@ -124,6 +150,7 @@ public class Funciones {
 
             if (AnorBox2.isSelected()) {
                 N2 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + PIL + "','PIL')");
             }
 
 
@@ -133,6 +160,7 @@ public class Funciones {
 
             if (AnorBox3.isSelected()) {
                 N3 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + MES + "','MES')");
             }
 
             if (NorBox4.isSelected()) {
@@ -142,14 +170,16 @@ public class Funciones {
 
             if (AnorBox4.isSelected()) {
                 N4 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + CIR + "','CIR')");
             }
 
-            if (Norbox.isSelected()) {
+            if (Norbox5.isSelected()) {
                 N5 = "N";
             }
 
             if (AnorBox5.isSelected()) {
                 N5 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + DIJ + "','DIJ')");
 
             }
 
@@ -160,6 +190,7 @@ public class Funciones {
 
             if (AnorBox6.isSelected()) {
                 N6 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + RES + "','RES')");
             }
 
             if (Norbox7.isSelected()) {
@@ -175,12 +206,9 @@ public class Funciones {
                 N8 = "N";
             }
 
-            if (Norbox9.isSelected()) {
-                N8 = "N";
-            }
-
             if (AnorBox8.isSelected()) {
                 N8 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + OJO + "','OJO')");
             }
 
             if (Norbox9.isSelected()) {
@@ -189,6 +217,7 @@ public class Funciones {
 
             if (AnorBox9.isSelected()) {
                 N9 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + OID + "','OID')");
             }
 
             if (Norbox10.isSelected()) {
@@ -198,6 +227,7 @@ public class Funciones {
 
             if (AnorBox10.isSelected()) {
                 N10 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + SNE + "','SNE')");
             }
 
             if (Norbox11.isSelected()) {
@@ -206,7 +236,7 @@ public class Funciones {
 
             if (AnorBox11.isSelected()) {
                 N11 = "A";
-
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + GAN + "','GAN')");
             }
 
             if (Norbox12.isSelected()) {
@@ -216,12 +246,16 @@ public class Funciones {
 
             if (AnorBox12.isSelected()) {
                 N12 = "A";
+                ResultSet insertar = statement.executeQuery("INSERT INTO detalle_citas values("+ 1 + ",'" + MUC + "','MUC')");
             }
 
 
-            Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
-            Statement statement = connection.createStatement();
-            ResultSet insertar = statement.executeQuery("insert into citamed(Fecha,Temperatura,Peso,Apariencia_G,DesAG,Piel,DesPiel,MusculoEsqueleto,DesME,Circulatorio,DesCircu,Respiratorio,DesRes,Digestivo,DesDige,GenitoUrinario,DesGU,Ojos,DesOjos,Oidos,DesOidos,SistemaNervioso,DesSN,Ganglios,DesGanglios,Mucosa,DesMucosa,PlanesDiagnostico,ProblemasTemporal,PlanesTerapeuticos,InstruccionesCli,ID_Mascota,ID_Adeudo) values ('" + Fecha + "','" + Temperatura + "','" + Peso + "','" + N1 + "','" + DesAG + "','" + N2 + "','" + DesPiel + "','" + N3 + "','" + DesME + "','" + N4 + "','" + DesCircu + "','" + N5 + "','" + DesRes + "','" + N6 + "','" + DesDige + "','" + N7 + "','" + DesGU + "','" + N8 + "','" + DesOjos + "','" + N9 + "','" + DesOidos + "','" + N10 + "','" + DesSN + "','" + N11 + "','" + DesGanglios + "','" + N12 + "','" + DesMucosa + "','" + PlanesDiagnostico + "','" + ProblemasTemporal + "','" + PlanesTerapeuticos + "','" + InstruccionesCliente + "'," + IDMASCOTA + "," + IDADEUDO + ")");
+
+            ResultSet insertar = statement.executeQuery("insert into citamed(Fecha,Temperatura,Peso,Apariencia_G,Piel,MusculoEsqueleto,Circulatorio,Respiratorio,Digestivo,GenitoUrinario,Ojos,Oidos,SistemaNervioso,Ganglios,Mucosa,ProblemasTemporal,PlanesTerapeuticos,InstruccionesCli,ID_Mascota,ID_Adeudo,PlanesDiagnostico) " +
+                    "values ('" + Fecha + "','" + Temperatura + "','" + Peso + "','" + N1 + "','" + N2 +
+                             "','" + N3 + "','" + N4 + "','" + N5 + "','" + N6 + "','" + N7 + "','" + N8 + "','" + N9 + "','" +
+                             N10 + "','" + N11 + "','" + N12 + "','" + ProblemasTemporal + "','" + PlanesTerapeuticos + "','" + InstruccionesCliente + "'," +
+                             IDMASCOTA + "," + IDADEUDO + ",'"+ PlanesDiagnostico + "')");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -231,17 +265,17 @@ public class Funciones {
 
     }
 
-    public void eventoguardarcitaA(TextField Fecha, TextField Temperatura, TextField Peso, RadioButton Norbox, RadioButton AnorBox, TextArea AparienciaGeneral, RadioButton Norbox2, RadioButton AnorBox2, TextArea Piel, RadioButton Norbox3, RadioButton AnorBox3,
+    public void eventoguardarcitaA(LocalDate Fecha, TextField Temperatura, TextField Peso, RadioButton Norbox, RadioButton AnorBox, TextArea AparienciaGeneral, RadioButton Norbox2, RadioButton AnorBox2, TextArea Piel, RadioButton Norbox3, RadioButton AnorBox3,
                                    TextArea MuscoloEesqueleto, RadioButton Norbox4, RadioButton AnorBox4, TextArea Circulatorio, RadioButton Norbox5, RadioButton AnorBox5, TextArea Respiratorio,
                                    RadioButton Norbox6, RadioButton AnorBox6, TextArea Digestivo, RadioButton Norbox7, RadioButton AnorBox7, TextArea GenitoUrinario,
                                    RadioButton Norbox8, RadioButton AnorBox8, TextArea Ojos, RadioButton Norbox9, RadioButton AnorBox9, TextArea Oidos,
                                    RadioButton Norbox10, RadioButton AnorBox10, TextArea SistemaNervioso, RadioButton Norbox11, RadioButton AnorBox11, TextArea Ganglios,
                                    RadioButton Norbox12, RadioButton AnorBox12, TextArea Mucosas, TextArea PlanesDiagnostico, TextArea ProblemasTemporal, TextArea PlanesTerapeuticos, TextArea IntruccionesCliente,
-                                   TextField IDMASCOTA, TextField IDADEUDO) {
+                                   String id_Mascota, String id_Adeudo,String id_Cita) {
 
 
         guardarCitaA(
-                Fecha.getText(), Temperatura.getText(), Peso.getText(),
+                Fecha.toString(), Temperatura.getText(), Peso.getText(),
                 Norbox, AnorBox, AparienciaGeneral.getText(),
                 Norbox2, AnorBox2, Piel.getText(),
                 Norbox3, AnorBox3, MuscoloEesqueleto.getText(),
@@ -255,17 +289,18 @@ public class Funciones {
                 Norbox11, AnorBox11, Ganglios.getText(),
                 Norbox12, AnorBox12, Mucosas.getText(),
                 PlanesDiagnostico.getText(), ProblemasTemporal.getText(), PlanesTerapeuticos.getText(),
-                IntruccionesCliente.getText(), Integer.parseInt(IDMASCOTA.getText()), Integer.parseInt(IDADEUDO.getText()));
+                IntruccionesCliente.getText(), id_Mascota, id_Adeudo);
     }
 
 
-public void GuardarDatosAdeudoM(TextField Descripcion, TextField Costo){
-    double precio = Double.parseDouble(Costo.getText());
+public void GuardarDatosAdeudoM(TextField Descripcion, TextField Costo, String Id_Cliente){
+    String precio = Costo.getText();
     String descripcion = Descripcion.getText();
+    String idCliente = Id_Cliente;
     try {
         Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/bdvironchi?user=root&password=1234");
         Statement statement = connection.createStatement();
-        ResultSet insertar = statement.executeQuery("insert into adeudo(concepto,Descripcion,CostoTotal) values('M','"+descripcion+"',"+precio+")");
+        ResultSet insertar = statement.executeQuery("insert into adeudo(concepto,Descripcion,CostoTotal, Id_Cliente) values('M','"+descripcion+"',"+precio+","+idCliente+")");
     } catch (SQLException e) {
         e.printStackTrace();
     }
