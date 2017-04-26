@@ -65,7 +65,7 @@ public class Diseño {
     String idCliente=null, nombreCliente="", direccionCliente="", telefonoCliente="", sexoCliente="";
     //MASCOTA
     String idMascota = "", nombreMascota="", especieMascota = "", razaMascota = "", sexoMascota = "", descripcionMascota = "";
- 
+ String nombreProducto="", cantidad="",precio="";
 
     TextField idClienteTxt = new TextField();
     TextField nombreClienteTxt = new TextField();

@@ -34,26 +34,6 @@ values(3,1,'2017-03-23 00:00:00','P'),
    	  (1,1,'2017-03-22 00:00:00','G');
 
 
-
-delete from tablacitasinicio  where TipoT like 'Cita Meica'
-
-SELECT * FROM cliente
-
-select * from tablacitasinicio
-
-select * from viewmed
-
-select * from citamed
-
-select * from citaestetica
-
-select * from mascota
-
-
-
-
-
-
 -- Query para calarle que jale XD
 select m. id_Mascota, M.Nombre,M.Raza from Cliente C
 inner join Mascota M on(c.id_Cliente=M.id_Cliente)

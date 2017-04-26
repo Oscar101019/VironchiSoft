@@ -253,9 +253,9 @@ public class Funciones {
 
             ResultSet insertar = statement.executeQuery("insert into citamed(Fecha,Temperatura,Peso,Apariencia_G,Piel,MusculoEsqueleto,Circulatorio,Respiratorio,Digestivo,GenitoUrinario,Ojos,Oidos,SistemaNervioso,Ganglios,Mucosa,ProblemasTemporal,PlanesTerapeuticos,InstruccionesCli,ID_Mascota,ID_Adeudo,PlanesDiagnostico) " +
                     "values ('" + Fecha + "','" + Temperatura + "','" + Peso + "','" + N1 + "','" + N2 +
-                             "','" + N3 + "','" + N4 + "','" + N5 + "','" + N6 + "','" + N7 + "','" + N8 + "','" + N9 + "','" +
-                             N10 + "','" + N11 + "','" + N12 + "','" + ProblemasTemporal + "','" + PlanesTerapeuticos + "','" + InstruccionesCliente + "'," +
-                             IDMASCOTA + "," + IDADEUDO + ",'"+ PlanesDiagnostico + "')");
+                    "','" + N3 + "','" + N4 + "','" + N5 + "','" + N6 + "','" + N7 + "','" + N8 + "','" + N9 + "','" +
+                    N10 + "','" + N11 + "','" + N12 + "','" + ProblemasTemporal + "','" + PlanesTerapeuticos + "','" + InstruccionesCliente + "'," +
+                    IDMASCOTA + "," + IDADEUDO + ",'"+ PlanesDiagnostico + "')");
 
         } catch (SQLException e) {
             e.printStackTrace();

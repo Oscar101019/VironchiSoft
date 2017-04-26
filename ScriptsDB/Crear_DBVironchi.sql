@@ -58,17 +58,17 @@ create table CitaMed(
 	SistemaNervioso char(1),
 	Ganglios char(1),
 	Mucosa char(1),
-	PlanesDiagnostico varchar(100),
 	ProblemasTemporal varchar(100),
 	PlanesTerapeuticos varchar(100),
 	InstruccionesCli varchar(100),
 	Id_Mascota int not null,
 	Id_Adeudo int not null,
+	PlanesDiagnostico varchar(100),
 	CONSTRAINT FK_Mascota FOREIGN KEY (Id_Mascota) REFERENCES Mascota(Id_Mascota),
 	CONSTRAINT FK_Adeudo FOREIGN KEY (Id_Adeudo) REFERENCES Adeudo(Id_Adeudo)
 );
 
-ALTER TABLE CitaMed ADD COLUMN PlanesDiagnostico VARCHAR(100);
+
 SELECT * FROM CitaMed;
 create table CitaEstetica(
 	Id_CitaEst int primary key AUTO_INCREMENT,
@@ -81,7 +81,7 @@ create table CitaEstetica(
 	CONSTRAINT FK_MASCOTAE FOREIGN KEY(Id_Mascota) REFERENCES Mascota(Id_Mascota),
 	CONSTRAINT FK_ADEUDOE FOREIGN KEY(Id_Adeudo) REFERENCES Adeudo(Id_Adeudo)
 );
-
+select * from CitaMed;
 create table Tabla_Citas_Inicio(
   id_Mascota int,
   TipoCit varchar(20),
